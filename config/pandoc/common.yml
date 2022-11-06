@@ -1,0 +1,8 @@
+# This inherits settings from input-files.yml
+defaults: input-files.yml
+from: markdown
+
+metadata-file: meta.yml
+toc: true
+highlight-style: kate
+citeproc: true

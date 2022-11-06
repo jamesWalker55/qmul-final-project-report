@@ -1,0 +1,10 @@
+# This inherits settings from ./base.yml
+defaults: config/pandoc/common.yml
+
+output-file: output/report.html
+to: html
+standalone: true
+metadata:
+  fontsize: 16px
+  fontcolor: '#444'
+  backgroundcolor: white
