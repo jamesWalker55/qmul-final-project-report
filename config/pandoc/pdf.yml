@@ -1,4 +1,4 @@
-# This inherits settings from ./base.yml
+# This inherits settings from ./common.yml
 defaults: config/pandoc/common.yml
 
 output-file: docs/report.pdf
