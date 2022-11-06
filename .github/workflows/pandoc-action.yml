@@ -12,14 +12,12 @@ jobs:
       # Create PDF using pandoc
       - uses: docker://pandoc/latex:2.19
         with:
-          args: >-
-            --defaults config/pandoc/pdf.yml
+          args: --defaults config/pandoc/pdf.yml
 
       # Create HTML using pandoc
       - uses: docker://pandoc/latex:2.19
         with:
-          args: >-
-            --defaults config/pandoc/html.yml
+          args: --defaults config/pandoc/html.yml
 
       # Commit all changes to a new branch
       - name: Commit changes and push to a new branch
