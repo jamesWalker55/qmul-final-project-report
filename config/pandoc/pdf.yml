@@ -1,5 +1,5 @@
 # This inherits settings from ./base.yml
 defaults: config/pandoc/common.yml
 
-output-file: output/report.pdf
+output-file: docs/report.pdf
 to: pdf
