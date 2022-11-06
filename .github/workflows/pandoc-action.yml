@@ -1,0 +1,37 @@
+name: Pandoc Action
+
+on: push
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repo
+      - uses: actions/checkout@v3
+
+      # Create PDF using pandoc
+      - uses: docker://pandoc/latex:2.19
+        with:
+          args: >-
+            --defaults config/pandoc/common.yml
+            --defaults config/pandoc/pdf.yml
+
+      # Create HTML using pandoc
+      - uses: docker://pandoc/latex:2.19
+        with:
+          args: >-
+            --defaults config/pandoc/common.yml
+            --defaults config/pandoc/html.yml
+
+      # Commit all changes to a new branch
+      - name: Commit changes and push to a new branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          skip_checkout: true
+          skip_fetch: true
+          create_branch: true
+          branch: pandoc-action
+          commit_message: Pandoc action
+          commit_options: "--signoff"
+          push_options: "--force"
+          skip_dirty_check: true
