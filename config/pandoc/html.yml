@@ -1,7 +1,7 @@
 # This inherits settings from ./base.yml
 defaults: config/pandoc/common.yml
 
-output-file: output/report.html
+output-file: docs/index.html
 to: html
 standalone: true
 metadata:
