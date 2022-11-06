@@ -29,7 +29,9 @@ jobs:
           skip_fetch: true
           create_branch: true
           branch: pandoc-action
+          file_pattern: docs/*.pdf docs/*.html
+          add_options:  --force
           commit_message: Pandoc action
-          commit_options: "--signoff"
-          push_options: "--force"
+          commit_options: --signoff
+          push_options: --force
           skip_dirty_check: true
