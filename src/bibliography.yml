@@ -22,3 +22,23 @@ references:
   DOI: 10.1038/171737a0
   URL: https://www.nature.com/articles/171737a0
   language: en-GB
+- id: RustLanguageSite
+  type: manual
+  title: Rust Programming Language
+  organization: The Rust Community
+  author:
+  - family: Hoare
+    given: Graydon
+  url: https://www.rust-lang.org/
+  issued: 2022-07-11
+- id: RustLanguageBook
+  type: manual
+  title: The Rust Programming Language
+  organization: The Rust Community
+  author:
+  - family: Klabnik
+    given: Steve
+  - family: Nichols
+    given: Carol
+  url: https://doc.rust-lang.org/book
+  issued: 2022-07-11
