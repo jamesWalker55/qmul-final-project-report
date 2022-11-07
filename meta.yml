@@ -1,3 +1,5 @@
-title: Final Project - Interim Report
+title: TagRepo - A tool to assign and query tags on files in a filesystem
+subtitle: BSc Computer Science
+author: Chun Ho Wong (200530468)
 bibliography: src/bibliography.yml
 csl: config/harvard-cite-them-right.csl
