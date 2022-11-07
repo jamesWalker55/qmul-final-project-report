@@ -6,3 +6,4 @@ metadata-file: meta.yml
 toc: true
 highlight-style: kate
 citeproc: true
+number-sections: true
