@@ -1,0 +1,34 @@
+A section for each tag program, survey 
+Tool stack
+Use case
+What you've implemented so far 
+
+Implementation and rationale, separate them for rust 
+Rust 
+
+Personal motivation is acceptable 
+Objective motivation is also good 
+If you have graphs for rising popularity
+Job market etc 
+
+Don't hide anything, don't worry if its too personal 
+
+The report is about the journey of the project, not just the final implementation
+
+In the report, include when you learned rust from scratch 
+
+Report should include the time usage, other people then know you spent time learning rust, 
+
+
+
+
+Focus on implementing things that are easy to measure and see, so the reviewers will be impressed 
+
+
+Do not self censor yourself on the report, if you think its not relevant enough
+
+Almost everything is relevant, you can include them in the report 
+
+
+If the report is in a good state, feel free to send him a message to give some feedback 
+
