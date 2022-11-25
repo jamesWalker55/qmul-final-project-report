@@ -1,3 +1,41 @@
+# Abstract {-}
+
+(all reports have this)
+
+# TOC {-}
+
+TOC should be after abstract.
+
+# Introduction
+
+## Background
+
+## Problem Statement
+
+## Aim
+
+<!-- This project is related to Personal Information Management (PIM). Particularly,  -->
+
+This project aims to alleviate the management and retrieval of large collections of files. [@JonesPIMBook]
+
+Digital file management is important to many people's lives. Regular users need need to store family photos, digital artists may keep a folder of reference images and concept art, and music producers may maintain a collection of audio samples for future use. With a large collection of files, information retrieval can become difficult as files get placed in deeply-nested folder structures.
+
+The aim of this project is to implement a tag-based file manager. The software must achieve two things: it must be able to tag files then let the user query for files using tags; it must be well-integrated with the file system - not overriding any existing folder hierarchies, and tracking file movement.
+
+<!-- The solution should use a combination of tags and folder structure. This means that files can be tagged, and can also be browsed using a folder structure. If a file is moved to a different folder, the tags for that file should also be moved to the new file. -->
+
+Many existing solutions only focus on tags and do not expect the user to browse the files with a file browser, often overriding a folder's existing structure, renaming files or generating many metadata files that clog up the browser view. [Tag Spaces](https://www.tagspaces.org/) renames the user's files to a space-separated list of tags. [Tabbles](https://tabbles.net/) does not track file movement, so tags are destroyed when files are moved to a new location. [Stagsi](https://stagsi.com/) stops tracking a file if it has been renamed by the user. [Hydrus](https://github.com/hydrusnetwork/hydrus) renames all files to their MD5 hash and moves them to a single folder.
+
+<!-- Users can enforce a logical structure of files by having a folder hierarchy. However, a folder structure will also limits the ways a user can search for files. If a collection of photos was grouped into folders by the year, then into subfolders by the month, the user will not be able to easily search this collection by other factors like the number of people in the photo or the location the photo was taken. As the folder hierarchy grows more complex, so does the effort needed to maintain the hierarchy. -->
+
+<!-- One reason for tackling this issue is personal motivation. I maintain a large collection (~200,000 files) of audio samples, where each sample may belong to multiple categories at the same time. For example, a kick drum audio sample may be placed in the path `SampleRadar - 808 Samples/Kicks/F#-01.wav`, where "SampleRadar - 808 Samples" is the name of the product, and "F#" indicates the musical key of the sample. This limits my ability to retrieve files from the collection and affects how I interact and use this collection for my work - I cannot search this collection directly by a sample's musical key, because the outermost layer of the folder structure is organised by the product name. -->
+
+## Objectives
+
+## Research Questions
+
+## Report Structure
+
 # Literature Review
 
 The programming language used
@@ -33,5 +71,9 @@ I chose Vue as the frontend framework because I find it to be more structured an
 SQLite is "a small, fast, self-contained, high-reliability, full-featured, SQL database engine", being one of the most used database engines in the world [@sqlite_2019_sqlite].
 
 Compared to other SQL engines, SQLite is a serverless database engine that operates on a single database file. This makes it suitable for developing a desktop application as it
+
+## Existing programs review
+
+# Requirements Analysis
 
 # Bibliography
