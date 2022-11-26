@@ -10,11 +10,17 @@ TOC should be after abstract.
 
 ## Background
 
+Computer users interact with digital files on a daily basis. This includes storing files, organising files, and retrieving files.
+
+This is known as Personal Information Management (PIM). PIM is concerned with the management of digital files on the computer.
+
 The directory tree structure is the de facto standard for data storage. Since its usage in early operating systems such as the OS/360 by IBM, most operating systems nowadays such as Microsoft Windows, macOS and Linux distributions use directory trees as the data storage method. In such a system, filenames are used to uniquely identify files, and files can be placed within directories or folders.
 
 The most common way of organising data is through the directory tree structure. Organising files in a directory tree is analogous to sorting paper documents in real life - users can organise files by placing them into folders and further subfolders. While this is an intuitive way of organising files due to its similarities to real-life organisation, it is not an effective way of organising and recalling files.
 
 [@singhal2001modern]
+
+[@dinneen2020ubiquitous]
 
 ## Problem Statement
 
