@@ -26,6 +26,8 @@ Current file management systems are not efficient when it comes to managing a la
 
 There are many methods available for users to search for files. This can include search functions, browsing through folders, or even looking through the recent documents list. However, these methods can be time-consuming and often give imprecise results that fail to find the file the user wants. This is a major problem for users who have to deal with large numbers of files.
 
+Another major problem with current file management systems is that they are not flexible when it comes to organising files. This is because they are based on a hierarchical structure which can be inflexible and difficult to use. This can make it difficult for users to organise their files in a way that is suitable for them.
+
 ## Aim
 
 <!-- This project is related to Personal Information Management (PIM). Particularly,  -->
