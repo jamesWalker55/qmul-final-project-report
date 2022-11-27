@@ -73,7 +73,25 @@ Section two explores the literature related to PIM and file management. Section 
 
 # Literature Review
 
-The programming language used
+In this section, we will review the existing literature related to file management, tagging, and personal information management. This will include a review of the challenges related to file management, an evaluation of existing solutions, and an investigation of the needs of users when performing file management tasks.
+
+## Personal Information Management
+
+Personal Information Management (PIM) is a field of research which is concerned with the management of digital files on the computer. This includes how people store, organise, and retrieve information to complete tasks. PIM is a relatively new field, and has only been studied extensively in the last few years. PIM is focused on how people organise, maintain and retrieve information, and on methods that can improve these tasks. This is not limited to digital files, but can also include paper documents for example.
+
+One of the aims of PIM is for people to have the right information in the right place, in the right form and with enough completeness and quality to meet the current need [@jones2007personal]. However this is not the case for most people. Often the necessary information may not be found by the user, or the information may arrive at an unsuitable time such that it cannot be used.
+
+@jones2010keeping mentions the idea of "keeping found things found", in which people store information in multiple location and multiple applications. If this is performed inconsistently, the information people need is scattered widely, which makes it even more difficult to maintain and organise information. This is known as information fragmentation [@jones2007personal].
+
+## File Management
+
+File management is the process of storing, retrieving, and manipulating files on a computer system. It is a fundamental part of using a computer, and is necessary for many tasks such as creating documents, downloading files from the internet, and storing photographs
+
+File management is a fundamental task which all computer users have to perform. This is because all computer users have to store, organise, and retrieve files on their computer. File management is a time-consuming task, and one that people often find difficult to do effectively.
+
+## Tags
+
+Tagging may be able to
 
 ## Rust
 
