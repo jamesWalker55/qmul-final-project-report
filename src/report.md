@@ -109,6 +109,20 @@ Compared to other SQL engines, SQLite is a serverless database engine that opera
 
 ## Existing programs review
 
-# Requirements Analysis
+# Project Analysis
+
+# Design
+
+# Implementation
+
+## Extension 1 - TODO
+
+## Extension 2 - TODO
+
+# Testing
+
+# Evaluation
+
+# Conclusion
 
 # Bibliography
