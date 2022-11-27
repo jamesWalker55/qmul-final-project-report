@@ -57,7 +57,19 @@ The objectives of the project are as follows:
 - To evaluate the system against existing software systems.
 - To conclude on the effectiveness of the system and to come up with recommendations for further work.
 
-## Research questions
+## Research Questions
+
+The research questions for this project are as follows:
+
+- How effective are existing solutions when it comes to managing a large number of files?
+- What do users need from a file management system in order to manage their files effectively?
+- Can a tag-based approach be used to improve the efficiency of file management?
+
+<!-- ## Project Structure
+
+(The following is auto generated)
+
+Section two explores the literature related to PIM and file management. Section three discusses the existing solutions that are available to users. Section four looks at the needs of users when performing file management tasks. Section five presents the development of the prototype system. Section six looks at the evaluation of the prototype system. And finally, section seven provides the conclusion and recommendations for future work. -->
 
 Digital file management is important to many people's lives. Regular users need need to store family photos, digital artists may keep a folder of reference images and concept art, and music producers may maintain a collection of audio samples for future use. With a large collection of files, information retrieval can become difficult as files get placed in deeply-nested folder structures.
 
