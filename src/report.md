@@ -32,7 +32,32 @@ Another major problem with current file management systems is that they are not 
 
 <!-- This project is related to Personal Information Management (PIM). Particularly,  -->
 
-This project aims to alleviate the management and retrieval of large collections of files. [@JonesPIMBook]
+The project aims to investigate and develop a tag-based file manager. The system would allow users to assign tags to their files, and then search for those files based on those tags. The aim of this project is to develop a file management system which is more efficient than current systems, and which enables users to organise their files in a way that is suitable for them.
+
+Compared to a hierarchical directory structure, a tag-based approach would allow users to organise their files in a more flexible and efficient way. Users would be able to assign arbitrary tags to their files then search for those files using those tags. This lets users avoid the time-consuming task of classifying files and browsing folders, for example deciding which single folder to place a file into [@dinneen2020ubiquitous]. This would also enable users to search for files based on their content, and would make it easier for users to manage their files.
+
+Users would still be able to organise their files into folders if they so choose. However, the system would not impose any strict structure on users and would allow them to store their files in any way they want. This is in contrast to existing tagging software which often override any existing hierarchical file structure and do not allow any hierarchical organisation.
+
+The system should provide a search function which would enable users to search for files based on their tags. This would make it easier for users to find the files they are looking for. The system should also be able to handle a large number of files, such that the software remains performant in tagging and searching for large numbers of files.
+
+The system should also be easy to use, such that users can use it without any prior knowledge of tagging or file management. This is in contrast to existing tagging software which often have a steep learning curve, and require users to have some knowledge of tagging before they can be used effectively.
+
+## Objectives
+
+The objectives of the project are as follows:
+
+- To identify existing challenges related to PIM and file management.
+- To compare and evaluate existing tagging software available to users.
+- To understand the needs of users when performing file management tasks.
+- To gain an understanding of concepts related to PIM.
+- To investigate the challenges related to file management.
+- To develop a system to allow users to manage and search files using tags.
+- To implement a user interface that is easy to learn and efficient to use.
+- To evaluate the effectiveness of the prototype system through user testing.
+- To evaluate the system against existing software systems.
+- To conclude on the effectiveness of the system and to come up with recommendations for further work.
+
+## Research questions
 
 Digital file management is important to many people's lives. Regular users need need to store family photos, digital artists may keep a folder of reference images and concept art, and music producers may maintain a collection of audio samples for future use. With a large collection of files, information retrieval can become difficult as files get placed in deeply-nested folder structures.
 
