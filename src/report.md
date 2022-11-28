@@ -1,10 +1,12 @@
-# Abstract {-}
+<!-- # Abstract {-}
 
 (all reports have this)
 
 # TOC {-}
 
-TOC should be after abstract.
+TOC should be after abstract. -->
+
+\newpage
 
 # Introduction
 
@@ -70,6 +72,8 @@ The research questions for this project are as follows:
 (The following is auto generated)
 
 Section two explores the literature related to PIM and file management. Section three discusses the existing solutions that are available to users. Section four looks at the needs of users when performing file management tasks. Section five presents the development of the prototype system. Section six looks at the evaluation of the prototype system. And finally, section seven provides the conclusion and recommendations for future work. -->
+
+\newpage
 
 # Literature Review
 
@@ -207,6 +211,8 @@ SQLite has a wide range of applications, including being used as an embedded dat
 
 I chose SQLite because I have plenty of experience using databases from my own personal use and through a part-time developer role. I would be able to implement a tagging system using SQLite and Rust without much difficulty.
 
+\newpage
+
 # Requirements Analysis
 
 This chapter covers the requirements identified for my application. The following requirements were obtained through a review of existing tagging software and other file management systems, and through online sources such as blogs and discussion forums.
@@ -237,6 +243,8 @@ The following requirements are extensions to the project and not mandatory as ba
 4. The source code should be well-documented such that it is easy to understand and maintain.
 5. All user input should be validated both on the frontend and backend to ensure data integrity and security.
 6. The application's graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
+
+\newpage
 
 # Design
 
