@@ -73,7 +73,7 @@ Section two explores the literature related to PIM and file management. Section 
 
 # Literature Review
 
-In this section, we will review the existing literature related to file management, tagging, and personal information management. This will include a review of the challenges related to file management, an evaluation of existing solutions, and an investigation of the needs of users when performing file management tasks.
+In this chapter, we will review the existing literature related to file management, tagging, and personal information management. This will include a review of the challenges related to file management, an evaluation of existing solutions, and an investigation of the needs of users when performing file management tasks.
 
 ## Personal Information Management
 
@@ -107,7 +107,7 @@ Tagging has many advantages over traditional methods for managing digital files.
 
 There are also some disadvantages associated with tagging. One of the main disadvantages is that manual tagging can be a time-consuming process, particularly if the user has a large number of files. Another disadvantage is that automatic tagging systems are not always accurate, and can often assign incorrect tags to files.
 
-## Existing Tagging Software
+## Existing Programs Review
 
 There are many software solutions for using tags for file management. Some of them are standalone applications, while some may be integrated into the operating system.
 
@@ -175,35 +175,72 @@ Rust is increasingly adopted by companies and projects such as Microsoft, Amazon
 
 Though I have years of experience in high-level languages such as Python, Ruby, Javascript, I have very limited experience with low-level languages like C++ and Rust. However, since Rust is being increasingly adopted by industry, as well as its memory-safety features, performance and industry support which make it a good choice for this project, it was an obvious choice for me when deciding upon a programming language for development. I take this opportunity to learn Rust as it will also help with my career.
 
-## Tauri
+### Tauri
 
 Tauri is a Rust framework that allows developing desktop applications using web technologies like HTML, CSS, JavaScript for the frontend, while using Rust for the backend [@tauricontributors_2022_tauriappstauri].
 
-Rust is a relatively new language compared to other languages. It has many user interface libraries, however most of them are in the early stages of development and not yet fully-featured [@shivshank_2022_are].
+Rust is a relatively new language compared to other languages. It has many user interface libraries, however most of them are in the early stages of development and not yet fully-featured [@shivshank_2022_are]. Among these, Tauri stands out for its support of many platforms and its polished feature set.
 
-Tauri uses web technologies for implementing user interfaces. This allows developers to use widgets and components from frontend frameworks such as Vue and React - developers are not limited to a small subset of widgets implemented by the library author.
+Tauri uses web technologies for implementing user interfaces. This allows developers to use widgets and components from frontend frameworks such as Vue and React - developers are not limited to a small subset of widgets implemented by the library author. Tauri can also take advantage of existing tools and libraries from the web development ecosystem - this provides a more complete solution.
 
-## Vue
+The Rust backend can be used to access the file system and other desktop-specific features. This provides a more complete solution compared to using web technologies alone, for example building a browser-based file manager.
 
-**(TODO)**
+### Vue
 
-Vue is a JavaScript frontend framework by Evan You. It allows the developer to break down user interfaces into smaller parts called components, and enables efficient rendering of these components by only updating parts of the components that have been modified.
+Vue is a JavaScript frontend framework developed by Evan You. It is designed to be flexible and easy-to-use, enabling the efficient development of web applications.
 
-Compared to other frontend frameworks such as React, Vue has two-way binding - it allows inner (child) components and outer (parent) components to communicate in both directions, whereas React only allows parents components to communicate with child components and not the other way around. This enables the development of more flexible components and **(TODO)** [@patel_2018_react]
+Vue combines aspects from modern frontend frameworks such as Angular.js and React. It generates a virtual DOM and renders this to the real DOM. It has many features such as two-way binding, reactivity, computed properties, single file components (SFC).
 
-I chose Vue as the frontend framework because I find it to be more structured and flexible compared to React. Vue was also the framework used in one of the university modules I am studying.
+Vue has developed into one of the most popular frontend JavaScript frameworks. In 2022 it reached 3rd place in terms of popularity, below React and Angular and above Next.js and Svelte [@stackoverflow_2022_stack].
 
-## SQLite
+I chose Vue as the frontend framework because it has good documentation and many third-party libraries, and is a well-supported framework used by companies such as Facebook, Netflix, and Adobe.
 
-SQLite is "a small, fast, self-contained, high-reliability, full-featured, SQL database engine", being one of the most used database engines in the world [@sqlite_2019_sqlite].
+I have some experience using Vue, but only in a limited capacity - I have experience with this framework through one of the university modules I am studying. I decided on this opportunity both improve my skills with the framework as well as developing new skills related to desktop application development.
 
-Compared to other SQL engines, SQLite is a serverless database engine that operates on a single database file. This makes it suitable for developing a desktop application as it
+### SQLite
 
-## Existing programs review
+SQLite is a file-based relational database management system developed by D. Richard Hipp. It is designed to be lightweight, making it a good choice for small desktop applications since it does not require any external dependencies such as running an entire SQL server application in the background.
 
-# Project Analysis
+SQLite has basic features including transactions, triggers, views and foreign key support so that queries can be easily made using JOIN clauses. This gives tagging software access to many useful query functionalities without the overhead of running a separate process for hosting a database connection.
+
+SQLite has a wide range of applications, including being used as an embedded database in Firefox and Android. It has good documentation, many client libraries and an active community of users.
+
+I chose SQLite because I have plenty of experience using databases from my own personal use and through a part-time developer role. I would be able to implement a tagging system using SQLite and Rust without much difficulty.
+
+# Requirements Analysis
+
+This chapter covers the requirements identified for my application. The following requirements were obtained through a review of existing tagging software and other file management systems, and through online sources such as blogs and discussion forums.
+
+## Functional Requirements
+
+1. The system should allow users to tag files with arbitrary tags.
+2. The system should provide a search function which would enable users to search for files based on their tags. This would make it easier for users to find the files they are looking for.
+3. The system should preserve any existing directory tree structures, avoiding automatic renaming or moving of files.
+4. The system should be able to handle a large number of files, such that the software remains performant in tagging and searching for large numbers of files.
+5. The system should be easy to use, such that users can use it without any prior knowledge of tagging or file management.
+6. The system should be able to tag any type of file, including but not limited to images, videos, text files, PDFs.
+7. The system should be cross-platform and work on Windows, macOS and Linux systems.
+8. The system should have a graphical user interface for tagging files and searching for files using tags.
+9. The system should allow tags to be assigned to multiple files at once, rather than individually tagging each file one-by-one. This would reduce the amount of time needed for tag assignment, particularly for large numbers of files.
+
+The following requirements are extensions to the project and not mandatory as base functions of the system.
+
+8. The system should be able to handle transferring of tags between different devices or systems. This would allow users to preserve their tags when transferring across multiple systems, and would also allow files to be stored on cloud backup services such as Dropbox or Google Drive.
+9. The system should provide tagging suggestions based on the content of the file being tagged. This would help users save time when tagging files by automating the task of tag-assignment
+10. The system should display previews of each file, including thumbnails for image files and extension icons for unrecognised file types.
+
+## Non-functional Requirements
+
+1. The system should be able to execute and complete searches within 1 seconds for large file collections up to 10000 files.
+2. The system should have a response time of less than 500ms for all file operations such as opening, renaming and tagging files.
+3. The application’s memory usage should be below 50MB for small collections of up to 1000 files. For larger collections above 10000 files, the application’s memory usage should not exceed 100MB.
+4. The source code should be well-documented such that it is easy to understand and maintain.
+5. All user input should be validated both on the frontend and backend to ensure data integrity and security.
+6. The application’s graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
 
 # Design
+
+## Use Cases
 
 # Implementation
 
