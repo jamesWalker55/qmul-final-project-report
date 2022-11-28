@@ -318,8 +318,6 @@ The user interface is designed to be consistent across all platforms. The applic
 
 # Conclusion
 
-# Bibliography
-
 # Literature review
 
 # Background
@@ -344,3 +342,5 @@ Risk|Impact|Likelihood|Rating|Preventative actions
 --|--|-|-|---
 Cannot finish initial implementation by March|Cannot complete draft report with sufficient information|Low|High|Break down project into basic functionality and extensions, focus solely on basic functionality before moving onto extensions
 Fail to find any users for testing|Cannot complete project evaluation|Low|High|Start finding users for testing as soon as initial implementation is complete
+
+# Bibliography
