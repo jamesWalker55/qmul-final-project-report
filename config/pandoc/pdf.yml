@@ -3,3 +3,14 @@ defaults: config/pandoc/common.yml
 
 output-file: docs/report.pdf
 to: pdf
+
+metadata:
+  papersize: a4
+  geometry:
+    - top=25mm
+    - bottom=30mm
+    - left=30mm
+    - right=30mm
+    - heightrounded
+  # linestretch: 1.1
+  fontsize: 12pt
