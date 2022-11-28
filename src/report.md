@@ -85,9 +85,11 @@ One of the aims of PIM is for people to have the right information in the right 
 
 ## File Management
 
-File management is the process of storing, retrieving, and manipulating files on a computer system. It is a fundamental part of using a computer, and is necessary for many tasks such as creating documents, downloading files from the internet, and storing photographs
+File management can be defined as the process of storing, retrieving and manipulating files on a computer system. This includes tasks such as creating, copying, moving and deleting files. File management is a fundamental task for users when using computers.
 
-File management is a fundamental task which all computer users have to perform. This is because all computer users have to store, organise, and retrieve files on their computer. File management is a time-consuming task, and one that people often find difficult to do effectively.
+Most modern operating systems use directory trees to store data within files. A directory tree is a hierarchical structure in which each node represents either a file or folder. In this type of structure, filenames are used to uniquely identify each file within the system. Users can create directories or folders to group together related files.
+
+While current methods for managing digital files are adequate for small workloads, they can become less effective with larger file collections. With larger collections, file hierarchies tend to have deeper structures [@henderson2009empirical]. This lead to file name duplication [@henderson2011document], and longer times spent to retrieve files [@bergman2010effect]. Large hierarchies also require the user to make many navigational decisions with many subdirectories per directory [@hicks-2008-organizing].
 
 ## Tags
 
