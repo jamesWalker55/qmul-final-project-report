@@ -165,7 +165,7 @@ From personal testing, another one of the issues is its slow performance. The ap
 
 ## Programming Tools and Frameworks
 
-For the development of this project, a variety of tools and frameworks will be used. In this section, I will explain my decisions when it comes to deciding what toolset То use.
+For the development of this project, a variety of tools and frameworks will be used. In this section, I will explain my decisions when it comes to deciding what toolset to use.
 
 ### Rust
 
@@ -233,10 +233,10 @@ The following requirements are extensions to the project and not mandatory as ba
 
 1. The system should be able to execute and complete searches within 1 seconds for large file collections up to 10000 files.
 2. The system should have a response time of less than 500ms for all file operations such as opening, renaming and tagging files.
-3. The application’s memory usage should be below 50MB for small collections of up to 1000 files. For larger collections above 10000 files, the application’s memory usage should not exceed 100MB.
+3. The application's memory usage should be below 50MB for small collections of up to 1000 files. For larger collections above 10000 files, the application's memory usage should not exceed 100MB.
 4. The source code should be well-documented such that it is easy to understand and maintain.
 5. All user input should be validated both on the frontend and backend to ensure data integrity and security.
-6. The application’s graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
+6. The application's graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
 
 # Design
 
