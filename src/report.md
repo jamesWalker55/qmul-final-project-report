@@ -255,3 +255,58 @@ The following requirements are extensions to the project and not mandatory as ba
 # Conclusion
 
 # Bibliography
+
+# Literature review
+
+# Background
+
+# Your other achievements to date
+
+# Amended plan for second semester
+
+> Another thing that you should be including in your interim report is a revised work plan for semester two. And this will be in the same format as your original work plan that you had actually written for your project definition. And you should clearly highlight any changes that have taken place.
+>
+> Now, it can be that you've made very good progress and you're pretty much on track and the plan hasn't changed.
+>
+> However, you could be in a situation where your progress hasn't been as great and hence your sculpts may have changed, hence the project plan needs to be revised. And we'd expect you to actually include this revised plan and it's very important that you clearly highlight any changes.
+>
+> And please do not worry if you deviate or fail to keep with the original milestones. The whole purpose of getting you to actually devise a revised work plan is so that it can be used as a tool for you to measure your progress and it's a tool to help you think and reflect.
+
+# Risk assessment
+
+> So as part of your interim report, you're expected to do some risk management for your project. This will be in the form of a risk register, which is presented as a simple table.
+>
+> So what does this include? Well, it should include a description of the risk. It should also include a description of the impact.
+>
+> So how much impact would it have on your project? It should also include a likelihood rating.
+>
+> So how likely is it to happen? Is the likelihood high? Is it medium? Is it low?
+>
+> And also, it should include an impact rating. So similar to the likelihood rating, is the impact high? Is it medium? Is it low?
+>
+> And it should also include preventative actions that you would take to actually mitigate the risk. So how can you prevent this risk?
+>
+> So what we're going to do, we're going to explore a really crude and simple example so you can understand the methodology of doing some risk management for your project using the risk register. And the example we're looking at is the risks in not getting to your first lecture of day on time.
+>
+> So as I said, this is a very simple example to illustrate how the risk register can actually be populated. And the example is what are the risks in not getting to your first lecture of the day on time. Now you need to keep in mind that this is a really trivial example.
+>
+> So keep in mind that for your risk assessment section or your risk register, the description of the impact and the preventative actions will be much more longer than what we're going to be exploring in this very simple example.
+>
+> So let's outline a few risks.
+>
+> So a risk might be that you are not woken by the alarm. And the impact of this would be that you would end up missing many lectures or missing a lecture. Now the likelihood rating could be medium and the impact rating would be medium. And the preventative actions would be to make sure your alarm volume is loud, louder than what it is, or even set a series of alarms.
+>
+> Another risk would be choking on breakfast. Now the impact of this risk would be that it could lead to possible injury or even death. Now the likelihood rating of this is low. There's not likely to happen. However, the impact rating is high. You know, the impact that would have would be quite catastrophic. And the preventative actions for this would be to eat carefully, don't eat alone.
+>
+> I mean, I'm sure there's others you can think of, but these are just two really simple actions that you could take.
+>
+> Another risk is tube delays, which is really common. And the impact of this would be that you would end up actually missing one lecture or many lectures. And I would say that the likelihood rating of this is medium to high, depending on what time you're getting on the tube. And obviously tube delays can be out of our control most of the times. And again, the impact rating of this would be medium. So a preventative action for this would be to check the train status. Another action would be to actually leave much more earlier than what you would do to them factor in any possible delays that may occur on your journey.
+>
+> Another description of a risk could be getting hit by a car crossing while you're crossing the road. Again, the description of the impact would be possible injury or death. That likelihood of this is low. However, the impact of this is high. And preventative action would be to use a crossing and watch the traffic and be more vigilant when you're crossing the road.
+>
+> Another risk could be you actually got to the wrong room, ended up in the wrong room, and the impact of this would be that you end up missing the lecture, which is quite common, especially when it's the first time you're looking for a room that you've actually been to during your studies.
+>
+> Or you may be a first year student who's finding it difficult to navigate around the campus. The likelihood impact of this is medium. Depending on how many lectures you miss, you could put the impact down as low or you could put the impact down as medium. In order to mitigate this, what you could do is read the timetable or read an email to let you know that there may have been a room change.
+>
+> Just to reiterate, this is a really simple, trivial example. However, you should use the same methodology when addressing and monitoring risks that are related to your project.
+
