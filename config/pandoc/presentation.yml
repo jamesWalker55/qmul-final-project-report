@@ -1,0 +1,10 @@
+input-files:
+- src/presentation.md
+from: markdown
+
+metadata-file: meta.yml
+highlight-style: kate
+citeproc: true
+
+output-file: docs/presentation.pdf
+to: beamer

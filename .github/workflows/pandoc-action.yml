@@ -19,6 +19,11 @@ jobs:
         with:
           args: --defaults config/pandoc/html.yml
 
+      # Create presentation using pandoc
+      - uses: docker://pandoc/latex:2.19
+        with:
+          args: --defaults config/pandoc/presentation.yml
+
       # Commit all changes to a new branch
       - name: Commit changes and push to a new branch
         uses: stefanzweifel/git-auto-commit-action@v4
