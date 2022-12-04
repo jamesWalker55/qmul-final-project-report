@@ -8,3 +8,6 @@ citeproc: true
 
 output-file: docs/presentation.pdf
 to: beamer
+template: templates/beamer.tex
+metadata:
+  logo: src/logo.png
