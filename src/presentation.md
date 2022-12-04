@@ -23,12 +23,12 @@
 
 Digital file management is fundamental to computer usage.
 
-- The increasing number of digital files has made it more important to investigate effective methods of managing digital files.
+- The increasing number of digital files has made it more important to investigate effective methods of managing digital files [@dinneen2020ubiquitous].
 
-Current file management systems are inefficient for managing a large number of files. [@henderson2009empirical] [@henderson2011document] [@bergman2010effect] [@hicks-2008-organizing]
+Current file management systems are inefficient for managing a large number of files:
 
-- They are based on a hierarchical structure (directory tree) which makes it difficult to search for files based on their content.
-- They are also not flexible when it comes to organising and retrieving files.
+- They are based on a hierarchical structure (directory tree) which makes it difficult to search for files based on their content [@henderson2009empirical] [@hicks-2008-organizing].
+- They are also less flexible when it comes to organising and retrieving files [@henderson2011document].
 
 ------
 
@@ -173,7 +173,7 @@ Concepts in engineering and computing:
 
 Concepts
 
-- Personal Information Management (PIM) - a field of research, concerned with how people store, organise, and retrieve information to complete tasks.
+- Personal Information Management (PIM) - a field of research, concerned with how people store, organise, and retrieve information to complete tasks [@jones2007personal].
 - File management - the process of storing, retrieving and manipulating files on a computer system.
 - Tagging - assigning labels to an item, enable users to search for files based on their content.
 
@@ -183,8 +183,8 @@ Previous approaches
 
 - Directory trees
   - Used by most modern operating systems
-  - File name duplication
-  - Deep structures require users to make many navigational decisions
+  - File name duplication [@henderson2011document]
+  - Deep structures require users to make many navigational decisions [@hicks-2008-organizing]
 - Tagging
   - Windows built-in tagging - doesn't support all filetypes, tagging interface is difficult to access.
   - TagSpaces - directly renames the file with a prefix containing the tags, causes issues with other software.
