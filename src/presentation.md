@@ -62,7 +62,61 @@ Evaluation:
 
 # Programme of Study
 
-(TODO)
+<!-- A1: Knowledge and skills related to the key field of software engineering, including the ability to design, implement and test algorithms and larger programmes in a rigorous and principled way, and detailed understanding of the software development life-cycle, relevant methodologies and tools. -->
+
+A1: The tag-based file manager has to be designed, implemented and then tested in order to ensure that it meets the project objectives. This requires the use of appropriate methodologies and tools to develop the software, such as programming design patterns and test-driven development.
+
+<!-- A2: Knowledge and skills related to the key field of computer systems, including understanding of the principles of computer architecture, operating systems and networks, and the ability to use specific techniques for small-scale implementations. -->
+
+A2: The project has to take into account the underlying operating system to provide integration with various systems. This requires the use of appropriate techniques for small-scale implementation techniques, such as dynamic programming, unit testing, benchmarking.
+
+<!-- A3: Knowledge and skills related to the key field of applications, including understanding of some of the major application areas in the sciences, medicine, industry and commerce, and the ability to grasp and apply appropriate usability principles and techniques for these areas. -->
+
+A3: The project has to take into account the needs of the users in order to be effective. This requires applying the appropriate usability principles and techniques for the software.
+
+------
+
+<!-- B1: Analyse and solve technical problems effectively, both individually and as part of a design team -->
+
+<!-- B2: Understand and apply technical project management techniques and skills -->
+
+B2: The project follows a plan that took into account the timeline, milestones and objects of the project. The project also uses risk registers that assess the risks involved in the project.
+
+<!-- B3: Demonstrate awareness and understanding of the mathematical, scientific and engineering foundations of the discipline of computer science -->
+
+B3: The project requires the use of appropriate mathematics and engineering techniques to develop the software system. This includes an understanding of algorithms, data structures and software engineering principles.
+
+<!-- B4: Demonstrate awareness and understanding of the historical, social, professional, industrial and ethical context of the discipline of computer science -->
+
+B4: The development of the software has to take into account the ethical implications of the system, such as user privacy and data security. This requires an understanding of the relevant ethical principles, as well as an understanding of the impact of the system on the users and the industry.
+
+------
+
+<!-- B5: Communicate technical detail effectively to a variety of audiences, both through production of well-written technical reports and through oral presentation / demonstration -->
+
+B5: The project includes a final project report which should be written in a clear and concise manner, as well as the presentation of the project to the university. This requires understanding of technical details to be able to present them in an effective manner.
+
+<!-- C1: Connect information and ideas within the broader context of the discipline of computer science -->
+
+C1: The project integrates various concepts from the field of computer science, such as operating systems, algorithms and user experience. This requires the use of appropriate techniques to ensure that the various components of the system are integrated correctly.
+
+<!-- C2: Acquire and apply knowledge in a critical way, evaluating its reliability and relevance, in order to investigate and solve unfamiliar problems -->
+
+C2: The project investigates existing solutions to file management, as well as develops a new system to manage and search files using tags. This requires the use of critical thinking to evaluate the reliability and relevance of the knowledge acquired in order to solve the unfamiliar problems associated with the project.
+
+------
+
+<!-- C3: Explain complex technical concepts clearly in a variety of settings, to a variety of audiences, using a variety of media -->
+
+C3: The project requires the communication of complex technical concepts, such as algorithms and data structures, to a variety of audiences, both through the production of a report and through the presentation of the project. This requires the use of appropriate communication techniques to ensure that the technical concepts are explained in an effective manner.
+
+<!-- C4: Develop a strong sense of intellectual and professional integrity -->
+
+C4: The project requires the use of ethical principles, such as user privacy and data security, in order to ensure that the system is developed in a responsible manner.
+
+<!-- C5: Think and work creatively, using information and experience as the basis for decision-making -->
+
+C5: The project involves the development of a system to manage and search files using tags. This requires the use of creativity and innovation to develop a system which is different from existing solutions.
 
 # Why is this a Engineering/Computing problem?
 
