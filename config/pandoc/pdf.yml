@@ -3,6 +3,7 @@ defaults: config/pandoc/common.yml
 
 output-file: docs/report.pdf
 to: pdf
+template: templates/latex.tex
 
 metadata:
   papersize: a4
