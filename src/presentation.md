@@ -174,10 +174,10 @@ Structure / Implementation
 Functionality
 
 - A folder can be designated as a "repository"
-  - Similar to repositories in Git
+  - Similar to repositories in version-tracking software like Git
 - The software is able to assign, search and manage tags for all files within a repository
   - Tags are not tied to the operating system, so the tags can be transferred between systems by moving the folder
-- Keep track of files and tags using a database
+- Keep track of files and tags using a database for each repository
   - Keeps existing file structure intact, avoid breaking compatibility with other software
 - UI should be designed to be accessible and easy to use
 - Provide a flexible and powerful search function
@@ -247,15 +247,27 @@ Questionnaires
 
 # Project Planning
 
-- Gantt chart
-  - Presents your project plan with achieved and future milestones.
-
-> Project planning, Gantt chart, you will create a grant chart for the progress presentation, so you'd add an updated one.
+Done|Deadline|Milestone
+-|--|-----------
+X|October|Build any mini-project using Rust, Tauri and Vue to learn the framework and libraries
+.|December|Initial implementation of database backend, using sqlite
+.|February|More work on the backend implementation, early prototype of the application (focus on functionality rather than UI)
+.|March|Polished prototype, minimal viable product
+.|April-May|Project extensions and finalised software
 
 # Risk Register
 
+<!--
 > Risk register is all to do with risk assessment for your project.
 >
 > There's a few videos you need to watch. There's a video about risk categories and there's a video about risk management. In this video, if you watch this video, there's an example of how to create a risk register for your project. What are the risks that you need to be aware of and what risks that you need to, how will you mitigate some of those risks to your project? So that's what you need to include. Again, you must watch this video, otherwise you will not be able to create a risk register.
+-->
+
+\tiny
+
+Risk|Impact|Likelihood|Rating|Preventative actions
+---|---|-|-|-----
+Cannot finish initial implementation by March|Cannot complete draft report with sufficient information|Low|High|Break down project into basic functionality and extensions, focus solely on basic functionality before moving onto extensions
+Fail to find any users for testing|Cannot complete project evaluation|Low|High|Start finding users for testing as soon as initial implementation is complete
 
 # References
