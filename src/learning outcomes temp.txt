@@ -1,0 +1,104 @@
+> A1: Knowledge and skills related to the key field of software engineering, including the ability to design, implement and test algorithms and larger programmes in a rigorous and principled way, and detailed understanding of the software development life-cycle, relevant methodologies and tools.
+
+The final project report demonstrates the ability to design, implement and test algorithms related to file management. It also shows an understanding of the software development life-cycle, relevant methodologies and tools.
+
+------
+
+> A2: Knowledge and skills related to the key field of computer systems, including understanding of the principles of computer architecture, operating systems and networks, and the ability to use specific techniques for small-scale implementations.
+
+The project report shows an understanding of principles of computer architecture, operating systems and databases, and the ability to use specific techniques for small-scale implementations.
+
+------
+
+> A3: Knowledge and skills related to the key field of applications, including understanding of some of the major application areas in the sciences, medicine, industry and commerce, and the ability to grasp and apply appropriate usability principles and techniques for these areas.
+
+The project report shows an understanding of major application areas in the sciences, medicine, industry and commerce, and the ability to apply appropriate usability principles and techniques for these areas.
+
+------
+
+> B1: Analyse and solve technical problems effectively, both individually and as part of a design team
+
+The project report shows the ability to analyse and solve technical problems related to file management, both individually and as part of a design team.
+
+------
+
+> B2: Understand and apply technical project management techniques and skills
+
+The project report demonstrates an understanding of technical project management techniques and skills.
+
+------
+
+> B3: Demonstrate awareness and understanding of the mathematical, scientific and engineering foundations of the discipline of computer science
+
+The project report shows an understanding of the mathematical, scientific and engineering foundations of the discipline of computer science.
+
+------
+
+> B4: Demonstrate awareness and understanding of the historical, social, professional, industrial and ethical context of the discipline of computer science
+
+The project report shows an understanding of the historical, social, professional, industrial and ethical context of the discipline of computer science.
+
+------
+
+> B5: Communicate technical detail effectively to a variety of audiences, both through production of well-written technical reports and through oral presentation / demonstration
+
+The project report shows the ability to communicate technical detail effectively to a variety of audiences, both through production of well-written technical reports and through oral presentation / demonstration.
+
+------
+
+> C1: Connect information and ideas within the broader context of the discipline of computer science
+
+The project report shows the ability to connect information and ideas within the broader context of the discipline of computer science.
+
+------
+
+> C2: Acquire and apply knowledge in a critical way, evaluating its reliability and relevance, in order to investigate and solve unfamiliar problems
+
+The project report demonstrates the ability to acquire and apply knowledge in a critical way, evaluating its reliability and relevance, in order to investigate and solve unfamiliar problems.
+
+------
+
+> C3: Explain complex technical concepts clearly in a variety of settings, to a variety of audiences, using a variety of media
+
+The project report shows the ability to explain complex technical concepts clearly in a variety of settings, to a variety of audiences, using a variety of media.
+
+------
+
+> C4: Develop a strong sense of intellectual and professional integrity
+
+The project report demonstrates a strong sense of intellectual and professional integrity.
+
+------
+
+> C5: Think and work creatively, using information and experience as the basis for decision-making
+
+The project report shows the ability to think and work creatively, using information and experience as the basis for decision-making.
+
+
+
+
+A1: The final project demonstrates the ability to design, implement and test algorithms and larger programmes in a rigorous and principled way. The project involved the development of a tag-based file manager which had to be designed, implemented and then tested in order to ensure that it met the project objectives. The project also required the use of appropriate methodologies and tools to develop the software, as well as the use of project management techniques to ensure that the project was completed on time and within budget.
+
+A2: The project demonstrates an understanding of the principles of computer architecture, operating systems and networks. The project involved the development of a software system which had to take into account the underlying hardware and operating system, as well as the system's network capabilities. This required the use of appropriate techniques for small-scale implementations, as well as an understanding of the hardware and software architecture.
+
+A3: The project demonstrates an understanding of the major application areas in the sciences, medicine, industry and commerce. The project involved the development of a file management system which had to take into account the needs of the users in order to be effective. This required the use of appropriate usability principles and techniques for the application area, as well as an understanding of the user needs.
+
+B1: The project demonstrates the ability to analyse and solve technical problems effectively, both individually and as part of a design team. The project involved the analysis of the existing solutions to file management, as well as the development of a new system to manage and search files using tags. This required the use of problem-solving techniques to identify and solve the technical challenges associated with the project.
+
+B2: The project demonstrates an understanding of, and the ability to use, technical project management techniques and skills. The project involved the implementation of a project plan which had to take into account the timeline, budget and objectives of the project. This required the use of appropriate project management techniques to ensure that the project was completed on time and within budget.
+
+B3: The project demonstrates an understanding of the mathematical, scientific and engineering foundations of the discipline of computer science. The project required the use of appropriate mathematics and engineering techniques to develop the software system. This included an understanding of algorithms, data structures and software engineering principles.
+
+B4: The project demonstrates an understanding of the historical, social, professional, industrial and ethical context of the discipline of computer science. The project involved the development of a software system which had to take into account the ethical implications of the system, such as user privacy and data security. This required an understanding of the relevant ethical principles, as well as an understanding of the impact of the system on the users and the industry.
+
+B5: The project demonstrates the ability to communicate technical detail effectively to a variety of audiences, both through production of well-written technical reports and through oral presentation / demonstration. The project included the production of a final project report which had to be written in a clear and concise manner, as well as the presentation of the project to a panel of experts. This required the use of appropriate communication techniques to ensure that the technical detail was presented in an effective manner.
+
+C1: The project demonstrates the ability to connect information and ideas within the broader context of the discipline of computer science. The project involved the integration of various concepts from the field of computer science, such as operating systems, networks, algorithms and data structures, in order to develop a software system. This required the use of appropriate techniques to ensure that the various components of the system were integrated correctly.
+
+C2: The project demonstrates the ability to acquire and apply knowledge in a critical way, evaluating its reliability and relevance, in order to investigate and solve unfamiliar problems. The project involved the investigation of existing solutions to file management, as well as the development of a new system to manage and search files using tags. This required the use of critical thinking to evaluate the reliability and relevance of the knowledge acquired in order to solve the unfamiliar problems associated with the project.
+
+C3: The project demonstrates the ability to explain complex technical concepts clearly in a variety of settings, to a variety of audiences, using a variety of media. The project required the communication of complex technical concepts, such as algorithms and data structures, to a variety of audiences, both through the production of a technical report and through the presentation of the project. This required the use of appropriate communication techniques to ensure that the technical concepts were explained in an effective manner.
+
+C4: The project demonstrates the development of a strong sense of intellectual and professional integrity. The project required the use of ethical principles, such as user privacy and data security, in order to ensure that the system was developed in a responsible manner. This required the use of appropriate techniques to ensure that the system was developed in an ethical and professional manner.
+
+C5: The project demonstrates the ability to think and work creatively, using information and experience as the basis for decision-making. The project involved the development of a system to manage and search files using tags. This required the use of creativity and innovation to develop a system which was different from existing solutions. This also required the use of appropriate techniques to ensure that the system was developed in an effective and efficient manner.
