@@ -28,14 +28,14 @@ Digital file management is fundamental to computer usage.
 Current file management systems are inefficient for managing a large number of files:
 
 - They are based on a hierarchical structure (directory tree) which makes it difficult to search for files based on their content [@henderson2009empirical] [@hicks-2008-organizing].
-- They are also less flexible when it comes to organising and retrieving files [@henderson2011document].
+- They can also less flexible when it comes to organising and retrieving files [@henderson2011document].
 
 ------
 
 Investigate and develop a tag-based file manager.
 
 - Allows users to assign tags to their files; provides a search function to search for files based on their tags.
-- Make the system easy to use for users with no prior knowledge of tagging or file management - UI is one of the focus of this project.
+- Make the system easy to use for users with no prior knowledge of tagging or file management - UX is one of the focus of this project.
 
 # Project Objectives
 
@@ -124,9 +124,10 @@ We develop a tag-based file manager.
 
 - Desktop application, interfaces with the underlying operating system
 - Built using engineering principles and computing technologies
-- Design system that allows assignment and quick searching of tags on files
-- Handle large numbers of files
-- User interface should be easy to use, UX
+- Design system architecture such that it...
+  - Allows assignment and quick searching of tags on files
+  - Handle large numbers of files
+- User interface should be easy to use, related to UX
 
 ------
 
