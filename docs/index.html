@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Chun Ho Wong (200530468)" />
+  <meta name="author" content="Dr. Johan Pauwels" />
+  <title>TagRepo - A tool to assign and query tags on files in a filesystem</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      color: #444;
+      background-color: white;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #444;
+      border-bottom: 1px solid #444;
+    }
+    th {
+      border-top: 1px solid #444;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">TagRepo - A tool to assign and query tags on files in
+a filesystem</h1>
+<p class="subtitle">BSc Computer Science</p>
+<p class="author">Chun Ho Wong (200530468)</p>
+<p class="author">Dr. Johan Pauwels</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction"><span
+class="toc-section-number">1</span> Introduction</a>
+<ul>
+<li><a href="#background" id="toc-background"><span
+class="toc-section-number">1.1</span> Background</a></li>
+<li><a href="#problem-statement" id="toc-problem-statement"><span
+class="toc-section-number">1.2</span> Problem Statement</a></li>
+<li><a href="#aim" id="toc-aim"><span
+class="toc-section-number">1.3</span> Aim</a></li>
+<li><a href="#objectives" id="toc-objectives"><span
+class="toc-section-number">1.4</span> Objectives</a></li>
+<li><a href="#research-questions" id="toc-research-questions"><span
+class="toc-section-number">1.5</span> Research Questions</a></li>
+</ul></li>
+<li><a href="#literature-review" id="toc-literature-review"><span
+class="toc-section-number">2</span> Literature Review</a>
+<ul>
+<li><a href="#personal-information-management"
+id="toc-personal-information-management"><span
+class="toc-section-number">2.1</span> Personal Information
+Management</a></li>
+<li><a href="#file-management" id="toc-file-management"><span
+class="toc-section-number">2.2</span> File Management</a></li>
+<li><a href="#tagging" id="toc-tagging"><span
+class="toc-section-number">2.3</span> Tagging</a></li>
+<li><a href="#existing-programs-review"
+id="toc-existing-programs-review"><span
+class="toc-section-number">2.4</span> Existing Programs Review</a>
+<ul>
+<li><a href="#windows-native-tagging-system"
+id="toc-windows-native-tagging-system"><span
+class="toc-section-number">2.4.1</span> Windows’ Native Tagging
+System</a></li>
+<li><a href="#tagspaces" id="toc-tagspaces"><span
+class="toc-section-number">2.4.2</span> TagSpaces</a></li>
+<li><a href="#tabbles" id="toc-tabbles"><span
+class="toc-section-number">2.4.3</span> Tabbles</a></li>
+</ul></li>
+<li><a href="#programming-tools-and-frameworks"
+id="toc-programming-tools-and-frameworks"><span
+class="toc-section-number">2.5</span> Programming Tools and
+Frameworks</a>
+<ul>
+<li><a href="#rust" id="toc-rust"><span
+class="toc-section-number">2.5.1</span> Rust</a></li>
+<li><a href="#tauri" id="toc-tauri"><span
+class="toc-section-number">2.5.2</span> Tauri</a></li>
+<li><a href="#vue" id="toc-vue"><span
+class="toc-section-number">2.5.3</span> Vue</a></li>
+<li><a href="#sqlite" id="toc-sqlite"><span
+class="toc-section-number">2.5.4</span> SQLite</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#requirements-analysis"
+id="toc-requirements-analysis"><span class="toc-section-number">3</span>
+Requirements Analysis</a>
+<ul>
+<li><a href="#functional-requirements"
+id="toc-functional-requirements"><span
+class="toc-section-number">3.1</span> Functional Requirements</a></li>
+<li><a href="#non-functional-requirements"
+id="toc-non-functional-requirements"><span
+class="toc-section-number">3.2</span> Non-functional
+Requirements</a></li>
+</ul></li>
+<li><a href="#design" id="toc-design"><span
+class="toc-section-number">4</span> Design</a>
+<ul>
+<li><a href="#components" id="toc-components"><span
+class="toc-section-number">4.1</span> Components</a>
+<ul>
+<li><a href="#rust-backend" id="toc-rust-backend"><span
+class="toc-section-number">4.1.1</span> Rust Backend</a></li>
+<li><a href="#vue-frontend" id="toc-vue-frontend"><span
+class="toc-section-number">4.1.2</span> Vue Frontend</a></li>
+<li><a href="#sqlite-database" id="toc-sqlite-database"><span
+class="toc-section-number">4.1.3</span> SQLite Database</a></li>
+<li><a href="#user-interface-design"
+id="toc-user-interface-design"><span
+class="toc-section-number">4.1.4</span> User Interface Design</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#amended-plan-for-second-semester"
+id="toc-amended-plan-for-second-semester"><span
+class="toc-section-number">5</span> Amended plan for second
+semester</a></li>
+<li><a href="#risk-assessment" id="toc-risk-assessment"><span
+class="toc-section-number">6</span> Risk assessment</a></li>
+<li><a href="#bibliography" id="toc-bibliography">Bibliography</a></li>
+</ul>
+</nav>
+<!-- # Abstract {-}
+
+(all reports have this)
+
+# TOC {-}
+
+TOC should be after abstract. -->
+<h1 data-number="1" id="introduction"><span
+class="header-section-number">1</span> Introduction</h1>
+<h2 data-number="1.1" id="background"><span
+class="header-section-number">1.1</span> Background</h2>
+<p>Computer users interact with digital files on a daily basis. This
+includes storing files, organising files, and retrieving files. The act
+of managing files and retrieving information is fundamental and
+necessary for general computer usage and many computer-based knowledge
+work. With modern systems and increased computer usage, the number of
+digital files on a user’s system has increased significantly <span
+class="citation" data-cites="dinneen2020ubiquitous">(Dinneen and Julien,
+2020)</span>.</p>
+<p>This is related to the field of Personal Information Management
+(PIM). PIM is concerned with the management of digital files on the
+computer, and how people store, organise, and retrieve information to
+complete tasks. The increasing number of digital files on computer
+systems has made it more important than ever to investigate effective
+methods of managing digital files.</p>
+<p>The directory tree structure is the de facto standard for data
+storage. Since its usage in early operating systems such as the OS/360
+by IBM, most operating systems nowadays including Microsoft Windows,
+macOS and Linux distributions use directory trees as the data storage
+method. In such a system, filenames are used to uniquely identify files,
+and files can be placed within directories or folders.</p>
+<p>The most common way of storing data on a computer is by using a
+directory tree structure. Organising files in a directory tree is
+analogous to sorting paper documents in real life - users can organise
+files by placing them into folders and further subfolders. While this is
+an intuitive way of organising files due to its similarities to
+organisation in real life, it is not an efficient way of organising and
+recalling files.</p>
+<p>Storage of files using a directory tree is trivial, since users can
+store files anywhere they wish. The main challenge arises when the user
+has a large amount of files, it can become difficult to organise and
+retrieve them. Users have to spend time to search through folders and
+subfolders, looking for the file they want. This makes file management a
+time-consuming task.</p>
+<h2 data-number="1.2" id="problem-statement"><span
+class="header-section-number">1.2</span> Problem Statement</h2>
+<p>Current file management systems are not efficient when it comes to
+managing a large number of files. Trying to search for a particular file
+can be a very time-consuming process. The main reason for this is that
+these systems are based on a hierarchical structure which makes it
+difficult to search for files based on their content <span
+class="citation" data-cites="DeVocht2012">(De Vocht <em>et al.</em>,
+2012)</span>. This problem is compounded when the users have to deal
+with a large number of files which can be difficult to organise
+consistently and structurally.</p>
+<p>There are many methods available for users to search for files. This
+can include search functions, browsing through folders, or even looking
+through the recent documents list. However, these methods can be
+time-consuming and often give imprecise results that fail to find the
+file the user wants. This is a major problem for users who have to deal
+with large numbers of files.</p>
+<p>Another major problem with current file management systems is that
+they are not flexible when it comes to organising files. This is because
+they are based on a hierarchical structure which can be inflexible and
+difficult to use. This can make it difficult for users to organise their
+files in a way that is suitable for them.</p>
+<h2 data-number="1.3" id="aim"><span
+class="header-section-number">1.3</span> Aim</h2>
+<!-- This project is related to Personal Information Management (PIM). Particularly,  -->
+<p>The project aims to investigate and develop a tag-based file manager.
+The system would allow users to assign tags to their files, and then
+search for those files based on those tags. The aim of this project is
+to develop a file management system which is more efficient than current
+systems, and which enables users to organise their files in a way that
+is suitable for them.</p>
+<p>Compared to a hierarchical directory structure, a tag-based approach
+would allow users to organise their files in a more flexible and
+efficient way. Users would be able to assign arbitrary tags to their
+files then search for those files using those tags. This lets users
+avoid the time-consuming task of classifying files and browsing folders,
+for example deciding which single folder to place a file into <span
+class="citation" data-cites="dinneen2020ubiquitous">(Dinneen and Julien,
+2020)</span>. This would also enable users to search for files based on
+their content, and would make it easier for users to manage their
+files.</p>
+<p>Users would still be able to organise their files into folders if
+they so choose. However, the system would not impose any strict
+structure on users and would allow them to store their files in any way
+they want. This is in contrast to existing tagging software which often
+override any existing hierarchical file structure and do not allow any
+hierarchical organisation.</p>
+<p>The system should provide a search function which would enable users
+to search for files based on their tags. This would make it easier for
+users to find the files they are looking for. The system should also be
+able to handle a large number of files, such that the software remains
+performant in tagging and searching for large numbers of files.</p>
+<p>The system should also be easy to use, such that users can use it
+without any prior knowledge of tagging or file management. This is in
+contrast to existing tagging software which often have a steep learning
+curve, and require users to have some knowledge of tagging before they
+can be used effectively.</p>
+<h2 data-number="1.4" id="objectives"><span
+class="header-section-number">1.4</span> Objectives</h2>
+<p>The objectives of the project are as follows:</p>
+<ul>
+<li>To identify existing challenges related to PIM and file
+management.</li>
+<li>To compare and evaluate existing tagging software available to
+users.</li>
+<li>To understand the needs of users when performing file management
+tasks.</li>
+<li>To gain an understanding of concepts related to PIM.</li>
+<li>To investigate the challenges related to file management.</li>
+<li>To develop a system to allow users to manage and search files using
+tags.</li>
+<li>To implement a user interface that is easy to learn and efficient to
+use.</li>
+<li>To evaluate the effectiveness of the prototype system through user
+testing.</li>
+<li>To evaluate the system against existing software systems.</li>
+<li>To conclude on the effectiveness of the system and to come up with
+recommendations for further work.</li>
+</ul>
+<h2 data-number="1.5" id="research-questions"><span
+class="header-section-number">1.5</span> Research Questions</h2>
+<p>The research questions for this project are as follows:</p>
+<ul>
+<li>How effective are existing solutions when it comes to managing a
+large number of files?</li>
+<li>What do users need from a file management system in order to manage
+their files effectively?</li>
+<li>Can a tag-based approach be used to improve the efficiency of file
+management?</li>
+</ul>
+<!-- ## Project Structure
+
+(The following is auto generated)
+
+Section two explores the literature related to PIM and file management. Section three discusses the existing solutions that are available to users. Section four looks at the needs of users when performing file management tasks. Section five presents the development of the prototype system. Section six looks at the evaluation of the prototype system. And finally, section seven provides the conclusion and recommendations for future work. -->
+<h1 data-number="2" id="literature-review"><span
+class="header-section-number">2</span> Literature Review</h1>
+<p>In this chapter, we will review the existing literature related to
+file management, tagging, and personal information management. This will
+include a review of the challenges related to file management, an
+evaluation of existing solutions, and an investigation of the needs of
+users when performing file management tasks.</p>
+<h2 data-number="2.1" id="personal-information-management"><span
+class="header-section-number">2.1</span> Personal Information
+Management</h2>
+<p>Personal Information Management (PIM) is a field of research which is
+concerned with the management of digital files on the computer. This
+includes how people store, organise, and retrieve information to
+complete tasks <span class="citation"
+data-cites="jones2007personal">(Jones and Teevan, 2007)</span>. PIM is a
+relatively new field, and has only been studied extensively in the last
+few years. PIM is focused on how people organise, maintain and retrieve
+information, and on methods that can improve these tasks. This is not
+limited to digital files, but can also include paper documents for
+example.</p>
+<p>One of the aims of PIM is for people to have the right information in
+the right place, in the right form and with enough completeness and
+quality to meet the current need <span class="citation"
+data-cites="jones2007personal">(Jones and Teevan, 2007)</span>. However
+this is not the case for most people. Often the necessary information
+may not be found by the user, or the information may arrive at an
+unsuitable time such that it cannot be used.</p>
+<p><span class="citation" data-cites="jones2010keeping">Jones
+(2010)</span> mentions the idea of “keeping found things found”, in
+which people store information in multiple location and multiple
+applications. If this is performed inconsistently, the information
+people need is scattered widely, which makes it even more difficult to
+maintain and organise information. This is known as information
+fragmentation <span class="citation"
+data-cites="jones2007personal">(Jones and Teevan, 2007)</span>.</p>
+<h2 data-number="2.2" id="file-management"><span
+class="header-section-number">2.2</span> File Management</h2>
+<p>File management can be defined as the process of storing, retrieving
+and manipulating files on a computer system. This includes tasks such as
+creating, copying, moving and deleting files. File management is a
+fundamental task for users when using computers.</p>
+<p>Most modern operating systems use directory trees to store data
+within files. A directory tree is a hierarchical structure in which each
+node represents either a file or folder. In this type of structure,
+filenames are used to uniquely identify each file within the system.
+Users can create directories or folders to group together related
+files.</p>
+<p>While current methods for managing digital files are adequate for
+small workloads, they can become less effective with larger file
+collections. With larger collections, file hierarchies tend to have
+deeper structures <span class="citation"
+data-cites="henderson2009empirical">(Henderson and Srinivasan,
+2009)</span>. This lead to file name duplication <span class="citation"
+data-cites="henderson2011document">(Henderson, 2011)</span>, and longer
+times spent to retrieve files <span class="citation"
+data-cites="bergman2010effect">(Bergman <em>et al.</em>, 2010)</span>.
+Large hierarchies also require the user to make many navigational
+decisions with many subdirectories per directory <span class="citation"
+data-cites="hicks-2008-organizing">(Hicks <em>et al.</em>,
+2008)</span>.</p>
+<p>There are many methods that can be used to help deal with large file
+collections. These include using automated organisational methods, and
+providing users with better tools for managing their files. Automated
+methods can be used to help users organise their files into a more
+manageable structure. This may include grouping files based on content
+or context using artificial intelligence algorithms.</p>
+<h2 data-number="2.3" id="tagging"><span
+class="header-section-number">2.3</span> Tagging</h2>
+<p>A tag is a label or keyword that can be attached to an item. One
+benefit of using tags to categorise items is that items can be easily
+found and classified. This can be useful for many tasks, such as
+information retrieval and content organisation.</p>
+<p>One benefit of tagging over hierarchical systems is that it is more
+flexible. This is because tags can be arbitrarily named depending on the
+user’s needs, and then assigned to multiple items at once. Items do not
+have to fit into predefined categories.</p>
+<p>Tagging rose into popularity through its usage in many websites in
+Web 2.0 <span class="citation" data-cites="smith2007tagging">(Smith,
+2007)</span>. Tagging is now widely-used, and can be found in many
+social media websites and online services. One example of this is
+category tags in news websites and blogs.</p>
+<p>Tagging has also been used to help users organise their files on the
+computer. There are some tools available that allow users to tag their
+files, and then search for them using those tags. This provides a more
+flexible way of organising files compared to traditional hierarchical
+directory structures. It also makes it easier for users to find the
+files they are looking for since they can search using any combination
+of tags.</p>
+<p>Tagging has many advantages over traditional methods for managing
+digital files. The most significant advantage is that it enables users
+to search for files based on their content, rather than just their
+filename or location. This makes it much easier for users to find the
+files they are looking for. Another advantage of tagging is that it does
+not require any specific structure or organisation, which may make it
+easier for users to manage their files.</p>
+<p>There are also some disadvantages associated with tagging. One of the
+main disadvantages is that manual tagging can be a time-consuming
+process, particularly if the user has a large number of files. Another
+disadvantage is that automatic tagging systems are not always accurate,
+and can often assign incorrect tags to files.</p>
+<h2 data-number="2.4" id="existing-programs-review"><span
+class="header-section-number">2.4</span> Existing Programs Review</h2>
+<p>There are many software solutions for using tags for file management.
+Some of them are standalone applications, while some may be integrated
+into the operating system.</p>
+<!-- TODO: Include a cool table here -->
+<!-- See table \ref{tagging-software-comparison}.
+
+Table: Comparison of existing tagging software \label{tagging-software-comparison}
+
+Software|Features|Limitations
+-|-|-
+a|a|a -->
+<h3 data-number="2.4.1" id="windows-native-tagging-system"><span
+class="header-section-number">2.4.1</span> Windows’ Native Tagging
+System</h3>
+<p>All Windows versions since Windows 7 has built-in tagging
+functionality. However this functionality is well-hidden and difficult
+to access. On files that support tags, a field for a list of tags is
+available on the “Properties &gt; Details” popup panel.</p>
+<p>Windows also provides a method for searching for files based on tags.
+On the search bar in Windows Explorer, the syntax
+<code>tag:&lt;tagname&gt;</code> can be used to search for files
+containing a specific tag.</p>
+<p>The main advantage of this solution is that it is integrated into
+Windows, requiring no additional software. This makes it easy for users
+to get started with the system, and makes it easy to use since users are
+likely already familiar with File Explorer and Windows Search.</p>
+<p>The main issue with Windows’ native tagging system is that not all
+filetypes support tags. For example, tags cannot be applied to PNG image
+files and various audio formats including WAV and MP3. This is a
+significant limitation given that PNG, WAV, MP3 and other formats are
+commonly-used, users are likely to have many files of these types.</p>
+<p>Another issue with Windows’ tagging system is that users can only
+assign tags to each file at a time. It is not possible to assign a
+single tag to multiple files at the same time. With a large number of
+files, tagging each file will become a very time-consuming process.</p>
+<p>One more issue is the speed of Windows’ search functionality. Windows
+does not cache or index the tags contained in each file. This means that
+the system needs to scan each file for the specific tag the user
+requested when performing a search. The time required to search for
+files grows proportionally with the number of files the user has.</p>
+<h3 data-number="2.4.2" id="tagspaces"><span
+class="header-section-number">2.4.2</span> TagSpaces</h3>
+<p>TagSpaces is an open source application which runs on Windows, macOS
+and Linux.</p>
+<p>It provides basic features such as assigning tags to files, and
+searching files based on tags. TagSpaces tags files by directly renaming
+the file with a prefix containing the tags to be assigned, wrapped with
+square brackets.</p>
+<p>One benefit of this approach is that it is able to track file
+movement. Files that are moved using the file default program can still
+be found by TagSpaces since the tags are part of the filename. This also
+means that a file’s tags are viewable using any file manager by simply
+viewing the filename.</p>
+<p>One issue with TagSpaces is that renaming files can break links
+between applications and files. For files that act as dependencies for
+other application, this method cannot be used. For example, an audio
+file <code>cat.wav</code> may get renamed to
+<code>[animal recorded short purr] cat.wav</code>. Any third-party
+applications that are linked to the <code>cat.wav</code> file will now
+be unable to find the file and give an error.</p>
+<p>Another issue with TagSpaces is that the filenames can get very long
+as users assign more tags to files. With a large number of tags on a
+file, the original filename will be prefixed by a large amount of text,
+making it difficult to view the original file name using file managers.
+For example, a file name like
+<code>[photo 2019 holiday uk london beach sunny clouds sea me dan jason burger beer sunglasses pub] IMG_7690.png</code>
+would easily get truncated in file managers, the user will not be able
+to view the full file name without resizing the entire window.</p>
+<h3 data-number="2.4.3" id="tabbles"><span
+class="header-section-number">2.4.3</span> Tabbles</h3>
+<p>Tabbles is a desktop application that only runs on Windows systems.
+It comes in several variants: individual, cloud, and LAN. The different
+versions differ in how tags are shared between users on the same network
+or users connected to the cloud.</p>
+<p>Tabbles tags files using a backing database, separate from the files
+being tagged. When the user moves a file to a different folder, a
+background service is used to detect such file movements and update the
+database to use the new path.</p>
+<p>It provides many features. It allows grouping tags into a hierarchy,
+creating auto-tag rules, and tagging of entire folders for example.</p>
+<p>One advantage of Tabbles is its auto-tagging feature. This feature
+allows for automatic assignment of tags to files based on specific file
+conditions. This helps the user save time when organising and managing
+files by automating the task of tag-assignment.</p>
+<p>One issue with the software is that tags are not transferrable
+between computers. Tags are stored in a database that is associated with
+the system. This makes it very difficult to transfer tags if the user
+needs to upgrade their operating system and reinstall their system, or
+if the user wishes to upload their files to cloud backup.</p>
+<p>From personal testing, another one of the issues is its slow
+performance. The application takes a long time to execute searches. When
+loading a large list of files, it slows down significantly as it scans
+each file to generate image previews.</p>
+<!-- TODO: Analyse more software! -->
+<h2 data-number="2.5" id="programming-tools-and-frameworks"><span
+class="header-section-number">2.5</span> Programming Tools and
+Frameworks</h2>
+<p>For the development of this project, a variety of tools and
+frameworks will be used. In this section, I will explain my decisions
+when it comes to deciding what toolset to use.</p>
+<h3 data-number="2.5.1" id="rust"><span
+class="header-section-number">2.5.1</span> Rust</h3>
+<p>Rust is a programming language designed by Graydon Hoare. It is
+designed to be memory-safe while still being performant <span
+class="citation" data-cites="balasubramanian2017system">(Balasubramanian
+<em>et al.</em>, 2017)</span>. This is enforced by the Rust compiler,
+which checks memory-safety rules during compilation.</p>
+<p>Rust is increasingly adopted by companies and projects such as
+Microsoft, Amazon, Cloudflare, and Facebook <span class="citation"
+data-cites="davison_2022_adoption">(Davison, 2022)</span>. It has also
+been integrated into the Linux kernel <span class="citation"
+data-cites="proven_2022_rust">(Proven, 2022)</span>.</p>
+<p>Though I have years of experience in high-level languages such as
+Python, Ruby, Javascript, I have very limited experience with low-level
+languages like C++ and Rust. However, since Rust is being increasingly
+adopted by industry, as well as its memory-safety features, performance
+and industry support which make it a good choice for this project, it
+was an obvious choice for me when deciding upon a programming language
+for development. I take this opportunity to learn Rust as it will also
+help with my career.</p>
+<h3 data-number="2.5.2" id="tauri"><span
+class="header-section-number">2.5.2</span> Tauri</h3>
+<p>Tauri is a Rust framework that allows developing desktop applications
+using web technologies like HTML, CSS, JavaScript for the frontend,
+while using Rust for the backend <span class="citation"
+data-cites="tauricontributors_2022_tauriappstauri">(Tauri Contributors,
+2022)</span>.</p>
+<p>Rust is a relatively new language compared to other languages. It has
+many user interface libraries, however most of them are in the early
+stages of development and not yet fully-featured <span class="citation"
+data-cites="shivshank_2022_are">(shivshank and dxenonb, 2022)</span>.
+Among these, Tauri stands out for its support of many platforms and its
+polished feature set.</p>
+<p>Tauri uses web technologies for implementing user interfaces. This
+allows developers to use widgets and components from frontend frameworks
+such as Vue and React - developers are not limited to a small subset of
+widgets implemented by the library author. Tauri can also take advantage
+of existing tools and libraries from the web development ecosystem -
+this provides a more complete solution.</p>
+<p>The Rust backend can be used to access the file system and other
+desktop-specific features. This provides a more complete solution
+compared to using web technologies alone, for example building a
+browser-based file manager.</p>
+<h3 data-number="2.5.3" id="vue"><span
+class="header-section-number">2.5.3</span> Vue</h3>
+<p>Vue is a JavaScript frontend framework developed by Evan You. It is
+designed to be flexible and easy-to-use, enabling the efficient
+development of web applications.</p>
+<p>Vue combines aspects from modern frontend frameworks such as
+Angular.js and React. It generates a virtual DOM and renders this to the
+real DOM. It has many features such as two-way binding, reactivity,
+computed properties, single file components (SFC).</p>
+<p>Vue has developed into one of the most popular frontend JavaScript
+frameworks. In 2022 it reached 3rd place in terms of popularity, below
+React and Angular and above Next.js and Svelte <span class="citation"
+data-cites="stackoverflow_2022_stack">(Stack Overflow, 2022)</span>.</p>
+<p>I chose Vue as the frontend framework because it has good
+documentation and many third-party libraries, and is a well-supported
+framework used by companies such as Facebook, Netflix, and Adobe.</p>
+<p>I have some experience using Vue, but only in a limited capacity - I
+have experience with this framework through one of the university
+modules I am studying. I decided on this opportunity both improve my
+skills with the framework as well as developing new skills related to
+desktop application development.</p>
+<h3 data-number="2.5.4" id="sqlite"><span
+class="header-section-number">2.5.4</span> SQLite</h3>
+<p>SQLite is a file-based relational database management system
+developed by D. Richard Hipp. It is designed to be lightweight, making
+it a good choice for small desktop applications since it does not
+require any external dependencies such as running an entire SQL server
+application in the background.</p>
+<p>SQLite has basic features including transactions, triggers, views and
+foreign key support so that queries can be easily made using JOIN
+clauses. This gives tagging software access to many useful query
+functionalities without the overhead of running a separate process for
+hosting a database connection.</p>
+<p>SQLite has a wide range of applications, including being used as an
+embedded database in Firefox and Android. It has good documentation,
+many client libraries and an active community of users.</p>
+<p>I chose SQLite because I have plenty of experience using databases
+from my own personal use and through a part-time developer role. I would
+be able to implement a tagging system using SQLite and Rust without much
+difficulty.</p>
+<h1 data-number="3" id="requirements-analysis"><span
+class="header-section-number">3</span> Requirements Analysis</h1>
+<p>This chapter covers the requirements identified for my application.
+The following requirements were obtained through a review of existing
+tagging software and other file management systems, and through online
+sources such as blogs and discussion forums.</p>
+<h2 data-number="3.1" id="functional-requirements"><span
+class="header-section-number">3.1</span> Functional Requirements</h2>
+<ol type="1">
+<li>The system should allow users to tag files with arbitrary tags.</li>
+<li>The system should provide a search function which would enable users
+to search for files based on their tags. This would make it easier for
+users to find the files they are looking for.</li>
+<li>The system should preserve any existing directory tree structures,
+avoiding automatic renaming or moving of files.</li>
+<li>The system should be able to handle a large number of files, such
+that the software remains performant in tagging and searching for large
+numbers of files.</li>
+<li>The system should be easy to use, such that users can use it without
+any prior knowledge of tagging or file management.</li>
+<li>The system should be able to tag any type of file, including but not
+limited to images, videos, text files, PDFs.</li>
+<li>The system should be cross-platform and work on Windows, macOS and
+Linux systems.</li>
+<li>The system should have a graphical user interface for tagging files
+and searching for files using tags.</li>
+<li>The system should allow tags to be assigned to multiple files at
+once, rather than individually tagging each file one-by-one. This would
+reduce the amount of time needed for tag assignment, particularly for
+large numbers of files.</li>
+</ol>
+<p>The following requirements are extensions to the project and not
+mandatory as base functions of the system.</p>
+<ol start="8" type="1">
+<li>The system should be able to handle transferring of tags between
+different devices or systems. This would allow users to preserve their
+tags when transferring across multiple systems, and would also allow
+files to be stored on cloud backup services such as Dropbox or Google
+Drive.</li>
+<li>The system should provide tagging suggestions based on the content
+of the file being tagged. This would help users save time when tagging
+files by automating the task of tag-assignment</li>
+<li>The system should display previews of each file, including
+thumbnails for image files and extension icons for unrecognised file
+types.</li>
+</ol>
+<h2 data-number="3.2" id="non-functional-requirements"><span
+class="header-section-number">3.2</span> Non-functional
+Requirements</h2>
+<ol type="1">
+<li>The system should be able to execute and complete searches within 1
+seconds for large file collections up to 10000 files.</li>
+<li>The system should have a response time of less than 500ms for all
+file operations such as opening, renaming and tagging files.</li>
+<li>The application’s memory usage should be below 50MB for small
+collections of up to 1000 files. For larger collections above 10000
+files, the application’s memory usage should not exceed 100MB.</li>
+<li>The source code should be well-documented such that it is easy to
+understand and maintain.</li>
+<li>All user input should be validated both on the frontend and backend
+to ensure data integrity and security.</li>
+<li>The application’s graphical user interface should be consistent
+across all platforms, providing a familiar experience for users
+regardless of their platform choice.</li>
+</ol>
+<h1 data-number="4" id="design"><span
+class="header-section-number">4</span> Design</h1>
+<p>This section discusses the components that make up the application
+and how they interact with each other. I will firstly go over each of
+the main software components, and then give an overview of how these
+components interact with each other. Following this, I will talk about
+my decision to use SQLite for storing tags, as well as discuss the user
+interface design.</p>
+<h2 data-number="4.1" id="components"><span
+class="header-section-number">4.1</span> Components</h2>
+<p>The following components make up the application:</p>
+<ul>
+<li>Rust backend for file operations, database access and cross-platform
+compatibility</li>
+<li>Vue frontend for the graphical user interface</li>
+<li>SQLite database for storing files and tags</li>
+</ul>
+<p>The Rust backend is responsible for file operations, database access
+and cross-platform compatibility. The Vue frontend is responsible for
+the graphical user interface. The SQLite database stores tags assigned
+to files by users. These components are explained in more detail
+below.</p>
+<h3 data-number="4.1.1" id="rust-backend"><span
+class="header-section-number">4.1.1</span> Rust Backend</h3>
+<p>The Rust backend is responsible for file operations, database access
+and cross-platform compatibility. The backend is implemented using the
+Rust programming language and the Tauri framework.</p>
+<p>The file operations module is responsible for listing and reading
+files in filesystem. Since the application writes to a database and not
+to files directly, this module is mainly focused on read operations.</p>
+<p>The database access module is responsible for interacting with the
+SQLite database. It contains functions for opening a database
+connection, executing SQL queries, and closing a database connection.
+This module also implements helper functions for inserting tags into the
+database and retrieving tags from the database.</p>
+<p>The cross-platform compatibility module is responsible for providing
+platform-specific functionality. This includes functions for opening an
+operating system specific file explorer, getting the path of common
+directories such as the home directory, and checking if a path is valid
+on the current platform.</p>
+<h3 data-number="4.1.2" id="vue-frontend"><span
+class="header-section-number">4.1.2</span> Vue Frontend</h3>
+<p>The Vue frontend is responsible for the graphical user interface. It
+is implemented using the Vue JavaScript framework and TailwindCSS for
+styling.</p>
+<p>The frontend consists of a single HTML file which loads the Vue
+JavaScript library and the TailwindCSS stylesheet.</p>
+<p>The interface contains elements for displaying the application’s
+toolbar, search and main content area. These elements are populated with
+data from the Rust backend using Tauri’s command system.</p>
+<p>The toolbar will contains buttons for opening repositories, which are
+directories with a centralised database that tracks tags with files. The
+toolbar will also contain operations for tagging files, and basic file
+operations such as renaming and deleting files. The main content area
+contains a list of items, which can be either files and directories, as
+well as previews and information about each file.</p>
+<p>The frontend uses TailwindCSS for consistent styling across all HTML
+renderers on different platforms.</p>
+<h3 data-number="4.1.3" id="sqlite-database"><span
+class="header-section-number">4.1.3</span> SQLite Database</h3>
+<p>The SQLite database stores tags assigned to files by users. The
+database is implemented using the SQLite 3 library and its full-text
+search extension.</p>
+<p>The “items” table contains three columns - an autoincrementing ID,
+the path of the file, and a list of tags. The path column is used to
+store the relative path of the file to the root of the repository. The
+tag name column is used to store a list of tags assigned to the
+file.</p>
+<p>The “items_fts” table is a virtual table using SQLite’s FTS5
+full-text search extension. It allows quick indexing and querying of any
+text-based columns. In this case, the virtual table is used to index and
+search the tag name column on the “items” table.</p>
+<p>The database is accessed by the Rust backend using the
+<code>rusqlite</code> Rust crate. Functions are provided for opening a
+database connection, executing SQL queries, and closing a database
+connection.</p>
+<h3 data-number="4.1.4" id="user-interface-design"><span
+class="header-section-number">4.1.4</span> User Interface Design</h3>
+<figure>
+<img src="src/screenshot.png"
+alt="Work-in-progress UI, 26 November 2022" />
+<figcaption aria-hidden="true">Work-in-progress UI, 26 November
+2022</figcaption>
+</figure>
+<p>The user interface is designed to be simple and easy-to-use. It
+consists of a toolbar, a search bar and the main content area. The
+toolbar contains buttons for opening files and directories, tagging
+files, renaming files and deleting files. The search bar allows the user
+to input arbitrary queries. The main content area contains a list of
+files and directories, as well as previews and information about each
+file.</p>
+<p>The application is designed to be used with a mouse and keyboard. The
+toolbar buttons and main content list can be clicked using the mouse.
+Files and directories can also be opened by double-clicking them with
+the mouse. Keyboard shortcuts are provided for focusing on the search
+bar (Ctrl+F) and tagging files (Ctrl+T).</p>
+<p>When tagging files, the user is presented with a sidebar that
+displays information about the selected file in the main content area.
+In the sidebar users can edit the list of tags for the selected file. If
+the user has selected multiple files, the sidebar will show common tags
+between all selected files, and any new tags will be added to all
+selected files.</p>
+<p>The user interface is designed to be consistent across all platforms.
+The application should look and feel the same on Windows, macOS and
+Linux systems.</p>
+<!-- ## Use Cases
+
+# Implementation
+
+## Extension 1 - TODO
+
+## Extension 2 - TODO
+
+# Testing
+
+# Evaluation
+
+# Conclusion
+
+# Literature review
+
+# Background
+
+# Your other achievements to date -->
+<h1 data-number="5" id="amended-plan-for-second-semester"><span
+class="header-section-number">5</span> Amended plan for second
+semester</h1>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Deadline</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>October</td>
+<td>Build any mini-project using Rust, Tauri and Vue to learn the
+framework and libraries</td>
+</tr>
+<tr class="even">
+<td>December</td>
+<td>Initial implementation of database backend, using sqlite</td>
+</tr>
+<tr class="odd">
+<td>February</td>
+<td>More work on the backend implementation, early prototype of the
+application (focus on functionality rather than UI)</td>
+</tr>
+<tr class="even">
+<td>March</td>
+<td>Polished prototype, minimal viable product</td>
+</tr>
+<tr class="odd">
+<td>April-May</td>
+<td>Project extensions and finalised software</td>
+</tr>
+</tbody>
+</table>
+<p>The plan has been amended such that all yet-to-be-completed
+milestones have been delayed by a month. Barring January (when the exams
+take plase), all milestones after October have been moved onto the next
+month.</p>
+<h1 data-number="6" id="risk-assessment"><span
+class="header-section-number">6</span> Risk assessment</h1>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Impact</th>
+<th>Likelihood</th>
+<th>Rating</th>
+<th>Preventative actions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cannot finish initial implementation by March</td>
+<td>Cannot complete draft report with sufficient information</td>
+<td>Low</td>
+<td>High</td>
+<td>Break down project into basic functionality and extensions, focus
+solely on basic functionality before moving onto extensions</td>
+</tr>
+<tr class="even">
+<td>Fail to find any users for testing</td>
+<td>Cannot complete project evaluation</td>
+<td>Low</td>
+<td>High</td>
+<td>Start finding users for testing as soon as initial implementation is
+complete</td>
+</tr>
+</tbody>
+</table>
+<h1 class="unnumbered" id="bibliography">Bibliography</h1>
+<div id="refs" class="references csl-bib-body" role="doc-bibliography">
+<div id="ref-balasubramanian2017system" class="csl-entry"
+role="doc-biblioentry">
+Balasubramanian, A. <em>et al.</em> (2017) <span>‘System programming in
+rust: Beyond safety’</span>, in <em>Proceedings of the 16th workshop on
+hot topics in operating systems</em>, pp. 156–161.
+</div>
+<div id="ref-bergman2010effect" class="csl-entry"
+role="doc-biblioentry">
+Bergman, O. <em>et al.</em> (2010) <span>‘The effect of folder structure
+on personal file navigation’</span>, <em>Journal of the American Society
+for Information Science and Technology</em>, 61(12), pp. 2426–2441.
+</div>
+<div id="ref-davison_2022_adoption" class="csl-entry"
+role="doc-biblioentry">
+Davison, L. (2022) <span>‘Adoption of rust: Who’s using it and
+how’</span>. The New Stack. Available at: <a
+href="https://thenewstack.io/adoption-of-rust-whos-using-it-and-how/">https://thenewstack.io/adoption-of-rust-whos-using-it-and-how/</a>
+(Accessed: 21 November 2022).
+</div>
+<div id="ref-DeVocht2012" class="csl-entry" role="doc-biblioentry">
+De Vocht, L. <em>et al.</em> (2012) <em>Formal experiment report:
+Tagging files vs. Placing files in a hierarchy</em>. Graz, Austria: Graz
+University of Technology. Available at: <a
+href="https://github.com/novoid/2011-01-tagstore-formal-experiment/blob/master/analysis_and_derived_data/Results_Report.pdf">https://github.com/novoid/2011-01-tagstore-formal-experiment/blob/master/analysis_and_derived_data/Results_Report.pdf</a>.
+</div>
+<div id="ref-dinneen2020ubiquitous" class="csl-entry"
+role="doc-biblioentry">
+Dinneen, J.D. and Julien, C.-A. (2020) <span>‘The ubiquitous digital
+file: A review of file management research’</span>, <em>Journal of the
+Association for Information Science and Technology</em>, 71(1), pp.
+E1–E32.
+</div>
+<div id="ref-henderson2011document" class="csl-entry"
+role="doc-biblioentry">
+Henderson, S. (2011) <span>‘Document duplication: How users (struggle
+to) manage file copies and versions’</span>, <em>Proceedings of the
+American Society for Information Science and Technology</em>, 48(1), pp.
+1–10.
+</div>
+<div id="ref-henderson2009empirical" class="csl-entry"
+role="doc-biblioentry">
+Henderson, S. and Srinivasan, A. (2009) <span>‘An empirical analysis of
+personal digital document structures’</span>, in <em>Symposium on human
+interface</em>. Springer, pp. 394–403.
+</div>
+<div id="ref-hicks-2008-organizing" class="csl-entry"
+role="doc-biblioentry">
+Hicks, B.J. <em>et al.</em> (2008) <span>‘Organizing and managing
+personal electronic files: <span>A</span> mechanical engineer’s
+perspective’</span>, <em><span>ACM</span> Trans. Inf. Syst.</em>, 26(4),
+pp. 23:1–23:40. Available at: <a
+href="https://doi.org/10.1145/1402256.1402262">https://doi.org/10.1145/1402256.1402262</a>.
+</div>
+<div id="ref-jones2010keeping" class="csl-entry" role="doc-biblioentry">
+Jones, W. (2010) <em>Keeping found things found: The study and practice
+of personal information management</em>. Morgan Kaufmann.
+</div>
+<div id="ref-jones2007personal" class="csl-entry"
+role="doc-biblioentry">
+Jones, W.P. and Teevan, J. (2007) <em>Personal information
+management</em>. University of Washington Press Seattle.
+</div>
+<div id="ref-proven_2022_rust" class="csl-entry" role="doc-biblioentry">
+Proven, L. (2022) <span>‘Rust is coming to the linux kernel’</span>. The
+Register. Available at: <a
+href="https://www.theregister.com/2022/09/16/rust_in_the_linux_kernel/">https://www.theregister.com/2022/09/16/rust_in_the_linux_kernel/</a>
+(Accessed: 21 November 2022).
+</div>
+<div id="ref-shivshank_2022_are" class="csl-entry"
+role="doc-biblioentry">
+shivshank and dxenonb (2022) <span>‘Are we GUI yet?’</span> Are we GUI
+yet? Available at: <a
+href="https://www.areweguiyet.com/">https://www.areweguiyet.com/</a>
+(Accessed: 21 November 2022).
+</div>
+<div id="ref-smith2007tagging" class="csl-entry" role="doc-biblioentry">
+Smith, G. (2007) <em>Tagging: People-powered metadata for the social
+web</em>. New Riders.
+</div>
+<div id="ref-stackoverflow_2022_stack" class="csl-entry"
+role="doc-biblioentry">
+Stack Overflow (2022) <span>‘Stack overflow developer survey
+2022’</span>. Stack Overflow. Available at: <a
+href="https://survey.stackoverflow.co/2022/">https://survey.stackoverflow.co/2022/</a>
+(Accessed: 28 November 2022).
+</div>
+<div id="ref-tauricontributors_2022_tauriappstauri" class="csl-entry"
+role="doc-biblioentry">
+Tauri Contributors (2022) <span>‘Tauri-apps/tauri’</span>. GitHub.
+Available at: <a
+href="https://github.com/tauri-apps/tauri">https://github.com/tauri-apps/tauri</a>
+(Accessed: 21 November 2022).
+</div>
+</div>
+</body>
+</html>
