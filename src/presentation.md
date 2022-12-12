@@ -21,58 +21,61 @@
   - Provides a search function which enables users to search for files based on their tags.
   - Make the system easy to use for users with no prior knowledge of tagging or file management. -->
 
-Digital file management is fundamental to computer usage.
+Investigate and develop a tag-based file manager.
 
-- The increasing number of digital files has made it more important to investigate effective methods of managing digital files [@dinneen2020ubiquitous].
-
-Current file management systems are inefficient for managing a large number of files:
-
-- They are based on a hierarchical structure (directory tree) which makes it difficult to search for files based on their content [@henderson2009empirical] [@hicks-2008-organizing].
-- They can also less flexible when it comes to organising and retrieving files [@henderson2011document].
+- Assign tags to files
+- Search for files based on tags
+- Should be easy to use for new users
+  - UX is one of the focus of this project.
 
 ------
 
-Investigate and develop a tag-based file manager.
+Digital file management is fundamental to computer usage.
 
-- Allows users to assign tags to their files; provides a search function to search for files based on their tags.
-- Make the system easy to use for users with no prior knowledge of tagging or file management - UX is one of the focus of this project.
+- Required for workers or casual users
+- Number of digital files is increasing - storage space increasing
+
+Current systems are inefficient for managing a large number of files:
+
+- Hierarchical structures (directory trees) - difficult to search for files [@henderson2009empirical] [@hicks-2008-organizing].
+- Less flexible for organising and retrieving files [@henderson2011document].
 
 # Project Objectives
 
 Research:
 
-- To identify existing challenges related to PIM and file management.
-- To compare and evaluate existing tagging software available to users.
-- To gain an understanding of concepts related to PIM.
-- To understand the needs of users when performing file management tasks.
-- To investigate the challenges related to file management.
+- Identify challenges in PIM
+- Evaluate existing tagging software
+- Gain an understanding of PIM concepts
+- Understand the needs of users when managing files
+- Investigate challenges related to file management
 
 ------
 
 Implementation:
 
-- To develop a system to allow users to manage and search files using tags.
-- To implement a user interface that is easy to learn and efficient to use.
+- Develop a system - allow managing and searching files with tags
+- Implement UI - easy to learn, and efficient
 
 Evaluation:
 
-- To evaluate the effectiveness of the prototype system through user testing.
-- To evaluate the system against existing software systems.
-- To conclude on the effectiveness of the system and to come up with recommendations for further work.
+- Evaluate effectiveness of system through user testing
+- Evaluate system against existing software
+- Come up with recommendations for further work
 
 # Programme of Study
 
 <!-- A1: Knowledge and skills related to the key field of software engineering, including the ability to design, implement and test algorithms and larger programmes in a rigorous and principled way, and detailed understanding of the software development life-cycle, relevant methodologies and tools. -->
 
-A1: The tag-based file manager has to be designed, implemented and then tested in order to ensure that it meets the project objectives. This requires the use of appropriate methodologies and tools to develop the software, such as programming design patterns and test-driven development.
+A1: Must design, implement and test software to ensure it meets objectives - appropriate methodologies and tools _(e.g. design patterns, test-driven development)_
 
 <!-- A2: Knowledge and skills related to the key field of computer systems, including understanding of the principles of computer architecture, operating systems and networks, and the ability to use specific techniques for small-scale implementations. -->
 
-A2: The project has to take into account the underlying operating system to provide integration with various systems. This requires the use of appropriate techniques for small-scale implementation techniques, such as dynamic programming, unit testing, benchmarking.
+A2: Understand operating systems for software integration - small-scale implementation techniques _(e.g. dynamic programming, unit testing, benchmarking)_
 
 <!-- A3: Knowledge and skills related to the key field of applications, including understanding of some of the major application areas in the sciences, medicine, industry and commerce, and the ability to grasp and apply appropriate usability principles and techniques for these areas. -->
 
-A3: The project has to take into account the needs of the users in order to be effective. This requires applying the appropriate usability principles and techniques for the software.
+A3: Understand the needs of users - appropriate usability principles and techniques _(e.g. participatory design, data collection)_
 
 ------
 
@@ -80,24 +83,25 @@ A3: The project has to take into account the needs of the users in order to be e
 
 <!-- B2: Understand and apply technical project management techniques and skills -->
 
-B2: The project follows a plan that took into account the timeline, milestones and objects of the project. The project also uses risk registers that assess the risks involved in the project.
+B2: Follow a plan, including timeline, milestones, objectives; use risk registers
 
 <!-- B3: Demonstrate awareness and understanding of the mathematical, scientific and engineering foundations of the discipline of computer science -->
 
-B3: The project requires the use of appropriate mathematics and engineering techniques to develop the software system. This includes an understanding of algorithms, data structures and software engineering principles.
+B3: Project uses appropriate mathematics and engineering techniques - requires understanding of algorithms, data structures, software engineering principles
 
 <!-- B4: Demonstrate awareness and understanding of the historical, social, professional, industrial and ethical context of the discipline of computer science -->
 
-B4: The development of the software has to take into account the ethical implications of the system, such as user privacy and data security. This requires an understanding of the relevant ethical principles, as well as an understanding of the impact of the system on the users and the industry.
+B4: Consider the ethical implications when developing the system _(e.g. user privacy and data security)_
 
 ------
 
 <!-- B5: Communicate technical detail effectively to a variety of audiences, both through production of well-written technical reports and through oral presentation / demonstration -->
 
-B5: The project includes a final project report which should be written in a clear and concise manner, as well as the presentation of the project to the university. This requires understanding of technical details to be able to present them in an effective manner.
+B5: Final project report and presentation: should be clear and concise - requires understanding of technical details to present them effectively
 
 <!-- C1: Connect information and ideas within the broader context of the discipline of computer science -->
 
+<!-- TODO: Simplify the rest -->
 C1: The project integrates various concepts from the field of computer science, such as operating systems, algorithms and user experience. This requires the use of appropriate techniques to ensure that the various components of the system are integrated correctly.
 
 <!-- C2: Acquire and apply knowledge in a critical way, evaluating its reliability and relevance, in order to investigate and solve unfamiliar problems -->
@@ -236,6 +240,22 @@ Functionality
   - Keeps existing file structure intact, avoid breaking compatibility with other software
 - UI should be designed to be accessible and easy to use
 - Provide a flexible and powerful search function
+
+------
+
+![Mockups](src/slice2.png){ width=90% }
+
+------
+
+![Mockups](src/slice3.png){ width=90% }
+
+------
+
+![Mockups](src/slice1.png){ width=90% }
+
+------
+
+![Current state](src/screenshot.png){ width=100% }
 
 # How will you evaluate your solution?
 

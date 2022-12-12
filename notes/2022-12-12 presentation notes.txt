@@ -1,16 +1,16 @@
 Reduce number of words
 
-Move actual aim to first bullet point, i.e. just switch slides 2 and 3
+# Move actual aim to first bullet point, i.e. just switch slides 2 and 3
 
-Objectives: pretty good, can you condense it a bit?
-This part would take about 2 mi itrs
+# Objectives: pretty good, can you condense it a bit?
+# This part would take about 2 mi itrs
 
 Programme of study:
 Not sure what the purpose of this slide, but required by qmul
 Get through these slides quickly, it's boring
 
-Concepts: good
-Previous approaches: good
+# Concepts: good
+# Previous approaches: good
 
 Risks
 Hard drive crashes - upload on GitHub
@@ -22,9 +22,9 @@ Think of things you don't have control over, like natural disasters
 Content overall is good
 Presentation wise, try to get rid of some detail
 
-Some more visuals would be nice
-E.g. screenshot, demo, diagrams etc
-Include a part where you demonstrate the software, that'd be good
+# Some more visuals would be nice
+# E.g. screenshot, demo, diagrams etc
+# Include a part where you demonstrate the software, that'd be good
 
 Also good to improvise a bit, not just reading from the slides
 
