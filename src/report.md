@@ -304,9 +304,183 @@ When tagging files, the user is presented with a sidebar that displays informati
 
 The user interface is designed to be consistent across all platforms. The application should look and feel the same on Windows, macOS and Linux systems.
 
-<!-- ## Use Cases
+## Searching for Items
+
+The application is designed to be a file manager. It should allow users to search for files using tags, but at the same time should not disregard the actual file structure of the underlying file tree. Therefore, users should be able to search for files not only using tags, but also using file attributes such as the file path.
+
+The application uses SQLite’s FTS5 full-text search extension to facilitate searching files by tag. When combined with other SQL conditions, the following is one example of a query:
+
+```sql
+SELECT i.id, i.path, i.tags, i.meta_tags
+FROM items i
+INNER JOIN
+    tag_query tq ON tq.id = i.id
+WHERE
+    tag_query = '("a" NOT "b")'
+    AND i.path LIKE 'samples/%';
+```
+
+The query searches for items that are under the path `samples/` and have the tag `"a"` but don't have the tag `"b"`.
+
+To keep the software accessible and usable to as many users as possible, the software should not expect users to enter SQL queries directly since most computer users do not have experience in SQL. For more complex queries, the resulting SQL statement would become difficult to write and to understand.
+
+As such, the application provides a plain-text query language that gets converted into SQL behind the scenes. The above query may be expressed in this new query language as follows:
+
+```
+a -b in:samples/
+```
+
+Terms such as `a` and `b` are treated as tag queries, while terms with the prefix `in:` are file path queries. Terms that do not have any operators between them are implicitly joined with an `AND` group. Additional operators such as `|` and `-` allow groupings that use boolean `OR` and `NOT` for searches.
+
+The application should convert the above plain-text query into the same SQL statement above when executing the query.
 
 # Implementation
+
+## Parsing Plain Text Queries
+
+To support the plain-text query language described in [Searching for Items], the application needs to implement a compiler that translates from the plain-text query language to SQL.
+
+This is one of the major challenges when implementing the software. In order to support arbitrarily-complicated queries, the compiler must be able to handle any combination of search operators and many edge cases.
+
+Since the application fetches data from the same tables for every query, the `SELECT` and `JOIN` clauses of the SQL statement stay constant - I only need to consider the `WHERE` clause of the SQL statement when converting from a plain-text query. The following is the SQL template used in the compiler:
+
+```sql
+SELECT i.id, i.path, i.tags, i.meta_tags
+FROM items i
+INNER JOIN
+    tag_query tq ON tq.id = i.id
+WHERE
+    :converted_plain_text_query
+```
+
+When given a plain-text query, the application converts it into a SQL `WHERE` clause, then inserts it into the template. However, due to differences between the plain-text and SQL languages, there is no straight-forward way to convert plain-text queries to SQL `WHERE` clauses. I will explain those differences by examining a few cases.
+
+### Query Edge Cases
+
+#### Case 1: FTS5-only queries
+
+```sql
+-- The plain-text query:
+-- "Item with tags a and b, or items with tag c without tag d"
+a b | c -d
+
+-- The SQL WHERE clause
+WHERE tag_query = '(a AND b) OR (c NOT d)'
+```
+
+In the simplest case, the plain-text query only contains tag queries. In terms of SQL, the plain-text query only queries using the FTS5 extension without accessing any other columns. In this case, the resulting WHERE clause will only contain one expression - the FTS5 expression. Conversion from plain-text to FTS5 is relatively simple, except for an edge case:
+
+```sql
+-- The plain-text query:
+-- "Item with tags a and b, or items without tag d"
+a b | -d
+
+-- The SQL WHERE clause
+WHERE tag_query = '(a AND b) OR (meta_tags:all NOT d)'
+```
+
+The FTS5 extension treats `NOT` as a binary operator, not a unary operator. This means that it is impossible to search for the negation of a single term, for example the following query cannot be represented under FTS5: _"items that don't have the tag 'old'"_.
+
+To circumvent this issue, I added a new column to the `items(id, path, tags)` table called `meta_tags`. The `meta_tags` column contains the string `"all"` by default, so all items in the table will gain a new `all` tag. I can then specify `meta_tags:all` in the FTS5 query to search for _"all items that have the tag 'all' in the 'meta_tags' column"_. I finally use `meta_tags:all` as the first operand in the `NOT` operator to implement unary negation of a single term.
+
+#### Case 2: FTS5 and SQL queries without OR operands
+
+```sql
+-- The plain-text query:
+-- "Item in the folder 'my_folder' with tags a and b"
+a b in:my_folder
+
+-- The SQL WHERE clause
+WHERE tag_query = 'a AND b' AND i.path LIKE 'my\_folder%' ESCAPE '\'
+```
+
+For clarity, "FTS terms/expressions" will refer to tag searches like "a b", while "SQL terms/expressions" will refer to non-tag searches like "in:my_folder".
+
+In this case, the WHERE clause requires multiple expressions in addition to the FTS expression. For each SQL term in the query, the WHERE clause must include a separate SQL expression for the term. All the rules and edge cases from [Case 1](#case-1-fts5-only-queries) apply here. This case is similar to case 1 and is simple to handle.
+
+#### Case 3: FTS5 and SQL queries with OR operands
+
+```sql
+-- The plain-text query:
+-- "Either i) item in the folder 'my_folder' with tags a and b, or
+--         ii) item in the folder 'other_folder' without the tag d
+a b in:my_folder | -d in:other_folder
+
+-- Incorrect SQL clause
+-- This will not behave as expected
+WHERE (
+  (tag_query = 'a AND b'
+    AND i.path LIKE 'my\_folder%' ESCAPE '\')
+  OR
+  (tag_query = 'meta_tags:all NOT d'
+    AND i.path LIKE 'other\_folder%' ESCAPE '\')
+)
+
+-- The working SQL WHERE clause
+WHERE (
+  (i.id IN (SELECT id FROM tag_query('a AND b'))
+    AND i.path LIKE 'my\_folder%' ESCAPE '\')
+  OR
+  (i.id IN (SELECT id FROM tag_query('meta_tags:all NOT d'))
+    AND i.path LIKE 'other\_folder%' ESCAPE '\')
+)
+```
+
+When the plain-text query contains FTS5 terms and SQL terms joined together with at least one OR operator, the resulting SQL statement must make use of subqueries.
+
+This is due to two limitations of SQLite's FTS5 extension. First, it only supports at most one FTS5 expression in the WHERE clause. Attempting to query using multiple FTS expressions will result in zero rows being returned. Second, it does not handle OR groups that contain a FTS5 expression correctly. A query such as _"a b | in:my\_folder"_ will have rows missing from the output.
+
+To overcome this, I replace all FTS expressions with a subquery that contains the required FTS expression. In effect, this make the statement behave as expected.
+
+### Rust Implementation
+
+### Differences between plain-text and SQL queries
+
+Plain-text queries cannot be directly translated to SQL queries due to several differences between them.
+
+The first major difference is [insert]
+
+
+
+## Testing
+
+Unit tests for each module etc
+
+Implemented.
+
+## Extension 1 - Directory watcher
+
+Watch a directory for changes, and update the tag database in real-time.
+
+The application successfully implements this, and solves one major issue with most existing tag-based file managers. They either fail to track file movement, make it the user's responsibility to manually update tags of moved files, or completely replace the existing file structure to avoid user tampering.
+
+The reason this feature is rarely implemented is due to incompatibility with systems. While there are libraries and native APIs for watching directory changes on different systems, the kind of events they yield can differ a lot.
+
+On Windows, file movement events are not detected as file rename events, but rather a file delete event then a file create event. There is some discussion online on how to mitigate this issue, but there is still ambiguity on what it means for a file to be 'moved' under a Windows file system. [stackoverflow discussion](https://stackoverflow.com/questions/22447022/best-way-to-track-files-being-moved-possibly-between-disks-vb-net-or-c)
+
+I have implemented this using a `NormWatcher` watcher that aims to minimise differences across operating systems. Particularly on Windows, it successfully resolves simple file-move events from file-create and file-delete events.
+
+Semi-implemented, WIP.
+
+## Extension 2 - Searching based on file path
+
+Allow searching for files using their path, so users can use the application just like any typical file manager.
+
+Not yet implemented.
+
+## Extension X - Audio sample categorisation
+
+Use deep learning to categorise audio files, then automatically tag them.
+
+Not yet implemented.
+
+## Extension X - Query simplification
+
+Simplify plain text query before converting to sql.
+
+Not yet implemented.
+
+<!-- ## Use Cases
 
 ## Extension 1 - TODO
 
@@ -342,5 +516,52 @@ Risk|Impact|Likelihood|Rating|Preventative actions
 --|--|-|-|---
 Cannot finish initial implementation by March|Cannot complete draft report with sufficient information|Low|High|Break down project into basic functionality and extensions, focus solely on basic functionality before moving onto extensions
 Fail to find any users for testing|Cannot complete project evaluation|Low|High|Start finding users for testing as soon as initial implementation is complete
+
+# Appendices
+
+## Database schema
+
+```sql
+CREATE TABLE items (
+  id INTEGER PRIMARY KEY,
+  path TEXT UNIQUE NOT NULL,
+  tags TEXT NOT NULL,
+  meta_tags TEXT NOT NULL DEFAULT 'all'
+);
+
+-- FTS5 Documentation:
+-- https://www.sqlite.org/fts5.html
+CREATE VIRTUAL TABLE tag_query USING fts5 (
+  -- Include columns to be stored on this virtual table:
+  -- Include the `id` column so I can join it to `items`, but don't index with FTS
+  id UNINDEXED,
+  -- Include the `tags` column to index them
+  tags,
+  -- a 'meta' column that stores additional tags, e.g. 'all'
+  meta_tags,
+
+  -- Make this an external content table (don't store the data in this table, but reference
+  -- the original table)
+  content=items,
+  content_rowid=id,
+
+  -- Use the Unicode61 tokenizer
+  -- https://www.sqlite.org/fts5.html#unicode61_tokenizer
+  tokenize="unicode61"
+);
+
+CREATE TRIGGER items_trigger_ai AFTER INSERT ON items BEGIN
+  INSERT INTO tag_query(id, tags, meta_tags) VALUES (NEW.id, NEW.tags, NEW.meta_tags);
+END;
+
+CREATE TRIGGER items_trigger_ad AFTER DELETE ON items BEGIN
+  INSERT INTO tag_query(tag_query, id, tags, meta_tags) VALUES('delete', OLD.id, OLD.tags, OLD.meta_tags);
+END;
+
+CREATE TRIGGER items_trigger_au AFTER UPDATE ON items BEGIN
+  INSERT INTO tag_query(tag_query, id, tags, meta_tags) VALUES('delete', OLD.id, old.tags, old.meta_tags);
+  INSERT INTO tag_query(id, tags, meta_tags) VALUES (NEW.id, NEW.tags, NEW.meta_tags);
+END;
+```
 
 # Bibliography
