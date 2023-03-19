@@ -432,7 +432,17 @@ This is due to two limitations of SQLite's FTS5 extension. First, it only suppor
 
 To overcome this, I replace all FTS expressions with a subquery that contains the required FTS expression. In effect, this make the statement behave as expected.
 
-### Rust Implementation
+### Compiler Implementation
+
+<!-- To implement a compiler in Rust
+
+There are many Rust crates (libraries) available for implementing compilers. In the application, I used [the nom crate](https://github.com/rust-bakery/nom) to implement the compiler. The compiler comprises of two parts: -->
+
+The compiler is implemented using two file, `parser.rs` and `convert.rs`.
+
+![Diagram showing the process of converting a plain-text query to a SQL statement](compiler-flow.png)
+
+The purpose of `parser.rs` is to convert the input query into a parse tree. The parser was implemented using [the "nom" crate](https://github.com/rust-bakery/nom).
 
 ### Differences between plain-text and SQL queries
 
