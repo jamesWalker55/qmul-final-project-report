@@ -5,6 +5,9 @@ output-file: docs/report.pdf
 to: pdf
 template: templates/latex.tex
 
+include-in-header:
+  - config/pandoc/pdf_header.tex
+
 metadata:
   papersize: a4
   geometry:
