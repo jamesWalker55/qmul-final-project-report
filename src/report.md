@@ -438,17 +438,23 @@ To overcome this, I replace all FTS expressions with a subquery that contains th
 
 There are many Rust crates (libraries) available for implementing compilers. In the application, I used [the nom crate](https://github.com/rust-bakery/nom) to implement the compiler. The compiler comprises of two parts: -->
 
-The compiler is implemented using two file, `parser.rs` and `convert.rs`.
+The compiler is implemented using two files, `parser.rs` and `convert.rs`.
 
 ![Diagram showing the process of converting a plain-text query to a SQL statement](compiler-flow.png)
 
-The purpose of `parser.rs` is to convert the input query into a parse tree. The parser was implemented using [the "nom" crate](https://github.com/rust-bakery/nom).
+The parser is implemented in `parser.rs` using [the "nom" crate (library)](https://github.com/rust-bakery/nom). Its purpose is to validate and parse a plain-text query into a parse tree.
 
-### Differences between plain-text and SQL queries
+The purpose of `convert.rs` is to convert the parse tree into an abstract syntax tree (AST). In this stage, it combines any FTS terms in the same level into a single `FTS()` object that represents a single FTS expression in the output SQL statement.
 
-Plain-text queries cannot be directly translated to SQL queries due to several differences between them.
+The conversion from the AST to SQL code is also handled by `convert.rs`. This is done by calling the `to_sql_clause(&self) -> String` method on the base of the tree, which then recursively calls `to_sql_subclause(&self, is_root: bool) -> String` on its child nodes.
 
-The first major difference is [insert]
+Finally, the compiler inserts the SQL clause into the SQL template to obtain the final SQL statement.
+
+
+The purpose of `parser.rs` is to convert the input query into a parse tree. The parser was implemented using [the "nom" crate](https://github.com/rust-bakery/nom). It is able to parse and validate any given plain-text query into a parse tree.
+
+The purpose of `convert.rs` is to convert the parse tree into a
+
 
 
 
