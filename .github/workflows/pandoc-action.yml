@@ -8,11 +8,19 @@ jobs:
     steps:
       # Checkout repo
       - uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       # Create PDF using pandoc
       - uses: docker://pandoc/latex:2.19
         with:
-          args: --defaults config/pandoc/pdf.yml
+          entrypoint: /bin/sh
+          args: >-
+            -c "
+             tlmgr update --self &&
+             tlmgr install fvextra lineno &&
+             pandoc --defaults config/pandoc/pdf.yml
+            "
 
       # Create HTML using pandoc
       - uses: docker://pandoc/latex:2.19
