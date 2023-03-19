@@ -294,7 +294,7 @@ The database is accessed by the Rust backend using the `rusqlite` Rust crate. Fu
 
 ### User Interface Design
 
-![Work-in-progress UI, 26 November 2022](src/screenshot.png)
+![Work-in-progress UI, 26 November 2022](screenshot.png)
 
 The user interface is designed to be simple and easy-to-use. It consists of a toolbar, a search bar and the main content area. The toolbar contains buttons for opening files and directories, tagging files, renaming files and deleting files. The search bar allows the user to input arbitrary queries. The main content area contains a list of files and directories, as well as previews and information about each file.
 

@@ -8,6 +8,10 @@ template: templates/latex.tex
 include-in-header:
   - config/pandoc/pdf_header.tex
 
+resource-path:
+  - src
+  - .
+
 metadata:
   papersize: a4
   geometry:
