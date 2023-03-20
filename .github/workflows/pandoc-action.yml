@@ -12,7 +12,7 @@ jobs:
           submodules: 'true'
 
       # Create PDF using pandoc
-      - uses: docker://pandoc/latex:2.19
+      - uses: docker://pandoc/latex:3.1.1
         with:
           entrypoint: /bin/sh
           args: >-
@@ -23,12 +23,12 @@ jobs:
             "
 
       # Create HTML using pandoc
-      - uses: docker://pandoc/latex:2.19
+      - uses: docker://pandoc/latex:3.1.1
         with:
           args: --defaults config/pandoc/html.yml
 
       # Create presentation using pandoc
-      - uses: docker://pandoc/latex:2.19
+      - uses: docker://pandoc/latex:3.1.1
         with:
           args: --defaults config/pandoc/presentation.yml
 
