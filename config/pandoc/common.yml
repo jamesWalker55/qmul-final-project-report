@@ -3,9 +3,7 @@ defaults: input-files.yml
 from: markdown
 
 metadata-file: meta.yml
-filters:
-  - pandoc-crossref
-  - citeproc
 toc: true
 highlight-style: kate
+citeproc: true
 number-sections: true
