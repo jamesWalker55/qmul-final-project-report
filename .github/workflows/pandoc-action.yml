@@ -25,7 +25,7 @@ jobs:
       # Create HTML using pandoc
       - uses: docker://pandoc/latex:3.1.1
         with:
-          args: --defaults config/pandoc/html.yml
+          args: --defaults config/pandoc/html.yml --embed-resources
 
       # Create presentation using pandoc
       - uses: docker://pandoc/latex:3.1.1
