@@ -448,17 +448,15 @@ The purpose of `convert.rs` is to convert the parse tree into an abstract syntax
 
 The conversion from the AST to SQL code is also handled by `convert.rs`. This is done by calling the `to_sql_clause(&self) -> String` method on the base of the tree, which then recursively calls `to_sql_subclause(&self, is_root: bool) -> String` on its child nodes.
 
-Finally, the compiler inserts the SQL clause into the SQL template to obtain the final SQL statement.
+Finally, the compiler inserts the SQL clause into the SQL template to obtain the final SQL statement. The statement can then be used to query items in the database.
 
-
-The purpose of `parser.rs` is to convert the input query into a parse tree. The parser was implemented using [the "nom" crate](https://github.com/rust-bakery/nom). It is able to parse and validate any given plain-text query into a parse tree.
-
-The purpose of `convert.rs` is to convert the parse tree into a
-
-
-
+The final number of lines of code in the compiler module was 1149 lines.
 
 ## Testing
+
+Testing of the application involved implementing unit tests for each application module, as well as integration tests for testing how the different modules integrate together.
+
+At the moment, 104 unit and integration tests have been implemented. The test output is included in the appendix.
 
 Unit tests for each module etc
 
@@ -477,6 +475,12 @@ On Windows, file movement events are not detected as file rename events, but rat
 I have implemented this using a `NormWatcher` watcher that aims to minimise differences across operating systems. Particularly on Windows, it successfully resolves simple file-move events from file-create and file-delete events.
 
 Semi-implemented, WIP.
+
+### Structure
+
+![](watcher-flow.png)
+
+
 
 ## Extension 2 - Searching based on file path
 
@@ -578,6 +582,115 @@ CREATE TRIGGER items_trigger_au AFTER UPDATE ON items BEGIN
   INSERT INTO tag_query(tag_query, id, tags, meta_tags) VALUES('delete', OLD.id, old.tags, old.meta_tags);
   INSERT INTO tag_query(id, tags, meta_tags) VALUES (NEW.id, NEW.tags, NEW.meta_tags);
 END;
+```
+
+## Test Output
+
+```
+test helpers::sql::test_fts5::no_quotes ... ok
+test helpers::sql::test_fts5::both_quotes ... ok
+test helpers::sql::test_fts5::single_quotes ... ok
+test helpers::sql::test_fts5::double_quotes ... ok
+test helpers::sql::test_like::both_quotes ... ok
+test helpers::sql::test_like::escape_char_1 ... ok
+test helpers::sql::test_like::single_quotes ... ok
+test helpers::sql::test_like::double_quotes ... ok
+test helpers::sql::test_like::no_quotes ... ok
+test helpers::sql::test_like::percent_2 ... ok
+test helpers::sql::test_like::escape_char_2 ... ok
+test helpers::sql::test_like::percent_1 ... ok
+test helpers::sql::test_like::underscore_2 ... ok
+test query::convert::test_clauses::fts_3 ... ok
+test query::convert::test_clauses::common_1 ... ok
+test query::convert::test_clauses::common_2 ... ok
+test query::convert::test_clauses::common_3 ... ok
+test query::convert::test_clauses::fts_1 ... ok
+test query::convert::test_clauses::fts_2 ... ok
+test helpers::sql::test_like::underscore_1 ... ok
+test query::convert::test_clauses::inpath_1 ... ok
+test query::convert::test_clauses::inpath_3 ... ok
+test query::convert::test_clauses::fts_4 ... ok
+test query::convert::test_clauses::fts_5 ... ok
+test query::convert::test_clauses::inpath_4 ... ok
+test query::convert::test_clauses::inpath_2 ... ok
+test query::convert::test_clauses::inpath_5 ... ok
+test query::convert::test_clauses::inpath_6 ... ok
+test query::convert::test_fts_query::and_1 ... ok
+test query::convert::test_fts_query::and_2 ... ok
+test query::convert::test_fts_query::neg_1 ... ok
+test query::convert::test_fts_query::complex_1 ... ok
+test query::convert::test_fts_query::neg_3 ... ok
+test query::convert::test_fts_query::neg_2 ... ok
+test query::convert::test_fts_query::neg_4 ... ok
+test query::convert::test_fts_query::neg_5 ... ok
+test query::convert::test_fts_query::or_1 ... ok
+test query::convert::test_fts_query::or_2 ... ok
+test query::convert::test_to_sql::fts_1 ... ok
+test query::convert::test_to_sql::common_1 ... ok
+test query::convert::test_to_sql::fts_2 ... ok
+test query::convert::test_to_sql::inpath_1 ... ok
+test query::convert::test_to_sql::fts_3 ... ok
+test query::convert::test_to_sql::inpath_2 ... ok
+test query::convert::test_to_sql::inpath_3 ... ok
+test query::convert::test_to_sql::inpath_4 ... ok
+test query::convert::test_to_sql::inpath_5 ... ok
+test query::parser::expr_tests::and_or_1 ... ok
+test query::parser::expr_tests::and_or_2 ... ok
+test query::parser::expr_tests::common_1 ... ok
+test query::parser::expr_tests::just_and_1 ... ok
+test query::parser::expr_tests::just_and_2 ... ok
+test query::parser::expr_tests::just_and_3 ... ok
+test query::parser::expr_tests::complex_1 ... ok
+test query::parser::expr_tests::just_and_4 ... ok
+test query::parser::expr_tests::just_or_2 ... ok
+test query::parser::expr_tests::just_or_1 ... ok
+test query::parser::expr_tests::just_or_3 ... ok
+test query::parser::expr_tests::just_or_4 ... ok
+test query::parser::expr_tests::parens_1 ... ok
+test query::parser::expr_tests::not_1 ... ok
+test query::parser::expr_tests::not_2 ... ok
+test query::parser::expr_tests::parens_2 ... ok
+test query::parser::expr_tests::parens_3 ... ok
+test query::parser::expr_tests::parens_4 ... ok
+test query::parser::expr_tests::string_tags_1 ... ok
+test query::parser::expr_tests::string_tags_2 ... ok
+test query::parser::expr_tests::string_tags_3 ... ok
+test query::parser::tests::test_literal ... ok
+test query::parser::tests::test_key_value ... ok
+test query::parser::tests::test_string ... ok
+test query::parser::tests::test_tag ... ok
+test query::tests::common_1 ... ok
+test query::tests::common_2 ... ok
+test query::tests::empty ... ok
+test query::tests::common_3 ... ok
+test watch::tests::basic_test ... ok
+test scan::tests::scans_files_in_folder ... ok
+test watch::tests::file_creations_01 ... ok
+test watch::tests::file_removes_01 ... ok
+test watch::tests::file_creations_02 ... ok
+test watch::tests::file_removes_02 ... ok
+test watch::tests::file_renames_01 ... ok
+test watch::tests::file_renames_02 ... ok
+test watch::tests::file_renames_03 ... ok
+test repo::tests::check_tables_of_newly_created_database ... ok
+test repo::tests::can_get_item_by_id ... ok
+test repo::tests::can_remove_item_by_path ... ok
+test tests::query_repo::query_1 ... ok
+test tests::query_repo::query_4 ... ok
+test repo::tests::cant_insert_duplicate_items ... ok
+test tests::query_repo::query_2 ... ok
+test repo::tests::can_insert_items ... ok
+test tests::query_repo::query_3 ... ok
+test repo::tests::can_get_item_by_path ... ok
+test repo::tests::can_get_all_items ... ok
+test repo::tests::can_query_items ... ok
+test repo::tests::can_update_item_path ... ok
+test repo::tests::can_remove_item_by_id ... ok
+test repo::tests::can_update_item_tags ... ok
+test repo::tests::query_test ... ok
+test repo::tests::query_test_2 ... ok
+test scan::tests::benchmark ... ok
+test repo::tests::scan_integration::my_test ... ok
 ```
 
 # Bibliography
