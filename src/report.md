@@ -308,7 +308,7 @@ The user interface is designed to be consistent across all platforms. The applic
 
 The application is designed to be a file manager. It should allow users to search for files using tags, but at the same time should not disregard the actual file structure of the underlying file tree. Therefore, users should be able to search for files not only using tags, but also using file attributes such as the file path.
 
-The application uses SQLite’s FTS5 full-text search extension to facilitate searching files by tag. When combined with other SQL conditions, the following is one example of a query:
+The application uses SQLite’s FTS5 full-text search extension to facilitate searching files by tag. When combined with other SQL conditions, the following is one example of such query:
 
 ```sql
 SELECT i.id, i.path, i.tags, i.meta_tags
@@ -316,7 +316,7 @@ FROM items i
 INNER JOIN
     tag_query tq ON tq.id = i.id
 WHERE
-    tag_query = '("a" NOT "b")'
+    tag_query = '(a NOT b)'
     AND i.path LIKE 'samples/%';
 ```
 
@@ -330,7 +330,7 @@ As such, the application provides a plain-text query language that gets converte
 a -b in:samples/
 ```
 
-Terms such as `a` and `b` are treated as tag queries, while terms with the prefix `in:` are file path queries. Terms that do not have any operators between them are implicitly joined with an `AND` group. Additional operators such as `|` and `-` allow groupings that use boolean `OR` and `NOT` for searches.
+Terms such as `a` and `b` are treated as tag names, while terms with the prefix `in:` are file path queries. Terms that do not have any operators between them are implicitly joined with an `AND` group. Additional operators such as `|` and `-` allow grouping terms using boolean `OR` and `NOT` queries.
 
 The application should convert the above plain-text query into the same SQL statement above when executing the query.
 
@@ -379,7 +379,7 @@ a b | -d
 WHERE tag_query = '(a AND b) OR (meta_tags:all NOT d)'
 ```
 
-The FTS5 extension treats `NOT` as a binary operator, not a unary operator. This means that it is impossible to search for the negation of a single term, for example the following query cannot be represented under FTS5: _"items that don't have the tag 'old'"_.
+The FTS5 extension treats `NOT` as a binary operator, not a unary operator. This means that it is impossible to search for the negation of a single term. For example, the following query cannot be represented under FTS5: _"items that don't have the tag 'old'"_.
 
 To circumvent this issue, I added a new column to the `items(id, path, tags)` table called `meta_tags`. The `meta_tags` column contains the string `"all"` by default, so all items in the table will gain a new `all` tag. I can then specify `meta_tags:all` in the FTS5 query to search for _"all items that have the tag 'all' in the 'meta_tags' column"_. I finally use `meta_tags:all` as the first operand in the `NOT` operator to implement unary negation of a single term.
 
@@ -464,23 +464,28 @@ Implemented.
 
 ## Extension 1 - Directory watcher
 
-Watch a directory for changes, and update the tag database in real-time.
+The ability to track file movement is essential to this application. When implemented, it allows the application to preserve tags on a file when the user moves a file to a new location. However, implementing this on the Windows operating system presents a major challenge.
 
-The application successfully implements this, and solves one major issue with most existing tag-based file managers. They either fail to track file movement, make it the user's responsibility to manually update tags of moved files, or completely replace the existing file structure to avoid user tampering.
+### Detecting File Movement on Windows
 
-The reason this feature is rarely implemented is due to incompatibility with systems. While there are libraries and native APIs for watching directory changes on different systems, the kind of events they yield can differ a lot.
+Windows provides a native API to watch a directory for changes. However, one major issue with this API is that it is unable to detect file movement. The API can emit events for file creation, removal, and in-place renames. However, file movement from one directory to another is simply detected as a pair of file-create and file-remove events.
 
-On Windows, file movement events are not detected as file rename events, but rather a file delete event then a file create event. There is some discussion online on how to mitigate this issue, but there is still ambiguity on what it means for a file to be 'moved' under a Windows file system. [stackoverflow discussion](https://stackoverflow.com/questions/22447022/best-way-to-track-files-being-moved-possibly-between-disks-vb-net-or-c)
+This prevents it from being able to be used directly as the watcher for the application. When used as the watcher for the application, the application is unable to preserve tags on a file when the user moves a file to a different folder. This is a major issue for many existing tag-based file managers as well - they often lack the ability to track file movement, have unorthodox solutions that affect user usability, or make it the user's responsibility to manually update tags after file movement.
 
-I have implemented this using a `NormWatcher` watcher that aims to minimise differences across operating systems. Particularly on Windows, it successfully resolves simple file-move events from file-create and file-delete events.
-
-Semi-implemented, WIP.
+To solve this issue, I implemented an asynchronous event handler that takes Windows' native events as input, and automatically resolves file movement by checking the file paths of the received events.
 
 ### Structure
 
-![](watcher-flow.png)
+![Diagram showing the flow of a Windows event from the watcher to the output](watcher-flow.png)
 
+The final watcher makes heavy use of concurrent programming. The basic structure of the watcher is as follows:
 
+- An instance of `ReadDirectoryChangesWatcher` from the `notify` crate, spawning native operating system events and sending them in a separate async task.
+- An event handler that takes native OS events and processes them, finally sending them to the output receiver.
+
+### Event Handler
+
+TODO
 
 ## Extension 2 - Searching based on file path
 
