@@ -1,13 +1,87 @@
-#set heading(numbering: "1.")
-#show link: underline
+#let title = "TagRepo - A tool to assign and query tags on files in a filesystem"
+#let author = "Chun Ho Wong"
+#let programme_of_study = "Computer Science"
+#let supervisor = "Dr. Johan Pauwels"
+#let submission_date = box(fill: yellow)[Add submission date]
 
-// = Abstract {-}
-//
-// (all reports have this)
-//
-// = TOC {-}
-//
-// TOC should be after abstract.
+#set document(title: title, author: author)
+#set page(paper: "a4")
+
+#show link: underline
+#set par(justify: true)
+#set text(font: "New Computer Modern", size: 12pt)
+#set heading(numbering: "1.")
+
+// The cover page
+#let cover_divider_line_width = 3pt
+#text(1.2em)[
+  #grid(
+    columns: (1fr, cover_divider_line_width, 1fr),
+    column-gutter: 1em,
+    [
+      School of Electronic Engineering and Computer Science
+      #v(1fr)
+
+      Final Year
+
+      Undergraduate Project 2022/23
+
+      #image("res/logo.png")
+    ],
+    line(length: 100%, angle: 90deg, stroke: cover_divider_line_width),
+    [
+      *Final Report*
+
+      #v(1fr)
+
+      *Programme of study:*
+
+      #programme_of_study
+
+      #v(1fr)
+
+      #text(1.4em)[
+        #underline[*Project Title:*]
+
+        *#title*
+      ]
+
+      #v(1fr)
+
+      *Supervisor:*
+
+      #supervisor
+
+      #v(1fr)
+
+      *Student Name:*
+
+      #author
+
+      #v(1fr)
+
+      Date: #submission_date
+    ],
+  )
+]
+
+#pagebreak()
+
+#heading(outlined: false, numbering: none)[Abstract]
+
+#lorem(350)
+
+#pagebreak()
+
+// Start showing page numbers at the outline
+#set page(numbering: "1")
+
+#outline(indent: true)
+
+#pagebreak()
+
+// Start showing headers after the outline
+#set page(header: block(inset: (bottom: 5pt), stroke: (bottom: 1pt), title + h(1fr) + author))
 
 = Introduction
 
@@ -849,7 +923,5 @@ test repo::tests::query_test_2 ... ok
 test scan::tests::benchmark ... ok
 test repo::tests::scan_integration::my_test ... ok
 ```
-
-= Bibliography
 
 #bibliography("bibliography.bib")
