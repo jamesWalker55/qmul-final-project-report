@@ -1,4 +1,5 @@
 #set heading(numbering: "1.")
+#show link: underline
 
 // = Abstract {-}
 //
@@ -393,7 +394,7 @@ WHERE tag_query = 'a AND b' AND i.path LIKE 'my\_folder%' ESCAPE '\'
 
 For clarity, "FTS terms/expressions" will refer to tag searches like "a b", while "SQL terms/expressions" will refer to non-tag searches like "in:my_folder".
 
-In this case, the WHERE clause requires multiple expressions in addition to the FTS expression. For each SQL term in the query, the WHERE clause must include a separate SQL expression for the term. All the rules and edge cases from Case 1 @query-edge-case-1 apply here. This case is similar to case 1 and is simple to handle.
+In this case, the WHERE clause requires multiple expressions in addition to the FTS expression. For each SQL term in the query, the WHERE clause must include a separate SQL expression for the term. All the rules and edge cases from @query-edge-case-1 apply here. This case is similar to case 1 and is simple to handle.
 
 ==== Case 3: FTS5 and SQL queries with OR operands
 
@@ -433,13 +434,16 @@ To overcome this, I replace all FTS expressions with a subquery that contains th
 
 // To implement a compiler in Rust
 //
-// There are many Rust crates (libraries) available for implementing compilers. In the application, I used [the nom crate](https://github.com/rust-bakery/nom) to implement the compiler. The compiler comprises of two parts: -->
+// There are many Rust crates (libraries) available for implementing compilers. In the application, I used #link("https://github.com/rust-bakery/nom")[the nom crate] to implement the compiler. The compiler comprises of two parts:
 
 The compiler is implemented using two files, `parser.rs` and `convert.rs`.
 
-![Diagram showing the process of converting a plain-text query to a SQL statement](compiler-flow.png)
+#figure(
+    image("res/compiler-flow.png"),
+    caption: [Diagram showing the process of converting a plain-text query to a SQL statement],
+)
 
-The parser is implemented in `parser.rs` using [the "nom" crate (library)](https://github.com/rust-bakery/nom). Its purpose is to validate and parse a plain-text query into a parse tree.
+The parser is implemented in `parser.rs` using #link("https://github.com/rust-bakery/nom")[the "nom" crate (library)]. Its purpose is to validate and parse a plain-text query into a parse tree.
 
 The purpose of `convert.rs` is to convert the parse tree into an abstract syntax tree (AST). In this stage, it combines any FTS terms in the same level into a single `FTS()` object that represents a single FTS expression in the output SQL statement.
 
@@ -473,7 +477,10 @@ To solve this issue, I implemented an asynchronous event handler that takes Wind
 
 === Structure
 
-![Diagram showing the flow of a Windows event from the watcher to the output](watcher-flow.png)
+#figure(
+    image("res/watcher-flow.png"),
+    caption: [Diagram showing the flow of a Windows event from the watcher to the output],
+)
 
 The final watcher makes heavy use of concurrent programming. The basic structure of the watcher is as follows:
 
