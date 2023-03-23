@@ -1,3 +1,5 @@
+#set par(justify: false)
+
 = Appendices
 
 == Database Schema <code-database-schema>
