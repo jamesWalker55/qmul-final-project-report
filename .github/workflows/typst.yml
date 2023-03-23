@@ -1,0 +1,49 @@
+name: Pandoc Action
+
+on: push
+
+jobs:
+  compile_pdf:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repo
+      - uses: actions/checkout@v3
+
+      # Download typst binary
+      - run: |
+          # URL to typst release
+          RELEASE_URL=https://github.com/typst/typst/releases/download/22-03-21-2/typst-x86_64-unknown-linux-gnu.tar.gz
+          # Temporary archive path
+          TEMP_ARCHIVE_NAME=temp.tar.gz
+          # Path of typst inside the archive
+          TYPST_ARCHIVE_PATH=typst-x86_64-unknown-linux-gnu/typst
+          # How many folders deep is the typst binary?
+          TYPST_ARCHIVE_DEPTH=1
+
+          # Download latest release as of 2023-03-23
+          # Output to release.tar.gz
+          curl -L $RELEASE_URL --output $TEMP_ARCHIVE_NAME
+
+          # Extract typst binary to current directory
+          tar -zxf $TEMP_ARCHIVE_NAME --strip-components=$TYPST_ARCHIVE_DEPTH $TYPST_ARCHIVE_PATH
+
+          # Delete the temp archive
+          rm $TEMP_ARCHIVE_NAME
+
+      # Build the report
+      - run: ./typst src/report.typ
+
+      # Commit all changes to a new branch
+      - name: Commit changes and push to a new branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          skip_checkout: true
+          skip_fetch: true
+          create_branch: true
+          branch: pandoc-action
+          file_pattern: '*.pdf'
+          add_options:  --force
+          commit_message: Typst action
+          commit_options: --signoff
+          push_options: --force
+          skip_dirty_check: true
