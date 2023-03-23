@@ -40,7 +40,7 @@ jobs:
           skip_checkout: true
           skip_fetch: true
           create_branch: true
-          branch: pandoc-action
+          branch: typst-action
           file_pattern: '*.pdf'
           add_options:  --force
           commit_message: Typst action
