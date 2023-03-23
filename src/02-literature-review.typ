@@ -124,6 +124,8 @@ I chose Vue as the frontend framework because it has good documentation and many
 
 I have some experience using Vue, but only in a limited capacity - I have experience with this framework through one of the university modules I am studying. I decided on this opportunity both improve my skills with the framework as well as developing new skills related to desktop application development.
 
+// TODO: Mention that you made a small tauri project for learning tauri and vue
+
 === SQLite
 
 SQLite is a file-based relational database management system developed by D. Richard Hipp. It is designed to be lightweight, making it a good choice for small desktop applications since it does not require any external dependencies such as running an entire SQL server application in the background.
