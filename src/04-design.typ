@@ -36,7 +36,7 @@ The frontend uses TailwindCSS for consistent styling across all HTML renderers o
 
 === SQLite Database
 
-The SQLite database stores tags assigned to files by users. The database is implemented using the SQLite 3 library and its full-text search extension. Please refer to [Database Schema] for the SQL schema.
+The SQLite database stores tags assigned to files by users. The database is implemented using the SQLite 3 library and its full-text search extension. Please refer to @code-database-schema for the SQL schema.
 
 The "items" table contains three columns - an autoincrementing ID, the path of the file, and a list of tags. The path column is used to store the relative path of the file to the root of the repository. The tag name column is used to store a list of tags assigned to the file.
 
@@ -47,7 +47,7 @@ The database is accessed by the Rust backend using the `rusqlite` Rust crate. Fu
 === User Interface Design
 
 #figure(
-    image("res/screenshot.png"),
+    image("res/screenshot.png", width: 70%),
     caption: [Work-in-progress UI, 26 November 2022.],
 )
 
@@ -59,7 +59,7 @@ When tagging files, the user is presented with a sidebar that displays informati
 
 The user interface is designed to be consistent across all platforms. The application should look and feel the same on Windows, macOS and Linux systems.
 
-== Searching for Items
+== Searching for Items <sec-searching-for-items>
 
 The application is designed to be a file manager. It should allow users to search for files using tags, but at the same time should not disregard the actual file structure of the underlying file tree. Therefore, users should be able to search for files not only using tags, but also using file attributes such as the file path.
 

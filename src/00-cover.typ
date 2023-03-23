@@ -3,55 +3,55 @@
 #import "meta.typ": title, author, programme_of_study, supervisor, submission_date
 
 #let cover_divider_line_width = 3pt
-#text(1.2em)[
-  #grid(
-    columns: (1fr, cover_divider_line_width, 1fr),
-    column-gutter: 1em,
-    [
-      School of Electronic Engineering and Computer Science
-      #v(1fr)
+#set text(1.2em)
 
-      Final Year
+#grid(
+  columns: (1fr, cover_divider_line_width, 1fr),
+  column-gutter: 1em,
+  [
+    School of Electronic Engineering and Computer Science
+    #v(1fr)
 
-      Undergraduate Project 2022/23
+    Final Year
 
-      #image("res/logo.png")
-    ],
-    line(length: 100%, angle: 90deg, stroke: cover_divider_line_width),
-    [
-      *Final Report*
+    Undergraduate Project 2022/23
 
-      #v(1fr)
+    #image("res/logo.png")
+  ],
+  line(length: 100%, angle: 90deg, stroke: cover_divider_line_width),
+  [
+    *Final Report*
 
-      *Programme of study:*
+    #v(1fr)
 
-      #programme_of_study
+    *Programme of study:*
 
-      #v(1fr)
+    #programme_of_study
 
-      #text(1.4em)[
-        #underline[*Project Title:*]
+    #v(1fr)
 
-        *#title*
-      ]
+    #text(1.4em)[
+      #underline[*Project Title:*]
 
-      #v(1fr)
+      *#title*
+    ]
 
-      *Supervisor:*
+    #v(1fr)
 
-      #supervisor
+    *Supervisor:*
 
-      #v(1fr)
+    #supervisor
 
-      *Student Name:*
+    #v(1fr)
 
-      #author
+    *Student Name:*
 
-      #v(1fr)
+    #author
 
-      Date: #submission_date
-    ],
-  )
-]
+    #v(1fr)
+
+    Date: #submission_date
+  ],
+)
 
 #pagebreak()

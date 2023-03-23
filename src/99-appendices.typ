@@ -1,10 +1,10 @@
 = Appendices
 
-== Database Schema
+== Database Schema <code-database-schema>
 
 #raw(read("res/schema.sql"), lang: "sql")
 
-== Directory Watcher Event Handler
+== Directory Watcher Event Handler <code-dir-watcher>
 
 #raw(read("res/dir-watcher.rs"), lang: "rust")
 

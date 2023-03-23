@@ -2,7 +2,7 @@
 
 == Parsing Plain Text Queries
 
-To support the plain-text query language described in [Searching for Items], the application needs to implement a compiler that translates from the plain-text query language to SQL.
+To support the plain-text query language described in @sec-searching-for-items, the application needs to implement a compiler that translates from the plain-text query language to SQL.
 
 This is one of the major challenges when implementing the software. In order to support arbitrarily-complicated queries, the compiler must be able to handle any combination of search operators and many edge cases.
 
@@ -163,7 +163,7 @@ When a create event is received, it may correspond to either a file movement or 
 
 If the list of recently-deleted paths is empty, the infinite loop blocks indefinitely while waiting for a new event from the `notify` watcher. If the list is not empty, the infinite loop will wait for the new event but timeout on the next earliest expiry time in the list. If a timeout occurs, it removes the associated path from the list and restarts the loop.
 
-The full code for the event handler is included in the appendices at [Directory Watcher Event Handler].
+The full code for the event handler is included in the appendices at @code-dir-watcher.
 
 == Extension 2 - Searching based on file path
 

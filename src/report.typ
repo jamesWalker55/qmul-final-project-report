@@ -29,4 +29,4 @@
 
 #include "99-appendices.typ"
 
-#bibliography("bibliography.bib")
+#bibliography("bibliography.bib", style: "author-date")
