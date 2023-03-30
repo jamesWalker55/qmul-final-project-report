@@ -1,1 +1,1 @@
-typst --watch src/report.typ
+typst --watch src/report.typ out/report.pdf
