@@ -5,7 +5,7 @@
 
 #show link: underline
 #set par(justify: true)
-#set text(font: "New Computer Modern", size: 12pt)
+#set text(font: "New Computer Modern", size: 11.5pt)
 #set heading(numbering: "1.")
 
 #include "00-cover.typ"
@@ -29,4 +29,4 @@
 
 #include "99-appendices.typ"
 
-#bibliography("bibliography.bib", style: "author-date")
+#bibliography("bibliography.bib", style: "chicago-author-date")
