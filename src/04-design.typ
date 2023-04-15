@@ -14,48 +14,50 @@ The Rust backend is responsible for file operations, database access and cross-p
 
 === Rust Backend
 
-The Rust backend is responsible for file operations, database access and cross-platform compatibility. The backend is implemented using the Rust programming language and the Tauri framework.
+The Rust backend is responsible for file operations, database access and cross-platform compatibility. The backend is implemented using the Rust programming language and the Tauri framework. It is divided into many modules for code organisation.
 
-The file operations module is responsible for listing and reading files in filesystem. Since the application writes to a database and not to files directly, this module is mainly focused on read operations.
+The query module is responsible for parsing user queries and converting them into SQL queries. It contains two further submodules for the lexing and conversion to SQL respectively. This is further discussed in @query-introduction.
 
-The database access module is responsible for interacting with the SQLite database. It contains functions for opening a database connection, executing SQL queries, and closing a database connection. This module also implements helper functions for inserting tags into the database and retrieving tags from the database.
+The repository module is responsible for interacting with the SQLite database. It contains functions for opening a database connection, executing SQL queries, and closing a database connection. It also provides high-level abstractions over the connection to provide functions for registering file paths, as well as adding or removing tags from file paths.
 
-The cross-platform compatibility module is responsible for providing platform-specific functionality. This includes functions for opening an operating system specific file explorer, getting the path of common directories such as the home directory, and checking if a path is valid on the current platform.
+The scan and diff modules are responsible for listing files in filesystem. Since the application may be opened and closed frequently, it needs to be able to keep track of the files in the file system after the application has been closed. The application achieves this is through a syncing operation when the user starts a new session with the application. The application scans the folder for files using the scan module, and determines which files are created, deleted, or removed since the previous session using the diff module.
+
+The watch module is responsible for real-time tracking of files in a folder. This is part of an extension to the application. The module is used to track changes to a folder while the application is open, allowing the user to modify files freely while the application is open and keep any tags on files intact. This is further discussed on @watcher-introduction.
 
 === Vue Frontend
 
-The Vue frontend is responsible for the graphical user interface. It is implemented using the Vue JavaScript framework and TailwindCSS for styling.
+The Vue frontend is responsible for the graphical user interface. It is implemented using the Vue JavaScript framework, TailwindCSS for styling, and Vite for building and optimising the frontend.
 
-The frontend consists of a single HTML file which loads the Vue JavaScript library and the TailwindCSS stylesheet.
+The frontend is created using the build tool Vite, it operates on a single HTML file and recursively checks any linked stylesheets and JavaScript files. This includes the Vue frontend framework and the TailwindCSS library.
 
-The interface contains elements for displaying the application's toolbar, search and main content area. These elements are populated with data from the Rust backend using Tauri's command system.
+The interface contains elements for displaying the application's toolbar, search, main content area and side panels. These elements are populated with data from the Rust backend using Tauri's command and event systems.
 
-The toolbar will contains buttons for opening repositories, which are directories with a centralised database that tracks tags with files. The toolbar will also contain operations for tagging files, and basic file operations such as renaming and deleting files. The main content area contains a list of items, which can be either files and directories, as well as previews and information about each file.
+The toolbar contains buttons for opening repositories, which are directories with a centralised database that tracks tags with files. The toolbar also contain additional features in the application, such as a folder filter panel and an audio preview extension. The main content area contains a list of items, as well as basic information about each file such as the file path and its tags.
 
-The frontend uses TailwindCSS for consistent styling across all HTML renderers on different platforms.
+The frontend uses TailwindCSS for consistent styling across all HTML renderers on different platforms. TailwindCSS is built on the modern-normalize framework, which aims to normalise styles across various browsers on different operating systems @cornes_2020_preflight. This allows the application to retain the same appearance across different operating systems.
 
 === SQLite Database
 
-The SQLite database stores tags assigned to files by users. The database is implemented using the SQLite 3 library and its full-text search extension. Please refer to @code-database-schema for the SQL schema.
+The SQLite database stores tags assigned to files by users. The database is implemented using the SQLite 3 library and its full-text search extension. The SQL schema is included as an appendix at @code-database-schema.
 
-The "items" table contains three columns - an autoincrementing ID, the path of the file, and a list of tags. The path column is used to store the relative path of the file to the root of the repository. The tag name column is used to store a list of tags assigned to the file.
+The "items" table contains several columns - an autoincrementing ID, the path of the file, a list of tags, and an additional list of metadata tags for the application's internal usage. The path column is used to store the relative path of the file to the root of the repository. The tag name column is used to store a list of tags assigned to the file. The metadata tags are used for the query module to construct accurate SQL statements, this is further discussed in @query-introduction.
 
 The "items_fts" table is a virtual table using SQLite's FTS5 full-text search extension. It allows quick indexing and querying of any text-based columns. In this case, the virtual table is used to index and search the tag name column on the "items" table.
 
-The database is accessed by the Rust backend using the `rusqlite` Rust crate. Functions are provided for opening a database connection, executing SQL queries, and closing a database connection.
+The database is accessed by the Rust backend using the `rusqlite` Rust crate. Functions are provided for opening and closing a database connection, executing SQL queries, as well as registering custom functions provided by my own code.
 
 === User Interface Design
 
 #figure(
-    image("res/screenshot.png", width: 70%),
-    caption: [Work-in-progress UI, 26 November 2022.],
+    image("res/frontend.png", width: 70%),
+    caption: [Current user interface, 15 April 2023.],
 )
 
-The user interface is designed to be simple and easy-to-use. It consists of a toolbar, a search bar and the main content area. The toolbar contains buttons for opening files and directories, tagging files, renaming files and deleting files. The search bar allows the user to input arbitrary queries. The main content area contains a list of files and directories, as well as previews and information about each file.
+The user interface is designed to be simple and easy-to-use. It consists of a toolbar, a search bar, the main content area, and a properties panel. The toolbar contains buttons for opening repositories, and toggling options and extensions for the application. The search bar allows the user to input arbitrary queries. The main content area contains a list of files and directories, as well as information about each file. The properties panel displays the list of tags assigned to the selected files, and allows the user to assign new tags to them.
 
-The application is designed to be used with a mouse and keyboard. The toolbar buttons and main content list can be clicked using the mouse. Files and directories can also be opened by double-clicking them with the mouse. Keyboard shortcuts are provided for focusing on the search bar (Ctrl+F) and tagging files (Ctrl+T).
+The application is designed to be used with a mouse and keyboard. The toolbar buttons and main content list can be clicked using the mouse. Files and directories can also be opened by double-clicking them with the mouse. An additional context menu is available by right-clicking on items in the list. Keyboard shortcuts are provided for convenience, such as pressing Enter on the query bar to switch focus to the file list, pressing arrow keys in the file list to navigate to the next / previous item.
 
-When tagging files, the user is presented with a sidebar that displays information about the selected file in the main content area. In the sidebar users can edit the list of tags for the selected file. If the user has selected multiple files, the sidebar will show common tags between all selected files, and any new tags will be added to all selected files.
+When tagging files, the user uses a sidebar that displays information about the selected file in the main content area. In the sidebar, users can edit the list of tags for the selected file. If the user has selected multiple files, the sidebar will show common tags between all selected files, and any new tags will be added to all selected files.
 
 The user interface is designed to be consistent across all platforms. The application should look and feel the same on Windows, macOS and Linux systems.
 

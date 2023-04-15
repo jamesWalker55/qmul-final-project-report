@@ -17,16 +17,14 @@ This chapter covers the requirements identified for my application. The followin
 The following requirements are extensions to the project and not mandatory as base functions of the system.
 
 8. The system should be able to handle transferring of tags between different devices or systems. This would allow users to preserve their tags when transferring across multiple systems, and would also allow files to be stored on cloud backup services such as Dropbox or Google Drive.
-9. The system should provide tagging suggestions based on the content of the file being tagged. This would help users save time when tagging files by automating the task of tag-assignment
-10. The system should display previews of each file, including thumbnails for image files and extension icons for unrecognised file types.
+9. The system should display previews of each file, for example preview of audio files, thumbnails for image files, and extension icons for unrecognised file types.
 
 == Non-functional Requirements
 
-1. The system should be able to execute and complete searches within 1 seconds for large file collections up to 10000 files.
-2. The system should have a response time of less than 500ms for all file operations such as opening, renaming and tagging files.
-3. The application's memory usage should be below 50MB for small collections of up to 1000 files. For larger collections above 10000 files, the application's memory usage should not exceed 100MB.
-4. The source code should be well-documented such that it is easy to understand and maintain.
-5. All user input should be validated both on the frontend and backend to ensure data integrity and security.
-6. The application's graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
++ The system should be able to execute and complete searches within 1 seconds for large file collections up to 10000 files.
++ The system should have a response time of less than 500ms for all file operations such as opening, renaming and tagging files.
++ The source code should be well-documented such that it is easy to understand and maintain.
++ All user input should be validated both on the frontend and backend to ensure data integrity and security.
++ The application's graphical user interface should be consistent across all platforms, providing a familiar experience for users regardless of their platform choice.
 
 #pagebreak()

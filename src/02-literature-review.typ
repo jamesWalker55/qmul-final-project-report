@@ -8,7 +8,7 @@ Personal Information Management (PIM) is a field of research which is concerned 
 
 One of the aims of PIM is for people to have the right information in the right place, in the right form and with enough completeness and quality to meet the current need @jones2007personal. However this is not the case for most people. Often the necessary information may not be found by the user, or the information may arrive at an unsuitable time such that it cannot be used.
 
-@jones2010keeping mentions the idea of "keeping found things found", in which people store information in multiple location and multiple applications. If this is performed inconsistently, the information people need is scattered widely, which makes it even more difficult to maintain and organise information. This is known as information fragmentation @jones2007personal.
+Jones mentions the idea of "keeping found things found", in which people store information in multiple location and multiple applications @jones2010keeping. If this is performed inconsistently, the information people need is scattered widely, which makes it even more difficult to maintain and organise information. This is known as information fragmentation @jones2007personal.
 
 == File Management
 
@@ -106,7 +106,7 @@ Though I have years of experience in high-level languages such as Python, Ruby, 
 
 Tauri is a Rust framework that allows developing desktop applications using web technologies like HTML, CSS, JavaScript for the frontend, while using Rust for the backend @tauricontributors_2022_tauriappstauri.
 
-Rust is a relatively new language compared to other languages. It has many user interface libraries, however most of them are in the early stages of development and not yet fully-featured @shivshank_2022_are. Among these, Tauri stands out for its support of many platforms and its polished feature set.
+Rust is a relatively new language compared to other languages. It has many user interface libraries, however most of them are in the early stages of development and not yet fully-featured @bensing_2019_are. Among these, Tauri stands out for its support of many platforms and its polished feature set.
 
 Tauri uses web technologies for implementing user interfaces. This allows developers to use widgets and components from frontend frameworks such as Vue and React - developers are not limited to a small subset of widgets implemented by the library author. Tauri can also take advantage of existing tools and libraries from the web development ecosystem - this provides a more complete solution.
 

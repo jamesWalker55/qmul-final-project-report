@@ -1,6 +1,6 @@
 = Implementation
 
-== Parsing Plain Text Queries
+== Parsing Plain Text Queries <query-introduction>
 
 To support the plain-text query language described in @sec-searching-for-items, the application needs to implement a compiler that translates from the plain-text query language to SQL.
 
@@ -43,9 +43,9 @@ a b | -d
 WHERE tag_query = '(a AND b) OR (meta_tags:all NOT d)'
 ```
 
-The FTS5 extension treats `NOT` as a binary operator, not a unary operator. This means that it is impossible to search for the negation of a single term. For example, the following query cannot be represented under FTS5: _"items that don't have the tag 'old'"_.
+The FTS5 extension treats `NOT` as a binary operator, not a unary operator. In other words, the `NOT` operator computes the set difference of two conditions. It is unable to search for the complement of a single condition. Often, it can be useful to search for the complement of a single tag, for example searching for all items that don't have the tag `old`. However, it is impossible to represent the following query in FTS5: _"items that don't have the tag 'old'"_.
 
-To circumvent this issue, I added a new column to the `items(id, path, tags)` table called `meta_tags`. The `meta_tags` column contains the string `"all"` by default, so all items in the table will gain a new `all` tag. I can then specify `meta_tags:all` in the FTS5 query to search for _"all items that have the tag 'all' in the 'meta_tags' column"_. I finally use `meta_tags:all` as the first operand in the `NOT` operator to implement unary negation of a single term.
+To circumvent this issue, I added a new column to the `items(id, path, tags)` table called `meta_tags`. The `meta_tags` column contains the string `"all"` by default, so all items in the table will gain a new `all` tag. I can then specify `meta_tags:all` in the FTS5 query to search for _"all items that have the tag 'all' in the 'meta_tags' column"_. I finally use `meta_tags:all` as the first operand in the `NOT` operator to compute the set difference between all items and the given query, effectively implementing unary negation of a single term.
 
 ==== Case 2: FTS5 and SQL queries without OR operands
 
@@ -96,7 +96,7 @@ This is due to two limitations of SQLite's FTS5 extension. First, it only suppor
 
 To overcome this, I replace all FTS expressions with a subquery that contains the required FTS expression. In effect, this make the statement behave as expected.
 
-=== Compiler Implementation
+=== Compiler Implementation <query-implementation>
 
 // To implement a compiler in Rust
 //
@@ -109,9 +109,9 @@ The compiler is implemented using two files, `parser.rs` and `convert.rs`.
     caption: [Diagram showing the process of converting a plain-text query to a SQL statement],
 )
 
-The parser is implemented in `parser.rs` using #link("https://github.com/rust-bakery/nom")[the "nom" crate (library)]. Its purpose is to validate and parse a plain-text query into a parse tree.
+The parser is implemented in `parser.rs` using the "nom" crate @couprie_2021_nom. Its purpose is to validate and parse a plain-text query into a parse tree.
 
-The purpose of `convert.rs` is to convert the parse tree into an abstract syntax tree (AST). In this stage, it combines any FTS terms in the same level into a single `FTS()` object that represents a single FTS expression in the output SQL statement.
+The purpose of `convert.rs` is to convert the parse tree into an abstract syntax tree (AST) @thain2019introduction. In this stage, it combines any FTS terms on the same level into a single `FTS()` object that represents a single FTS expression in the output SQL statement.
 
 The conversion from the AST to SQL code is also handled by `convert.rs`. This is done by calling the `to_sql_clause(&self) -> String` method on the base of the tree, which then recursively calls `to_sql_subclause(&self, is_root: bool) -> String` on its child nodes.
 
@@ -129,7 +129,10 @@ Unit tests for each module etc
 
 Implemented.
 
-== Extension 1 - Directory watcher
+== Extension 1 - Directory watcher <watcher-introduction>
+
+// TODO: any challenges encountered while implementing this?
+// TODO: give an example of it detecting a rename
 
 The ability to track file movement is essential to this application. When implemented, it allows the application to preserve tags on a file when the user moves a file to a new location. However, implementing this on the Windows operating system presents a major challenge.
 
@@ -159,11 +162,11 @@ The event handler receives new events in an infinite loop. It performs a differe
 
 When a delete event is received, it may correspond to either a file movement or a file deletion. The algorithm stores this event in a list, and adds to the event an expiry date. If the path is determined to be a rename event before the expiry time, then the algorithm sends a rename event. Otherwise, the path expires and is treated as a delete event, which the algorithm sends to the output.
 
-When a create event is received, it may correspond to either a file movement or a file creation. The algorithm goes through the list of recently-deleted paths and checks if any path has the same file name as this create event. If a matching path is found, it marks the path as a rename event, then sends a rename event to the output. Otherwise, the algorithm returns the create event as-is.
+When a create event is received, it may correspond to either a file movement or a file creation. The algorithm goes through the list of recently-deleted paths and checks if any path has the same file name as this create event. If a matching file name is found, it marks the path as a rename event, then sends a rename event to the output. Otherwise, the algorithm returns the create event as-is.
 
 If the list of recently-deleted paths is empty, the infinite loop blocks indefinitely while waiting for a new event from the `notify` watcher. If the list is not empty, the infinite loop will wait for the new event but timeout on the next earliest expiry time in the list. If a timeout occurs, it removes the associated path from the list and restarts the loop.
 
-The full code for the event handler is included in the appendices at @code-dir-watcher.
+The full code for the event handler is included as an appendix at @code-dir-watcher.
 
 == Extension 2 - Searching based on file path
 
