@@ -1,3 +1,7 @@
 {
-    "typst-lsp.exportPdf": "never"
+    "typst-lsp.exportPdf": "never",
+    "cSpell.words": [
+        "Tauri",
+        "Vite"
+    ]
 }
