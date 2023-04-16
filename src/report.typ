@@ -26,6 +26,7 @@
 #include "03-requirements-analysis.typ"
 #include "04-design.typ"
 #include "05-implementation.typ"
+#include "06-testing.typ"
 
 #include "99-appendices.typ"
 

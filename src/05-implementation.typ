@@ -119,15 +119,21 @@ Finally, the compiler inserts the SQL clause into the SQL template to obtain the
 
 The final number of lines of code in the compiler module was 1149 lines.
 
-== Testing
+== File Paths and Operating Systems
 
-Testing of the application involved implementing unit tests for each application module, as well as integration tests for testing how the different modules integrate together.
+One of the requirements of the software is cross-platform compatibility: the software should run on all major operating systems, and the produced database must be transferable between operating systems. However, an issue arises when the software needs to handle file paths. In terms of file path handling, Windows and Unix-like operating systems (including macOS and Linux) have drastic differences.
 
-At the moment, 104 unit and integration tests have been implemented. The test output is included in the appendix.
+The first major difference is path separators. Windows defaults to backslashes (`\`) to separate components in a path, however in command contexts it also recognises forward slashes (`/`) as valid path separators. Unix systems use forward slashes to separate path components, whereas backslashes, while heavily discouraged, are allowed as normal characters in filenames.
 
-Unit tests for each module etc
+The second major difference is partitions. A Windows system partitions disk space into partition, each of which has a unique drive letter such as `C:\` and `D:\`. In Windows, absolute file paths will always contain drive letters, for example "`D:\Audio Samples`" represents an absolute path on Windows. Unix systems do not use partitions, on such systems file paths always begin with a forward slash, for example `/home/james/audio`.
 
-Implemented.
+These differences present several issues when storing paths in the database. If the application directly stored the absolute paths of files in the database, this would mean storing either Windows-specific paths or Unix-specific paths in the database. The database would become operating system-specific and is no longer cross-platform.
+
+The issue of path separators is easy to solve - we only use forward slashes as separators in the database since that is recognised as a valid separator on all operating systems. On Unix, this requires no changes to the paths and thus has no effect. On Windows, this can be implemented with a simple string substitution.
+
+The issue of drive letters is more difficult to handle. If we wish to store absolute paths in the database, there is no way to create absolute paths that are valid on both Windows and Unix systems, since Windows drive letters are invalid on Unix systems.
+
+Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as a "base path", and store paths relative to the "base path". In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
 
 == Extension 1 - Directory watcher <watcher-introduction>
 
@@ -236,34 +242,18 @@ Allow searching for files using their path, so users can use the application jus
 
 Not yet implemented.
 
-== Extension X - Audio sample categorisation
+== Future work
+
+=== Extension X - Audio sample categorisation
 
 Use deep learning to categorise audio files, then automatically tag them.
 
 Not yet implemented.
 
-== Extension X - Query simplification
+=== Extension X - Query simplification
 
 Simplify plain text query before converting to sql. Should use Disjunctive normal form: https://en.wikipedia.org/wiki/Disjunctive_normal_form
 
 Not yet implemented.
-
-// == Use Cases
-//
-// == Extension 1 - TODO
-//
-// == Extension 2 - TODO
-//
-// = Testing
-//
-// = Evaluation
-//
-// = Conclusion
-//
-// = Literature review
-//
-// = Background
-//
-// = Your other achievements to date
 
 #pagebreak()

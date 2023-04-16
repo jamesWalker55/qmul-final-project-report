@@ -20,7 +20,7 @@
 
 #pagebreak()
 
-== Test Output
+== Test Output <test-output>
 
 #raw(read("res/test-output.txt"))
 
