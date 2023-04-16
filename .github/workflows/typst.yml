@@ -11,8 +11,8 @@ jobs:
 
       # Download typst binary
       - run: |
-          # URL to typst release
-          RELEASE_URL=https://github.com/typst/typst/releases/download/v23-03-28/typst-x86_64-unknown-linux-gnu.tar.gz
+          # URL to typst release as of 2023-04-16
+          RELEASE_URL=https://github.com/typst/typst/releases/download/v0.2.0/typst-x86_64-unknown-linux-gnu.tar.gz
           # Temporary archive path
           TEMP_ARCHIVE_NAME=temp.tar.gz
           # Path of typst inside the archive
@@ -20,7 +20,7 @@ jobs:
           # How many folders deep is the typst binary?
           TYPST_ARCHIVE_DEPTH=1
 
-          # Download latest release as of 2023-03-23
+          # Download release
           # Output to release.tar.gz
           curl -L $RELEASE_URL --output $TEMP_ARCHIVE_NAME
 
@@ -31,7 +31,7 @@ jobs:
           rm $TEMP_ARCHIVE_NAME
 
       # Build the report
-      - run: ./typst src/report.typ
+      - run: ./typst compile src/report.typ out/report.pdf
 
       # Commit all changes to a new branch
       - name: Commit changes and push to a new branch
@@ -41,7 +41,7 @@ jobs:
           skip_fetch: true
           create_branch: true
           branch: typst-action
-          file_pattern: '*.pdf'
+          file_pattern: '**/*.pdf'
           add_options:  --force
           commit_message: Typst action
           commit_options: --signoff
