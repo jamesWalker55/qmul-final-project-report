@@ -135,6 +135,45 @@ The issue of drive letters is more difficult to handle. If we wish to store abso
 
 Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as a "base path", and store paths relative to the "base path". In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
 
+== Optimising the Item List
+
+One of the requirements for this project is for the software to remain responsive when handling large file collections. This concerns the frontend user interface of the software. The main item list of the user interface is a major component of the software that the user will interact with frequently, thus it is important to ensure that the item list is sufficiently responsive.
+
+A naive implementation of the item list may be as follows: When the user enters a new search query, the item list sends the query to the Rust backend. The backend queries the database for a list of items, then returns a list of each item and any associated information such as item paths to the Vue frontend. Upon receiving the list, the item list renders every item in the received list using data that is stored in the list.
+
+The above implementation works well for small file collections, but does not scale with larger collections.
+
+As the length of the list increases, the data needed to be transferred from the backend to the frontend increases very quickly, and requires a longer time to complete. This is reflected in the user interface as a momentary freeze lasting 1 to 5 seconds or more depending on the size of the list.
+
+After the transfer, the item list then renders every item in the list. In a DOM-based (Document Object Model) user interface library like Vue, this means creating DOM nodes for every item in the list. This can quickly become expensive, especially for larger lists. This is reflected in the user interface as a low framerate or stuttering when the user scrolls the list.
+
+The software implements two optimisations to address these issues.
+
+=== Virtual Item List
+
+#figure(
+    image("res/virtual-list.png", width: 60%),
+    caption: [Diagram showing the different regions involved in a virtualised list.],
+)
+
+The first optimisation is a virtual item list. A virtual list is a technique for rendering only the items visible on-screen in a scrollable list, while skipping the rendering of all other items to improve performance.
+
+In Vue, a virtual item list massively reduces the number of DOM nodes generated for a given item list. Since the number of items visible depends on the size of the application window, the number of rendered items remain constant as the length of the item list increases. This way, the item list only generates a fixed number of elements, and the user can still interact with all items as if they were all present on the page.
+
+The full code for the item list is included as an appendix at @code-virtual-list.
+
+In my implementation of the virtual list, I added a buffer zone to pre-render items that are slightly off-screen. The reason for this buffer zone will be explained in the next section.
+
+=== Limiting the Data Transferred
+
+To reduce the amount of data transferred from the backend to the frontend during the initial load, we observe that not all of the data is useful when the list first loads. In a list of 100 items, only the paths and tags of the first few items will be visible, while the path and tags of all other items will be invisible until scrolled to. Thus it is unnecessary to transfer the paths and tags of all items for the initial load, the only necessary information is the item ID, which is used to uniquely identify the item in the database.
+
+In the software implementation, the virtual list initially only has access to a list of item IDs. If it wishes to get the path and tags of an item to render it, it must make another request to the backend to fetch the item data. The fetching of items is not instantaneous and takes about 5-10ms for each item.
+
+A further optimisation is to cache the data obtained from the backend. I implemented an item data cache that stores any retrieved items until the next query. When the virtual list attempts to fetch data from the backend, it now checks the item cache for existing data before attempting the fetch.
+
+One downside of this approach is that the rendering of items is no longer instantaneous, since it needs to wait for the backend to respond with the relevant data before being able to render the item. To address this, the virtual list includes a buffer zone to pre-render items that are slightly off-screen. This ensures that items have enough time to render before being visible to the user.
+
 == Extension 1 - Directory watcher <watcher-introduction>
 
 // TODO: any challenges encountered while implementing this?
@@ -237,6 +276,12 @@ If the list of recently-deleted paths is empty, the infinite loop blocks indefin
 The full code for the event handler is included as an appendix at @code-dir-watcher.
 
 == Extension 2 - Searching based on file path
+
+Allow searching for files using their path, so users can use the application just like any typical file manager.
+
+Not yet implemented.
+
+== Extension 3 - Audio previewing
 
 Allow searching for files using their path, so users can use the application just like any typical file manager.
 

@@ -20,6 +20,12 @@
 
 #pagebreak()
 
+== Virtual List Implementation <code-virtual-list>
+
+#raw(read("res/ItemList.vue"), lang: "html")
+
+#pagebreak()
+
 == Test Output <test-output>
 
 #raw(read("res/test-output.txt"))
