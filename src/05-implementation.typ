@@ -98,10 +98,6 @@ To overcome this, I replace all FTS expressions with a subquery that contains th
 
 === Compiler Implementation <query-implementation>
 
-// To implement a compiler in Rust
-//
-// There are many Rust crates (libraries) available for implementing compilers. In the application, I used #link("https://github.com/rust-bakery/nom")[the nom crate] to implement the compiler. The compiler comprises of two parts:
-
 The compiler is implemented using two files, `parser.rs` and `convert.rs`.
 
 #figure(
