@@ -52,7 +52,7 @@ WHERE (
 )
 ```
 
-To optimise the query, we can convert the input query into conjunctive normal form (CNF) and disjunctive normal form (DNF) @büning1999propositional. These forms flatten any nested groupings in the query, and represent the query as either an AND or ORs, or an OR of ANDs. Depending on the query submitted by the user, either the CNF or DNF form will contain the least amount of query terms.
+To optimise the query, we can convert the input query into conjunctive normal form (CNF) and disjunctive normal form (DNF) @büning1999propositional. These forms flatten any nested groupings in the query, and represent the query as either an AND of ORs, or an OR of ANDs. Depending on the query submitted by the user, either the CNF or DNF form will contain the least amount of query terms.
 
 For instance, the query expressed above can be converted into DNF, which yields the following SQL statement with only two FTS terms:
 
