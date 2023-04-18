@@ -22,8 +22,6 @@ Another major problem with current file management systems is that they are not 
 
 == Aim
 
-// This project is related to Personal Information Management (PIM). Particularly,
-
 The project aims to investigate and develop a tag-based file manager. The system would allow users to assign tags to their files, and then search for those files based on those tags. The aim of this project is to develop a file management system which is more efficient than current systems, and which enables users to organise their files in a way that is suitable for them.
 
 Compared to a hierarchical directory structure, a tag-based approach would allow users to organise their files in a more flexible and efficient way. Users would be able to assign arbitrary tags to their files then search for those files using those tags. This lets users avoid the time-consuming task of classifying files and browsing folders, for example deciding which single folder to place a file into @dinneen2020ubiquitous. This would also enable users to search for files based on their content, and would make it easier for users to manage their files.
@@ -55,11 +53,5 @@ The research questions for this project are as follows:
 
 - What do users need from a file management system in order to manage their files effectively?
 - Can a tag-based approach be used to improve the efficiency of file management?
-
-// == Project Structure
-//
-// (The following is auto generated)
-//
-// Section two explores the literature related to PIM and file management. Section three discusses the existing solutions that are available to users. Section four looks at the needs of users when performing file management tasks. Section five presents the development of the prototype system. Section six looks at the evaluation of the prototype system. And finally, section seven provides the conclusion and recommendations for future work.
 
 #pagebreak()

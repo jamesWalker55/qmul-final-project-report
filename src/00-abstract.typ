@@ -1,5 +1,7 @@
 #heading(outlined: false, numbering: none)[Abstract]
 
-#lorem(350)
+In today's digital age, people are constantly creating and storing large amounts of data, ranging from personal photos and documents to work-related files. However, traditional file management systems, which rely on hierarchical folder structures, can be cumbersome and inefficient when dealing with a large number of files. This has led to an increased interest in alternative file management systems, such as tag-based approaches, which allow users to assign tags to their files and search for them based on those tags.
+
+This report investigates and develops a tag-based file management system. The aim of this project is to provide a more efficient and flexible file management system compared to current hierarchical directory structures, enabling users to organise their files in a way that is suitable for them. The report identifies existing challenges related to personal information management (PIM) and file management, evaluates existing tagging software, and explores user needs in file management tasks. The report also discusses concepts related to PIM, investigates challenges related to file management, and proposes a tag-based system that allows users to manage and search files using tags. A user interface is developed that is easy to learn and efficient to use, and the effectiveness of the prototype system is evaluated through user testing. The report concludes by offering recommendations for further work.
 
 #pagebreak()
