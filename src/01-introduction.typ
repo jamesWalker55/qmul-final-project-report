@@ -53,7 +53,6 @@ The objectives of the project are as follows:
 
 The research questions for this project are as follows:
 
-- How effective are existing solutions when it comes to managing a large number of files?
 - What do users need from a file management system in order to manage their files effectively?
 - Can a tag-based approach be used to improve the efficiency of file management?
 

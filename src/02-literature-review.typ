@@ -38,16 +38,6 @@ There are also some disadvantages associated with tagging. One of the main disad
 
 There are many software solutions for using tags for file management. Some of them are standalone applications, while some may be integrated into the operating system.
 
-// TODO: Include a cool table here
-
-// See table \ref{tagging-software-comparison}.
-//
-// Table: Comparison of existing tagging software \label{tagging-software-comparison}
-//
-// Software|Features|Limitations
-// -|-|-
-// a|a|a
-
 === Windows' Native Tagging System
 
 All Windows versions since Windows 7 has built-in tagging functionality. However this functionality is well-hidden and difficult to access. On files that support tags, a field for a list of tags is available on the "Properties > Details" popup panel.
@@ -88,8 +78,6 @@ One issue with the software is that tags are not transferrable between computers
 
 From personal testing, another one of the issues is its slow performance. The application takes a long time to execute searches. When loading a large list of files, it slows down significantly as it scans each file to generate image previews.
 
-// TODO: Analyse more software!
-
 == Programming Tools and Frameworks
 
 For the development of this project, a variety of tools and frameworks will be used. In this section, I will explain my decisions when it comes to deciding what toolset to use.
@@ -112,6 +100,8 @@ Tauri uses web technologies for implementing user interfaces. This allows develo
 
 The Rust backend can be used to access the file system and other desktop-specific features. This provides a more complete solution compared to using web technologies alone, for example building a browser-based file manager.
 
+In preparation for this project, I developed a small program using Rust, Tauri and Vue to learn more about these technologies and gain experience in software development. The program was successfully completed and I was able to gain a better understanding of Rust, as well as the features made available by the libraries Tauri and Vue.
+
 === Vue
 
 Vue is a JavaScript frontend framework developed by Evan You. It is designed to be flexible and easy-to-use, enabling the efficient development of web applications.
@@ -123,8 +113,6 @@ Vue has developed into one of the most popular frontend JavaScript frameworks. I
 I chose Vue as the frontend framework because it has good documentation and many third-party libraries, and is a well-supported framework used by companies such as Facebook, Netflix, and Adobe.
 
 I have some experience using Vue, but only in a limited capacity - I have experience with this framework through one of the university modules I am studying. I decided on this opportunity both improve my skills with the framework as well as developing new skills related to desktop application development.
-
-// TODO: Mention that you made a small tauri project for learning tauri and vue
 
 === SQLite
 

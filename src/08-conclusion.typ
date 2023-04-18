@@ -1,5 +1,15 @@
 = Conclusion
 
+The aim of this project was to develop a file manager that allowed assigning tags to files while still retaining the existing folder structure. At the same time, the file manager must fulfill a number of requirements listed in @requirements-analysis.
+
+The development of the project involved the development of a custom query language that transpiles to an SQL statement, an asynchronous file watcher to handle Windows-specific behaviour in file events, a database schema for efficiently storing and retrieving tags using SQLite, and a frontend with a lazily loaded list that improves performance.
+
+Many challenges arose during the development of the project. One was learning the Rust language from scratch when I had little to no experience of typed languages or low-level languages, concepts such as lifetimes in Rust were particularly difficult to understand since I only had prior experience in scripting languages such as Python. Another major challenge was the implementation of the asynchronous file watcher, I was able to use my knowledge of tasks as loops from embedded systems to implement it successfully, but the process of developing the solution was still very difficult.
+
+In the end, the development of the software was successful. All of the requirements stated previously were met. The feedback received from user testing was well-received, and from that I had obtained new ideas and possible ways to further develop and extend the software.
+
+Overall, the project was a success. I was able to apply my knowledge of operating systems, compilers, databases, web development, and user interfaces in a practical application that can not only solve my own file management problems, but can also help other users in file management. This is a major achievement for me as I was able to finish developing fully-functional software and distribute it to end-users.
+
 == Future Work <future-work>
 
 === Audio Sample Categorisation

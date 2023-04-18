@@ -60,7 +60,7 @@ Most of the users felt the software was quick and responsive. This is helped by 
 
 While the responses to the questions are generally positive, one of the responses highlight the fact that this software solves the issue of file organisation in a specific way that may not be applicable to all users. However, for users who are dealing with file management issues, the software can provide an efficient solution.
 
-== Public Feedback <public-feedback>
+=== Public Feedback <public-feedback>
 
 #let quote(content) = {
   set text(fill: luma(25%), style: "italic")
