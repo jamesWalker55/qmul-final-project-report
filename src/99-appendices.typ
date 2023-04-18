@@ -8,13 +8,13 @@
 
 #pagebreak()
 
-== First Iteration of Directory Watcher Manager <code-deprecated-watcher>
+== First Iteration of Directory Watcher <code-deprecated-watcher>
 
 #raw(read("res/watcher-iteration-1.rs"), lang: "rust")
 
 #pagebreak()
 
-== Directory Watcher Event Handler <code-dir-watcher>
+== Final Iteration of Directory Watcher <code-dir-watcher>
 
 #raw(read("res/dir-watcher.rs"), lang: "rust")
 

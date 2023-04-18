@@ -101,8 +101,8 @@ To overcome this, I replace all FTS expressions with a subquery that contains th
 The compiler is implemented using two files, `parser.rs` and `convert.rs`.
 
 #figure(
-    image("res/compiler-flow.png"),
-    caption: [Diagram showing the process of converting a plain-text query to a SQL statement],
+  image("res/compiler-flow.png"),
+  caption: [Diagram showing the process of converting a plain-text query to a SQL statement],
 )
 
 The parser is implemented in `parser.rs` using the "nom" crate @couprie_2021_nom. Its purpose is to validate and parse a plain-text query into a parse tree.
@@ -131,7 +131,7 @@ The issue of drive letters is more difficult to handle. If we wish to store abso
 
 Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as a "base path", and store paths relative to the "base path". In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
 
-== Optimising the Item List
+== Optimising the Item List <optimise-item-list>
 
 One of the requirements for this project is for the software to remain responsive when handling large file collections. This concerns the frontend user interface of the software. The main item list of the user interface is a major component of the software that the user will interact with frequently, thus it is important to ensure that the item list is sufficiently responsive.
 
@@ -170,7 +170,7 @@ A further optimisation is to cache the data obtained from the backend. I impleme
 
 One downside of this approach is that the rendering of items is no longer instantaneous, since it needs to wait for the backend to respond with the relevant data before being able to render the item. To address this, the virtual list includes a buffer zone to pre-render items that are slightly off-screen. This ensures that items have enough time to render before being visible to the user.
 
-== Extension 1 - Directory watcher <watcher-introduction>
+== Extension: Directory watcher <watcher-introduction>
 
 The ability to track file movement is essential to this application. When implemented, it allows the application to preserve tags on a file when the user moves a file to a new location. However, implementing this on the Windows operating system presents a major challenge.
 
@@ -268,66 +268,15 @@ If the list of recently-deleted paths is empty, the infinite loop blocks indefin
 
 The full code for the event handler is included as an appendix at @code-dir-watcher.
 
-== Future work
+== Software Manual <manual-website>
 
-=== Extension 2 - Audio sample categorisation
-
-Audio sample categorisation is a task where given an audio file, the goal is to classify it into one or more categories, such as genre, instrument, and mood. This task can be used in various applications, such as automated music recommendation and music search.
-
-In the context of this project, audio sample categorisation can be used to automatically tag and categorise audio samples. This feature can be found in many popular audio sample management software, such as Algonaut Atlas 2 @sherbourne_2022_algonaut and Waves Cosmos @rogersonpublished_2022_waves.
-
-The audio sample categorisation task is challenging due to the wide variety of possible audio files that can be encountered. This means that the model must be able to handle a wide range of audio files with varying lengths and characteristics. Some common approaches for audio sample categorisation include deep learning techniques such as convolutional and recurrent neural networks.
-
-To implement this extension, I would make use of modern machine learning techniques. The first step would be to collect a dataset of annotated audio samples with data I can derive tags from, such as genre and instrument labels. Due to the large number of samples typically involved in training a neural network, I would likely use an existing dataset rather than manually tagging a dataset.
-
-After obtaining the dataset, I can then use the dataset to train a convolutional or recurrent neural network model. The model would be trained to classify each audio sample into one or more categories. I would use modern deep learning tools such as PyTorch and TensorFlow to train the model.
-
-Finally, I would use the model to classify audio samples into the desired categories. The output of the model can be used to automatically generate tags for the audio samples. The generated tags can then be used to search for files with the software's query bar, as with other user-assigned tags.
-
-=== Extension 3 - Query simplification
-
-This extension relates to simplifying the generated SQL statement produced by the parser described in @query-introduction.
-
-Queries expressed in the query bar can be arbitrarily complicated due to the nature of user-submitted inputs. The software currently translates the plain-text query into an SQL statement without any optimisation. In SQLite, FTS terms are the most expensive to compute due to their internal implementation. Therefore, the number of FTS terms in the resulting SQL query should be minimised.
-
-The following example query contains tags (`a`, `b`, `c`) and path (`in:1`, `in:2`) terms, the output SQL query contains three separate FTS terms in total.
-
-```sql
--- The plain-text query
-(a in:1 | b in:1) c
-
--- The generated SQL WHERE clause
-WHERE (
-  (
-    (i.id IN (SELECT id FROM tag_query('a'))
-      AND i.path LIKE '1%')
-    OR
-    (i.id IN (SELECT id FROM tag_query('b'))
-      AND i.path LIKE '1%')
-  )
-  AND
-  i.id IN (SELECT id FROM tag_query('C'))
+#figure(
+  image("res/documentation.png", width: 70%),
+  caption: [Screenshot of the documentation website, 17 May 2023],
 )
-```
 
-To optimise the query, we can convert the input query into conjunctive normal form (CNF) and disjunctive normal form (DNF) @büning1999propositional. These forms flatten any nested groupings in the query, and represent the query as either an AND or ORs, or an OR of ANDs. Depending on the query submitted by the user, either the CNF or DNF form will contain the least amount of query terms.
+As part of the evaluation for the project, I have created a public website containing documentation for the software @wong_2023_introduction. The website is hosted on GitHub Pages and contains information such as the software download link, version changelogs, documentation about basic usage, and documentation about the custom query language used by the software.
 
-For instance, the query expressed above can be converted into DNF, which yields the following SQL statement with only two FTS terms:
-
-```sql
--- The plain-text query in DNF
-a c in:1 | b c in:1
-
--- The generated SQL WHERE clause
-WHERE (
-  (i.id IN (SELECT id FROM tag_query('a AND c'))
-    AND i.path LIKE '1%')
-  OR
-  (i.id IN (SELECT id FROM tag_query('b AND c'))
-    AND i.path LIKE '1%')
-)
-```
-
-Further work on the software will include implementation of CNF and DNF algorithms to simplify the user-provided query before converting to an SQL statement.
+One of the requirements of the project was that the software should remain accessible to new users. The manual helps with this requirement by providing explanations of related concepts and software features, allowing new users to gain a better understanding of the software and its uses.
 
 #pagebreak()

@@ -27,6 +27,8 @@
 #include "04-design.typ"
 #include "05-implementation.typ"
 #include "06-testing.typ"
+#include "07-evaluation.typ"
+#include "08-conclusion.typ"
 
 #include "99-appendices.typ"
 
