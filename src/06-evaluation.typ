@@ -1,4 +1,4 @@
-= Testing
+= Evaluation
 
 == Software Testing
 
@@ -25,7 +25,7 @@ A group of five users were given the software and tasked to tag files in a given
   caption: [Responses to the question "How was your experience using the program?"],
 )
 
-None of the individuals involved in the survey felt the program was difficult to use, the responses ranged from "medium" to "very easy". This indicates that the user interface is generally user-friendly and understandable.
+The participants felt the program was easy to use, the responses ranged from "medium" to "very easy". This indicates that the user interface is generally user-friendly and understandable, even when the users had not seen the software before.
 
 #figure(
   image("res/survey-q2.png", width: 70%),
