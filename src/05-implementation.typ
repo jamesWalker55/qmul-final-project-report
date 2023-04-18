@@ -62,7 +62,7 @@ For clarity, "FTS terms/expressions" will refer to tag searches like "a b", whil
 
 In this case, the WHERE clause requires multiple expressions in addition to the FTS expression. For each SQL term in the query, the WHERE clause must include a separate SQL expression for the term. All the rules and edge cases from @query-edge-case-1 apply here. This case is similar to case 1 and is simple to handle.
 
-==== Case 3: FTS5 and SQL queries with OR operands
+==== Case 3: FTS5 and SQL queries with OR operands <query-edge-case-3>
 
 ```sql
 -- The plain-text query:

@@ -30,7 +30,7 @@ Finally, I would use the model to classify audio samples into the desired catego
 
 This extension relates to simplifying the generated SQL statement produced by the parser described in @query-introduction.
 
-Queries expressed in the query bar can be arbitrarily complicated due to the nature of user-submitted inputs. The software currently translates the plain-text query into an SQL statement without any optimisation. In SQLite, FTS terms are the most expensive to compute due to their internal implementation. Therefore, the number of FTS terms in the resulting SQL query should be minimised.
+Queries expressed in the query bar can be arbitrarily complicated due to the nature of user-submitted inputs. The software currently translates the plain-text query into an SQL statement without any optimisation. In SQLite, FTS terms are the most expensive to compute because of the usage of subqueries as mentioned in @query-edge-case-3. Therefore, the number of FTS terms in the resulting SQL query should be minimised.
 
 The following example query contains tags (`a`, `b`, `c`) and path (`in:1`, `in:2`) terms, the output SQL query contains three separate FTS terms in total.
 
