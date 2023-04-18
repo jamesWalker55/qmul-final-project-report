@@ -168,7 +168,7 @@ In the software implementation, the virtual list initially only has access to a 
 
 A further optimisation is to cache the data obtained from the backend. I implemented an item data cache that stores any retrieved items until the next query. When the virtual list attempts to fetch data from the backend, it now checks the item cache for existing data before attempting the fetch.
 
-One downside of this approach is that the rendering of items is no longer instantaneous, since it needs to wait for the backend to respond with the relevant data before being able to render the item. To address this, the virtual list includes a buffer zone to pre-render items that are slightly off-screen. This ensures that items have enough time to render before being visible to the user.
+One downside of this approach is that the rendering of items is no longer instantaneous, since it needs to wait for the backend to respond with the relevant data before being able to render the item. To address this, the virtual list includes a buffer zone to pre-render items that are slightly off-screen. This ensures that items have enough time to render before being scrolled into view.
 
 == Extension: Directory watcher <watcher-introduction>
 
