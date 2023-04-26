@@ -8,6 +8,10 @@
 #set text(font: "New Computer Modern", size: 11.5pt)
 #set heading(numbering: "1.")
 
+#show heading.where(level: 1): it => block(width: 100%)[
+  Chapter #counter(heading).display("1:") #it.body
+]
+
 #include "00-cover.typ"
 #include "00-abstract.typ"
 
