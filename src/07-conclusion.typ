@@ -80,6 +80,6 @@ In the context of this project, audio sample categorisation can be used to autom
 
 The audio sample categorisation task is challenging due to the wide variety of possible audio files that can be encountered. This means that the model must be able to handle a wide range of audio files with varying lengths and characteristics. Some common approaches for audio sample categorisation include deep learning techniques such as convolutional and recurrent neural networks.
 
-To implement this extension, machine learning techniques such as convolutional or recurrent neural network model can be used. Obtaining a dataset of annotated audio samples is also one challenge with this extension.
+To implement this extension, machine learning techniques such as convolutional or recurrent neural network models can be used. Obtaining a dataset of annotated audio samples is also one challenge with this extension.
 
 #pagebreak()

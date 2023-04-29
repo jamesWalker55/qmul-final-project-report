@@ -98,7 +98,7 @@ When the plain-text query contains FTS5 terms and SQL terms joined together with
 
 This is due to two limitations of SQLite's FTS5 extension. First, it only supports at most one FTS5 expression in the WHERE clause. Attempting to query using multiple FTS expressions will result in zero rows being returned. Second, it does not handle OR groups that contain a FTS5 expression correctly. A query such as _"a b | in:my\_folder"_ will have rows missing from the output.
 
-To overcome this, I replace all FTS expressions with a subquery that contains the required FTS expression. In effect, this make the statement behave as expected.
+To overcome this, I replace all FTS expressions with a subquery that contains the required FTS expression. In effect, this makes the statement behave as expected.
 
 === Compiler Implementation <query-implementation>
 
@@ -125,7 +125,7 @@ One of the requirements of the software is cross-platform compatibility: the sof
 
 The first major difference is path separators. Windows defaults to backslashes (`\`) to separate components in a path, but also recognises forward slashes (`/`) as valid path separators in command contexts. Unix systems use forward slashes to separate path components, whereas backslashes, while heavily discouraged, are allowed as normal characters in filenames.
 
-The second major difference is partitions. A Windows system partitions disk space into partition, each of which has a unique drive letter such as `C:\` and `D:\`. Windows absolute file paths will always contain drive letters, for example "`D:\Audio Samples`". Unix systems do not use partitions, on such systems file paths always begin with a forward slash, for example `/home/james/audio`.
+The second major difference is partitions. A Windows system divides disk space into partitions, each of which has a unique drive letter such as `C:\` and `D:\`. Windows absolute file paths will always contain drive letters, for example "`D:\Audio Samples`". Unix systems do not use partitions, on such systems file paths always begin with a forward slash, for example `/home/james/audio`.
 
 These differences present several issues when storing paths in the database. If the application directly stored the absolute paths of files in the database, this would mean storing either Windows-specific paths or Unix-specific paths in the database. The database would become operating system-specific and is no longer cross-platform.
 
