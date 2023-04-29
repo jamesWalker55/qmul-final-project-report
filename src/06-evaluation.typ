@@ -4,17 +4,13 @@
 
 Testing of the application involved implementing unit tests for each application module, as well as integration tests for testing how the different modules integrate together. As of writing, 130 unit and integration tests have been implemented. A total of 9129 lines of code were written in this project. The test output is included in the appendix at @test-output.
 
-=== Unit tests
+Unit tests were implemented for each module in the Rust backend. The tested modules include `diff.rs` for diffing file trees, `repo.rs` for the repository definition, `scan.rs` for scanning a folder, `sql.rs` for escaping strings for use in SQL queries, and `parser.rs` and `convert.rs` for the query transpiler.
 
-Unit tests were implemented for each module in the Rust backend. The tested modules include: `diff.rs` for diffing file trees, `repo.rs` for the repository definition, `scan.rs` for scanning a given folder, `sql.rs` for escaping strings to be inserted into SQL queries, `parser.rs` for the parser part of the query transpiler, and `convert.rs` for the codegen part of the query transpiler.
-
-=== Integration tests
-
-Integration tests were implemented to test how different modules would work together. The integration tests were implemented in `query_repo.rs` with a mock repository to assert that the results of the query transpiler were as expected when used in an actual SQLite connection.
+Integration tests were implemented in `query_repo.rs` with a mock repository to assert that the results of the query transpiler were as expected when used in an actual SQLite connection.
 
 == User Testing
 
-User testing was performed in two forms. The first form involved giving a group of participants the software and a task, and finally completing a survey. The second form involved a public release of the software to gather feedback and suggestions about the software. Since this was an evaluation of a service (the file management software) with the aim of improving the service, this project is exempt from needing research ethics approval.
+User testing was performed in two forms. The first form involved giving a group of participants the software and a task, and finally completing a survey. The second form involved a public release of the software to gather feedback and suggestions about the software. Since this was an evaluation of a service with the aim of improving the service, this project is exempt from needing research ethics approval.
 
 === User Trials
 

@@ -78,19 +78,19 @@ a b in:my_folder | -d in:other_folder
 -- This will not behave as expected
 WHERE (
   (tag_query = 'a AND b'
-    AND i.path LIKE 'my\_folder%' ESCAPE '\')
+    AND i.path LIKE 'my\_folder%' ESCAPE '\\')
   OR
   (tag_query = 'meta_tags:all NOT d'
-    AND i.path LIKE 'other\_folder%' ESCAPE '\')
+    AND i.path LIKE 'other\_folder%' ESCAPE '\\')
 )
 
 -- The working SQL WHERE clause
 WHERE (
   (i.id IN (SELECT id FROM tag_query('a AND b'))
-    AND i.path LIKE 'my\_folder%' ESCAPE '\')
+    AND i.path LIKE 'my\_folder%' ESCAPE '\\')
   OR
   (i.id IN (SELECT id FROM tag_query('meta_tags:all NOT d'))
-    AND i.path LIKE 'other\_folder%' ESCAPE '\')
+    AND i.path LIKE 'other\_folder%' ESCAPE '\\')
 )
 ```
 
@@ -113,7 +113,7 @@ The parser is implemented in `parser.rs` using the "nom" crate @couprie_2021_nom
 
 The purpose of `convert.rs` is to convert the parse tree into an abstract syntax tree (AST) @thain2019introduction. In this stage, it combines any FTS terms on the same level into a single `FTS()` object that represents a single FTS expression in the output SQL statement.
 
-The conversion from the AST to SQL code is also handled by `convert.rs`. This is done by calling the `to_sql_clause(&self) -> String` method on the base of the tree, which then recursively calls `to_sql_subclause(&self, is_root: bool) -> String` on its child nodes.
+The conversion from the AST to SQL code is also handled by `convert.rs`. This is done by calling the `to_sql_clause(&self)` method on the base of the tree, which then recursively calls `to_sql_subclause(&self, is_root: bool)` on its child nodes.
 
 Finally, the compiler inserts the SQL clause into the SQL template to obtain the final SQL statement. The statement can then be used to query items in the database.
 
@@ -133,7 +133,7 @@ The issue of path separators is easy to solve - we only use forward slashes as s
 
 The issue of drive letters is more difficult to handle. If we wish to store absolute paths in the database, there is no way to create absolute paths that are valid on both Windows and Unix systems, since Windows drive letters are invalid on Unix systems.
 
-Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as a "base path", and store paths relative to the "base path". In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
+Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as the root directory, and store paths relative to the root directory. In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
 
 == Optimising the Item List <optimise-item-list>
 
@@ -143,9 +143,9 @@ A naive implementation of the item list may be as follows: When the user enters 
 
 The above implementation works well for small file collections, but does not scale with larger collections.
 
-As the length of the list increases, the data needed to be transferred from the backend to the frontend increases very quickly, and requires a longer time to complete. This is reflected in the user interface as a momentary freeze lasting 1 to 5 seconds or more depending on the size of the list.
+As the length of the list increases, the data needed to be transferred from the backend to the frontend increases very quickly, and requires a longer time to complete. This causes a momentary freeze in the user interface lasting 1 to 5 seconds or more depending on the size of the list.
 
-After the transfer, the item list then renders every item in the list. In a DOM-based (Document Object Model) user interface library like Vue, this means creating DOM nodes for every item in the list. This can quickly become expensive, especially for larger lists. This is reflected in the user interface as a low framerate or stuttering when the user scrolls the list.
+After the transfer, the item list then renders every item in the list. In a DOM-based (Document Object Model) user interface library like Vue, this means creating DOM nodes for every item in the list. This can quickly become expensive, especially for larger lists. This is reflected in the user interface as stuttering when the user scrolls the list.
 
 The software implements two optimisations to address these issues.
 
@@ -155,20 +155,20 @@ The first optimisation is a virtual item list. A virtual list is a technique for
 
 In Vue, a virtual item list massively reduces the number of DOM nodes generated for a given item list. Since the number of items visible depends on the size of the application window, the number of rendered items remain constant as the length of the item list increases. This way, the item list only generates a fixed number of elements, and the user can still interact with all items as if they were all present on the page.
 
+The full code for the item list is included as an appendix at @code-virtual-list.
+
+In my implementation of the virtual list, I added a buffer zone to pre-render items that are slightly off-screen. The reason for this buffer zone will be explained in the next section.
+
 #figure(
     image("res/virtual-list.png", width: 60%),
     caption: [Diagram showing the different regions involved in a virtualised list.],
 )
 
-The full code for the item list is included as an appendix at @code-virtual-list.
-
-In my implementation of the virtual list, I added a buffer zone to pre-render items that are slightly off-screen. The reason for this buffer zone will be explained in the next section.
-
 === Limiting the Data Transferred
 
-To reduce the amount of data transferred from the backend to the frontend during the initial load, we observe that not all of the data is useful when the list first loads. In a list of 100 items, only the paths and tags of the first few items will be visible, whereas the path and tags of all other items are not visible until scrolled to. Thus it is unnecessary to transfer the paths and tags of all items for the initial load, the only necessary information is the item ID, which is used to uniquely identify the item in the database.
+To reduce the amount of data transferred from the backend to the frontend during the initial load, we observe that not all of the data is useful when the list first loads. In a list of 100 items, only the paths and tags of the first few items will be visible, whereas the path and tags of all other items are not visible until scrolled to. Thus it is unnecessary to transfer the paths and tags of all items for the initial load, the only necessary information is the item ID, which uniquely identifies the item in the database.
 
-In the software implementation, the virtual list initially only has access to a list of item IDs. If it wishes to get the path and tags of an item to render it, it must make another request to the backend to fetch the item data. The fetching of items is not instantaneous and takes about 5-10ms for each item.
+In the software implementation, the virtual list initially only has access to a list of item IDs. If it wishes to get more information about an item to render it, it must make another request to the backend to fetch the item data. The fetching of items is not instantaneous and takes about 5-10ms for each item.
 
 A further optimisation is to cache the data obtained from the backend. I implemented an item data cache that stores any retrieved items until the next query. When the virtual list attempts to fetch data from the backend, it now checks the item cache for existing data before attempting the fetch.
 
@@ -184,7 +184,9 @@ Windows provides a native API to watch a directory for changes. However, one maj
 
 This prevents it from being able to be used directly as the watcher for the application. When used as the watcher for the application, the application is unable to preserve tags on a file when the user moves a file to a different folder. This is a major issue for many existing tag-based file managers as well - they often lack the ability to track file movement, have unorthodox solutions that affect user usability, or make it the user's responsibility to manually update tags after file movement.
 
-To solve this issue, I implemented an asynchronous event handler that takes Windows' native events as input, and automatically resolves file movement by checking the file paths of the received events. This watcher is only used on Windows systems. On other systems, their respective default watchers are used instead with conditional compilation.
+To solve this issue, I implemented an asynchronous event handler that takes Windows' native events as input, and automatically resolves file movement by checking the file paths of the received events.
+
+This watcher is only used on Windows systems. On other systems, their respective default watchers are used instead with conditional compilation.
 
 === Final Implementation
 
@@ -207,13 +209,13 @@ I observe that moved files retain the same file name, even if they are moved to 
 
 The final implementation used two components: the watcher, and the handler.
 
-The watcher is an instance of a `Watcher` from the `notify` file watching library. It watches a directory and emits events generated by the underlying operating system (on Windows, the events come from the Windows API). At this stage, file movement is treated as a pair of create and delete events.
+The watcher is an instance of a `Watcher` from the `notify` file watching library. It watches a directory and emits events generated by the underlying operating system (on Windows, the events come from the Windows API). In Windows, file movement is treated as a pair of create and delete events.
 
-The handler is an asynchronous infinite loop, iterating through all events received from the watcher. It is responsible for determining whether a received event can be used as-is, or whether the event must undergo further processing and be deferred. This is performed using an algorithm, which will be described in the following sections.
+The handler is an asynchronous infinite loop, iterating through all events received from the watcher. It is responsible for determining whether a received event can be used as-is, or whether the event must undergo further processing and be deferred. The following sections describe the algorithm used to process events.
 
 ==== Handler Algorithm
 
-In the case of Windows' file system, all events except create and delete events can be used as-is, these events will be sent directly to the output. Create and delete events may correspond to a single rename event, as such they are handled differently from other events.
+In Windows' file system, all events except create and delete events can be used as-is, these events will be sent directly to the output. Create and delete events may correspond to a single rename event, as such they are handled differently from other events.
 
 When a delete event is received, it may correspond to either a file movement or a file deletion. The algorithm stores this event in a list, and adds to the event an expiry date. The reason behind the expiry date will be explained in the next section. If the path is determined to be a rename event before the expiry time, then the algorithm sends a rename event. Otherwise, the path expires and is treated as a delete event, which the algorithm sends to the output.
 
@@ -223,7 +225,9 @@ If the list of recently-deleted paths is empty, the infinite loop blocks indefin
 
 === Implementation
 
-When the handler receives an event, the handler must determine whether the event belongs to a pair of create-delete events. The issue is that the pairing event may appear in a later loop, or it might have already arrived in an earlier loop. As such, the handler stores any received events in a list which is initialised on the first loop and persistent across future loops. The handler will search this list for a matching pair on every received event. However, we do not want to store these events in the list indefinitely - if the handler receives a remove event for `foo.txt`, then a create event for `foo.txt` 10 hours later, these events should not be paired together as a single rename event. The handler thus adds a timeout for each event received. The timeout is an arbitrary short time window, the implementation uses a time window of 10ms. In every loop, the handler will now either wait for a new event from the handler, or wait for the timeout of any path in the list, whichever occurs first. If a timeout occurs, the handler removes the path from the list and waits for the next loop cycle.
+When the handler receives an event, the handler must determine whether the event belongs to a pair of create-delete events. The issue is that the pairing event may appear in a later loop, or it might have already arrived in an earlier loop. As such, the handler stores any received delete events in a list which is initialised on the first loop and persistent across future loops. The handler will search this list for a matching pair on every received create event.
+
+However, we do not want to store these events in the list indefinitely - if the handler receives a remove event for `foo.txt`, then a create event for `foo.txt` 10 hours later, these events should not be paired together as a single rename event. The handler thus adds a timeout to each delete event added to the list. The timeout is an arbitrary short time window, the implementation uses a time window of 10ms. In every loop, the handler will now either wait for a new event from the handler, or wait for the timeout of any path in the list, whichever occurs first. If a timeout occurs, the handler removes the path from the list and waits for the next loop cycle.
 
 In the actual implementation, the timeout of the handler must be handled asynchronously to prevent blocking of the current thread, otherwise new events from the watcher cannot be processed as the handler waits for a matching pair. The implementation overcomes this by starting the watcher and handler in separate threads.
 
@@ -253,7 +257,7 @@ Compared the the final iteration, this iteration is more complex. The assumption
 
 The handler in this iteration differs from the final solution in that it only checks if an event can be used as-is, otherwise it sends the event to the manager. The handler is not responsible for pairing create and delete events, but rather the manager.
 
-The manager is an asynchronous infinite loop like the handler, it loops through create and delete events received from the handler. The key difference from the final solution is that this solution adds an expiry time to both delete events and create events, whereas the final solution only adds an expiry time to delete events. The reason is that this solution assumes that the create and delete events corresponding to a single rename event can be in any order, either create-delete or delete-create. It searches for a pair of matching events upon receipt of either create or delete events, while the final solution only searches for a pair of matching events upon receipt of create events.
+The manager is an asynchronous infinite loop like the handler, it loops through create and delete events received from the handler. The key difference from the final solution is that this solution adds an expiry time to both delete events and create events. The reason is that this solution assumes that the create and delete events corresponding to a single rename event can be in any order, either create-delete or delete-create. It searches for a pair of matching events upon receipt of either create or delete events.
 
 An error was discovered in the assumption when I was implementing unit tests for the module.
 

@@ -1,6 +1,6 @@
 = Requirements Analysis <requirements-analysis>
 
-This chapter covers the requirements identified for my application. The following requirements were obtained through a review of existing tagging software and other file management systems, and through online sources such as blogs and discussion forums.
+The following requirements were obtained through a review of existing tagging software and other file management systems, and through online sources such as blogs and discussion forums.
 
 == Functional Requirements
 
@@ -14,7 +14,7 @@ This chapter covers the requirements identified for my application. The followin
 8. The system should have a graphical user interface for tagging files and searching for files using tags.
 9. The system should allow tags to be assigned to multiple files at once, rather than individually tagging each file one-by-one. This would reduce the amount of time needed for tag assignment, particularly for large numbers of files.
 
-The following requirements are extensions to the project and not mandatory as base functions of the system.
+The following requirements are optional extensions to the project and not required for the base functionality.
 
 8. The system should be able to handle transferring of tags between different devices or systems. This would allow users to preserve their tags when transferring across multiple systems, and would also allow files to be stored on cloud backup services such as Dropbox or Google Drive.
 9. The system should display previews of each file, for example preview of audio files, thumbnails for image files, and extension icons for unrecognised file types.
