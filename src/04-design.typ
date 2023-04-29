@@ -4,6 +4,11 @@ This section discusses the components that make up the application and how they 
 
 == Components
 
+#figure(
+    image("res/components.png", width: 80%),
+    caption: [Components of the application],
+)
+
 The following components make up the application:
 
 - Rust backend for file operations, database access and cross-platform compatibility

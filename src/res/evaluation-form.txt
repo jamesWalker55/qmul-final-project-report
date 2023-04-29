@@ -1,0 +1,44 @@
+= tagrepo Evaluation Form
+
+Thank you for trying out tagrepo!
+
+tagrepo was built as part of my Computer Science course's final project. The software is intended to provide users an easy-to-use method of organising files while still maintaining flexibility of use and compatibility with any existing folder structure.
+
+I am currently gathering feedback for evaluating the project, I would greatly appreciate it if you could take a moment to fill out this survey.
+
+* Indicates required question
+
+== User experience
+
+1. How was your experience using the program? *
+Mark only one oval.
+(Frustrating to use) 1 2 3 4 5 (Easy to use)
+
+2. How easy was it to use tagrepo's search engine to find files? *
+Mark only one oval.
+(Hard) 1 2 3 4 5 (Easy)
+
+3. How satisfied are you with the speed and responsiveness of tagrepo? *
+Mark only one oval.
+(Unsatisfied) 1 2 3 4 5 (Very satisfied)
+
+4. Would you recommend this program to others? Why or why not? *
+(Freeform question)
+
+== User preference
+
+5. How do you feel tagrepo compares to existing file management solutions? *
+Mark only one oval.
+- [ ] Better
+- [ ] About the same
+- [ ] Worse
+- [ ] Never used other file management solutions
+
+6. Do you often have trouble finding the files you need? *
+Mark only one oval.
+- [ ] Yes
+- [ ] No
+- [ ] Other (Freeform answer)
+
+7. Thank you for taking the time to complete this form! If you have any additional feedback about the software, please feel free to let me know here.
+(Freeform question)
