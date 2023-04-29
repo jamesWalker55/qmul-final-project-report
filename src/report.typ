@@ -9,7 +9,7 @@
 #set heading(numbering: "1.")
 
 #show heading.where(level: 1): it => {
-  if it.outlined {
+  if it.outlined and it.numbering != none {
     block(width: 100%)[
       Chapter #counter(heading).display("1:") #it.body
     ]
