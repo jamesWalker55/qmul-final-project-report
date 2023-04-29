@@ -11,8 +11,8 @@ jobs:
 
       # Download typst binary
       - run: |
-          # URL to typst release as of 2023-04-16
-          RELEASE_URL=https://github.com/typst/typst/releases/download/v0.2.0/typst-x86_64-unknown-linux-gnu.tar.gz
+          # URL to typst release as of 2023-04-29
+          RELEASE_URL=https://github.com/typst/typst/releases/download/v0.3.0/typst-x86_64-unknown-linux-musl.tar.xz
           # Temporary archive path
           TEMP_ARCHIVE_NAME=temp.tar.gz
           # Path of typst inside the archive
