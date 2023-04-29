@@ -4,4 +4,4 @@
 #let author = "Chun Ho Wong"
 #let programme_of_study = "Computer Science"
 #let supervisor = "Dr. Johan Pauwels"
-#let submission_date = box(fill: yellow)[Add submission date]
+#let submission_date = "29 April 2023"

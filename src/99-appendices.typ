@@ -8,15 +8,15 @@
 
 #pagebreak()
 
-== First Iteration of Directory Watcher <code-deprecated-watcher>
-
-#raw(read("res/watcher-iteration-1.rs"), lang: "rust")
-
-#pagebreak()
-
 == Final Iteration of Directory Watcher <code-dir-watcher>
 
 #raw(read("res/dir-watcher.rs"), lang: "rust")
+
+#pagebreak()
+
+== First Iteration of Directory Watcher <code-deprecated-watcher>
+
+#raw(read("res/watcher-iteration-1.rs"), lang: "rust")
 
 #pagebreak()
 

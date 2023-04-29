@@ -184,7 +184,7 @@ Windows provides a native API to watch a directory for changes. However, one maj
 
 This prevents it from being able to be used directly as the watcher for the application. When used as the watcher for the application, the application is unable to preserve tags on a file when the user moves a file to a different folder. This is a major issue for many existing tag-based file managers as well - they often lack the ability to track file movement, have unorthodox solutions that affect user usability, or make it the user's responsibility to manually update tags after file movement.
 
-To solve this issue, I implemented an asynchronous event handler that takes Windows' native events as input, and automatically resolves file movement by checking the file paths of the received events.
+To solve this issue, I implemented an asynchronous event handler that takes Windows' native events as input, and automatically resolves file movement by checking the file paths of the received events. This watcher is only used on Windows systems. On other systems, their respective default watchers are used instead with conditional compilation.
 
 === Final Implementation
 
