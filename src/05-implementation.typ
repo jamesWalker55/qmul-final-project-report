@@ -223,7 +223,7 @@ When a create event is received, it may correspond to either a file movement or 
 
 If the list of recently-deleted paths is empty, the infinite loop blocks indefinitely while waiting for a new event from the watcher. If the list is not empty, the infinite loop will wait for the new event but timeout on the next earliest expiry time in the list. If a timeout occurs, it removes the associated path from the list and waits for the next loop cycle.
 
-=== Implementation
+==== Implementation
 
 When the handler receives an event, the handler must determine whether the event belongs to a pair of create-delete events. The issue is that the pairing event may appear in a later loop, or it might have already arrived in an earlier loop. As such, the handler stores any received delete events in a list which is initialised on the first loop and persistent across future loops. The handler will search this list for a matching pair on every received create event.
 
