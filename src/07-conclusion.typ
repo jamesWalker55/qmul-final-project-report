@@ -12,19 +12,9 @@ Overall, the project was a success. I was able to apply my knowledge of operatin
 
 == Future Work <future-work>
 
-=== Audio Sample Categorisation
+The software described in this report is still in its infancy. It is still unfinished and should be further developed to refine existing features, to implement additional functionality, as well as to fix bugs. The feedback obtained from the evaluation is valuable for determining areas of improvement for the software, for example the custom query language and the user interface. I also have ideas for the software that I would like to implement. All these factors have helped refine the plans for further developing the software.
 
-Audio sample categorisation is a task where given an audio file, the goal is to classify it into one or more categories, such as genre, instrument, and mood. This task can be used in various applications, such as automated music recommendation and music search.
-
-In the context of this project, audio sample categorisation can be used to automatically tag and categorise audio samples. This feature can be found in many popular audio sample management software, such as Algonaut Atlas 2 @sherbourne_2022_algonaut and Waves Cosmos @rogersonpublished_2022_waves.
-
-The audio sample categorisation task is challenging due to the wide variety of possible audio files that can be encountered. This means that the model must be able to handle a wide range of audio files with varying lengths and characteristics. Some common approaches for audio sample categorisation include deep learning techniques such as convolutional and recurrent neural networks.
-
-To implement this extension, I would make use of modern machine learning techniques. The first step would be to collect a dataset of annotated audio samples with data I can derive tags from, such as genre and instrument labels. Due to the large number of samples typically involved in training a neural network, I would likely use an existing dataset rather than manually tagging a dataset.
-
-After obtaining the dataset, I can then use the dataset to train a convolutional or recurrent neural network model. The model would be trained to classify each audio sample into one or more categories. I would use modern deep learning tools such as PyTorch and TensorFlow to train the model.
-
-Finally, I would use the model to classify audio samples into the desired categories. The output of the model can be used to automatically generate tags for the audio samples. The generated tags can then be used to search for files with the software's query bar, as with other user-assigned tags.
+Below are a few examples of future work.
 
 === Query Simplification
 
@@ -81,5 +71,19 @@ One approach would be to implement a plugin system for the software, such that u
 The plugin system should allow editing of file tags stored in the repository, as well as calling external programs to provide integration with other software. This would enable many of the diverse use cases discussed in @public-feedback.
 
 There are many choices for choosing a programming language as the scripting interface for the software. One popular choice is Lua, which is used as the plugin system for Neovim. Lua is a fast and lightweight language @pall_2012_luajit that has good integration with many languages including C and Rust, this has made it a good choice for a plugin system language.
+
+=== Audio Sample Categorisation
+
+Audio sample categorisation is a task where given an audio file, the goal is to classify it into one or more categories, such as genre, instrument, and mood. This task can be used in various applications, such as automated music recommendation and music search.
+
+In the context of this project, audio sample categorisation can be used to automatically tag and categorise audio samples. This feature can be found in many popular audio sample management software, such as Algonaut Atlas 2 @sherbourne_2022_algonaut and Waves Cosmos @rogersonpublished_2022_waves.
+
+The audio sample categorisation task is challenging due to the wide variety of possible audio files that can be encountered. This means that the model must be able to handle a wide range of audio files with varying lengths and characteristics. Some common approaches for audio sample categorisation include deep learning techniques such as convolutional and recurrent neural networks.
+
+To implement this extension, I would make use of modern machine learning techniques. The first step would be to collect a dataset of annotated audio samples with data I can derive tags from, such as genre and instrument labels. Due to the large number of samples typically involved in training a neural network, I would likely use an existing dataset rather than manually tagging a dataset.
+
+After obtaining the dataset, I can then use the dataset to train a convolutional or recurrent neural network model. The model would be trained to classify each audio sample into one or more categories. I would use modern deep learning tools such as PyTorch and TensorFlow to train the model.
+
+Finally, I would use the model to classify audio samples into the desired categories. The output of the model can be used to automatically generate tags for the audio samples. The generated tags can then be used to search for files with the software's query bar, as with other user-assigned tags.
 
 #pagebreak()
