@@ -47,7 +47,7 @@ a b | -d
 WHERE tag_query = '(a AND b) OR (meta_tags:all NOT d)'
 ```
 
-The FTS5 extension treats `NOT` as a binary operator, not a unary operator. In other words, the `NOT` operator computes the set difference of two conditions. It is unable to search for the complement of a single condition. Often, it can be useful to search for the complement of a single tag, for example searching for all items that don't have the tag `old`. However, it is impossible to represent the following query in FTS5: _"items that don't have the tag 'old'"_.
+The FTS5 extension treats `NOT` as a binary operator, not a unary operator. In other words, the `NOT` operator computes the set difference of two conditions. It cannot search for the complement of a single condition. Often, it can be useful to search for the complement of a single tag, for example searching for all items that don't have the tag `old`. However, it is impossible to represent complements in FTS5.
 
 To circumvent this issue, I added a new column to the `items(id, path, tags)` table called `meta_tags`. The `meta_tags` column contains the string `"all"` by default, so all items in the table will gain a new `all` tag. I can then specify `meta_tags:all` in the FTS5 query to search for _"all items that have the tag 'all' in the 'meta_tags' column"_. I finally use `meta_tags:all` as the first operand in the `NOT` operator to compute the set difference between all items and the given query, effectively implementing unary negation of a single term.
 
@@ -121,25 +121,25 @@ The final number of lines of code in the compiler module was 1149 lines.
 
 == File Paths and Operating Systems
 
-One of the requirements of the software is cross-platform compatibility: the software should run on all major operating systems, and the produced database must be transferable between operating systems. However, an issue arises when the software needs to handle file paths. In terms of file path handling, Windows and Unix-like operating systems (including macOS and Linux) have drastic differences.
+One of the requirements of the software is cross-platform compatibility: the software should run on all major operating systems, and the produced database must be transferable between operating systems. However, in terms of file path handling, Windows and Unix-like operating systems (including macOS and Linux) have drastic differences.
 
-The first major difference is path separators. Windows defaults to backslashes (`\`) to separate components in a path, however in command contexts it also recognises forward slashes (`/`) as valid path separators. Unix systems use forward slashes to separate path components, whereas backslashes, while heavily discouraged, are allowed as normal characters in filenames.
+The first major difference is path separators. Windows defaults to backslashes (`\`) to separate components in a path, but also recognises forward slashes (`/`) as valid path separators in command contexts. Unix systems use forward slashes to separate path components, whereas backslashes, while heavily discouraged, are allowed as normal characters in filenames.
 
-The second major difference is partitions. A Windows system partitions disk space into partition, each of which has a unique drive letter such as `C:\` and `D:\`. In Windows, absolute file paths will always contain drive letters, for example "`D:\Audio Samples`" represents an absolute path on Windows. Unix systems do not use partitions, on such systems file paths always begin with a forward slash, for example `/home/james/audio`.
+The second major difference is partitions. A Windows system partitions disk space into partition, each of which has a unique drive letter such as `C:\` and `D:\`. Windows absolute file paths will always contain drive letters, for example "`D:\Audio Samples`". Unix systems do not use partitions, on such systems file paths always begin with a forward slash, for example `/home/james/audio`.
 
 These differences present several issues when storing paths in the database. If the application directly stored the absolute paths of files in the database, this would mean storing either Windows-specific paths or Unix-specific paths in the database. The database would become operating system-specific and is no longer cross-platform.
 
-The issue of path separators is easy to solve - we only use forward slashes as separators in the database since that is recognised as a valid separator on all operating systems. On Unix, this requires no changes to the paths and thus has no effect. On Windows, this can be implemented with a simple string substitution.
+The issue of path separators is easy to solve - we only use forward slashes as separators since that is recognised as a valid separator on all operating systems. On Unix, this requires no changes to the paths and thus has no effect. On Windows, this can be implemented with a simple string substitution.
 
 The issue of drive letters is more difficult to handle. If we wish to store absolute paths in the database, there is no way to create absolute paths that are valid on both Windows and Unix systems, since Windows drive letters are invalid on Unix systems.
 
-Thus, the decision was made to limit the software to only store relative paths. This means the software must choose a location as the root directory, and store paths relative to the root directory. In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder, allowing cross-platform compatibility. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
+Thus, the software must be limited to relative paths for cross-platform compatibility. This means the software must choose a location as the root directory, and store paths relative to the root directory. In the software, this is abstracted with the concept of "repositories", which is a folder where tags are managed and stored. This ensures that all paths can be stored as relative paths relative to the root of the folder. If the software doesn't track files outside the folder, this also has the added benefit of lower performance overhead as the software does not need to keep track of files in the entire system, including system files that the user may not want to tag. This also allows the user to create several isolated folders of tags, each folder dedicated for a different purpose and containing different tags.
 
 == Optimising the Item List <optimise-item-list>
 
-One of the requirements for this project is for the software to remain responsive when handling large file collections. This concerns the frontend user interface of the software. The main item list of the user interface is a major component of the software that the user will interact with frequently, thus it is important to ensure that the item list is sufficiently responsive.
+One of the requirements for this project is for the software to remain responsive when handling large file collections. The main item list of the user interface is a major component of the software that the user will interact with frequently, thus it is important to ensure that the item list is sufficiently responsive.
 
-A naive implementation of the item list may be as follows: When the user enters a new search query, the item list sends the query to the Rust backend. The backend queries the database for a list of items, then returns a list of each item and any associated information such as item paths to the Vue frontend. Upon receiving the list, the item list renders every item in the received list using data that is stored in the list.
+A naive implementation of the item list may be as follows: When the user enters a new search query, the frontend sends the query to the Rust backend. The backend queries the database for a list of items, then returns a list of each item and any associated information such as item paths to the frontend. Upon receiving the list, the item list renders every item in the received list using data that is stored in the list.
 
 The above implementation works well for small file collections, but does not scale with larger collections.
 
@@ -166,7 +166,7 @@ In my implementation of the virtual list, I added a buffer zone to pre-render it
 
 === Limiting the Data Transferred
 
-To reduce the amount of data transferred from the backend to the frontend during the initial load, we observe that not all of the data is useful when the list first loads. In a list of 100 items, only the paths and tags of the first few items will be visible, whereas the path and tags of all other items are not visible until scrolled to. Thus it is unnecessary to transfer the paths and tags of all items for the initial load, the only necessary information is the item ID, which uniquely identifies the item in the database.
+To reduce the amount of data transferred from the backend to the frontend during the initial load, we observe that not all of the data is useful when the list first loads. In a large list of items, only the paths and tags of the first few items will be visible, whereas the path and tags of all other items are not visible until scrolled to. Thus it is unnecessary to transfer the paths and tags of all items for the initial load, the only necessary information is the item ID, which uniquely identifies the item in the database.
 
 In the software implementation, the virtual list initially only has access to a list of item IDs. If it wishes to get more information about an item to render it, it must make another request to the backend to fetch the item data. The fetching of items is not instantaneous and takes about 5-10ms for each item.
 
